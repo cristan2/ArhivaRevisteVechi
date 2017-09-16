@@ -6,67 +6,46 @@ $toateEditiile = $db->query("
   FROM editii e
   JOIN reviste r
   USING ('revista_id')
-  WHERE e.revista_id = '$revistaId' AND e.tip = 'revista'; ");
+  WHERE 1
+  AND e.revista_id = '$revistaId'
+  AND e.tip = 'revista'
+  ");
 
-afiseazaTabel($toateEditiile);
+$tabelHead = array(
 
-function afiseazaTabel($toateEditiile) {
-    $randuri = getRows($toateEditiile);
-    $output = "" .
-    "<!DOCTYPE html>
-    <html>
-    <head>
-        <meta content=\"text/html; charset=utf-8\">
-        <style>
-            table, th, td {
-                border: 1px solid black;
-                border-collapse: collapse;
-                min-height: 1em;
-            }
-        </style>
-    </head>
-    <body>
-        <table>
-            <thead>
-                <tr>
-                    <th>Imagine</th>
-                    <th>An</th>
-                    <th>Luna</th>
-                    <th>Nr.</th>
-                    <th>Joc full</th>
-                </tr>
-            </thead>"
-            ."<tbody>"
-                . $randuri
-        . " </tbody>
-        </table>
-    </body>
-    </html>";
+    "An"        => function ($row) {return getColData($row, 'an');},
+    "Luna"      => function ($row) {return getColData($row, 'luna');},
+    "Nr."       => function ($row) {return getColData($row, 'numar');},
+    "Joc full"  => function ($row) {return getColData($row, 'joc_complet');},
+    "Imagine"   => function ($row) {return makeImgUrl(getColData($row, 'revista_nume'),
+                                                      getColData($row, 'an'),
+                                                      getColData($row, 'luna'),
+                                                      1);}
+    );
 
-    echo $output;
-}
+$tabelBody = buildRowsDinamic($toateEditiile, $tabelHead);
 
-function getRows($toateEditiile) {
-    $randuri = "";
+include_once PATH_TEMPL . "/tpl_tabel.php";
+
+
+// ========== inner stuff =========== //
+
+function buildRowsDinamic($toateEditiile, $tabelHead) {
+    $allRows = "";
+
     while ($row = $toateEditiile->fetchArray(SQLITE3_ASSOC)) {
-        $id = $row['editie_id'];
-        $nume_revista = $row['revista_nume'];
-        $an = $row['an'];
-        $luna = $row['luna'];
-        $nr = $row['numar'];
-        $joc_complet = $row['joc_complet'];
-        $url = makeImgUrl(strtolower($nume_revista), $an, $luna, 1);
-        $randuri .= getRowTableData($url, $an, $luna, $nr, $joc_complet) . PHP_EOL;
+        $currentRow = "<tr>";
+        foreach($tabelHead as $colNume => $colValue) {
+            $currentRow .= getTd($colValue($row));
+        }
+        $currentRow .= "</tr>";
+        $allRows .= $currentRow . PHP_EOL;
     }
-    return $randuri;
+    return $allRows;
 }
 
-function getRowTableData(...$cols) {
-    $tableRow= "<tr>";
-    foreach ($cols as $col) {
-        $tableRow .= getTd($col);
-    }
-    return $tableRow . "</tr>";
+function getColData($row, $colName) {
+    return $row[$colName];
 }
 
 function getTd($cellValue) {
@@ -74,21 +53,20 @@ function getTd($cellValue) {
 }
 
 function makeImgUrl($nume_revista, $an, $luna, $pgNo) {
+    $nume_revista = strtolower($nume_revista);
 
     $paddedPage = str_pad($pgNo, 3, '0', STR_PAD_LEFT);
     $paddedMonth = str_pad($luna, 2, '0', STR_PAD_LEFT);
 
-    $baseImgName = $nume_revista.$an.$paddedMonth.$paddedPage;
-    $imgDirPath = PATH_IMG."/$nume_revista/$an/$paddedMonth";
+    $baseImgName = $nume_revista . $an . $paddedMonth . $paddedPage;
+    $imgDirPath = PATH_IMG . "/$nume_revista/$an/$paddedMonth";
 
     $imgSrc = "$imgDirPath/$baseImgName.jpg";
-    $imgThumbSrc = "$imgDirPath/th/$baseImgName"."_th.jpg";
+    $imgThumbSrc = "$imgDirPath/th/$baseImgName" . "_th.jpg";
 
     if (file_exists($imgSrc)) {
         return "<a href=\"$imgSrc\"><img src=\"$imgThumbSrc\" alt=\"Image\" /></a>";
     } else {
         return "n/a";
     }
-
-
 }
