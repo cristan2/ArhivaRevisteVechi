@@ -2,7 +2,6 @@
 
 require("./resources/config.php");
 
-// quick test
 if (isset($_POST["reviste"])) {
     include_once PATH_TEMPL . "/editii.php";
 } else {
