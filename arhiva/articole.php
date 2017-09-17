@@ -1,16 +1,12 @@
 <?php
+DEFINE("ROOT", "..");
 require("../resources/config.php");
 require_once LIB . "/helper_tables.php";
 
-if (isset($db)) echo "db is set";
-else echo "is not set";
-
 $editieId = $_GET["editie"];
 
-echo "editie = $editieId";
-
 $toateArticolele = $db->query("
-    SELECT * FROM editii
+    SELECT * FROM articole
     WHERE editie_id = $editieId
 ");
 
