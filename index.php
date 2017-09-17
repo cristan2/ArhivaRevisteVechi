@@ -1,6 +1,6 @@
 <?php
-
-require("./resources/config.php");
+DEFINE ("ROOT"       , ".");
+require(ROOT ."/resources/config.php");
 
 if (isset($_POST["reviste"])) {
     include_once ARHIVA . "/editii.php";
