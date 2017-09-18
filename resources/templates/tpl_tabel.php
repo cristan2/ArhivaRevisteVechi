@@ -16,7 +16,7 @@
       <thead>
         <tr>
           <?php
-          foreach ($tabelHead as $colKey => $colValue) echo "<th>$colKey</th>";
+            foreach ($tabelHead as $colKey => $colValue) echo "<th>$colKey</th>";
           ?>
         </tr>
       </thead>

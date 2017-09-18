@@ -1,13 +1,14 @@
 <?php
-
+DEFINE("ROOT", "..");
+require("../resources/config.php");
 require_once LIB . "/helper_tables.php";
 
-$revistaId = $_POST["reviste"];
+$revistaId = $_GET["revista"];
 
 $toateEditiile = $db->query("
     SELECT r.revista_nume, e.*
     FROM editii e
-    JOIN reviste r
+    LEFT JOIN reviste r
     USING ('revista_id')
     WHERE 1
     AND e.revista_id = '$revistaId'
