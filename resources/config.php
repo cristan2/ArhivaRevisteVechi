@@ -5,7 +5,7 @@ DEFINE ("RESOURCES" , ROOT . "/resources");
 DEFINE ("LIB"       , ROOT ."/lib");
 
 // resources
-DEFINE ("DB_FILE"   , RESOURCES . "/db/arhiva_reviste_v4.1.db");
+DEFINE ("DB_FILE"   , RESOURCES . "/db/arhiva_reviste_v4.2.db");
 DEFINE ("TEMPL"     , RESOURCES ."/templates");
 DEFINE ("IMG"       , RESOURCES ."/img");
 

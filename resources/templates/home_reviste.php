@@ -4,18 +4,23 @@ require_once(RESOURCES . "/config.php");
 require_once LIB . "/helper_tables.php";
 
 $toaterevistele = $db->query("
-  SELECT r.*, COUNT(e.editie_id) cnt
-  FROM reviste r
-  LEFT JOIN editii e
-  USING (revista_id)
-  GROUP BY r.revista_id
+    SELECT rev.*, ed.cnt
+    FROM reviste rev
+    LEFT JOIN (
+        SELECT revista_id, COUNT(editie_id) cnt
+        FROM editii
+        WHERE tip = 'revista'
+        GROUP BY revista_id) ed
+    USING (revista_id)
+    GROUP BY rev.revista_id
   ");
 
 $tabelHead = array(
-    "Nume" => function($row) {return getColData($row, 'revista_nume');},
-    "Editii Arhiva" => function($row) {return getColData($row, 'cnt');},
-    "Coperta" => function ($row) {return makeImgUrl(getNumeFisier(getColData($row, 'revista_nume')),
-        getColData($row, 'revista_id'));}
+    "Nume"          => function ($row) {return getColData($row, 'revista_nume');},
+    "Editii Arhiva" => function ($row) {return makeEditiiInfo(getColData($row, 'cnt'),
+                                                              getColData($row, 'aparitii'));},
+    "Coperta"       => function ($row) {return makeImgUrl(getNumeFisier(getColData($row, 'revista_nume')),
+                                                          getColData($row, 'revista_id'));}
 );
 
 $tabelBody = buildRowsDinamic($toaterevistele, $tabelHead);
@@ -24,11 +29,16 @@ include_once TEMPL . "/tpl_tabel.php";
 
 function getNumeFisier($numeRevista) {
     $simpleName = preg_replace('/[^a-z0-9 ]+/', "", strtolower($numeRevista));
-    echo "transformed $numeRevista => $simpleName" . "<br>";
     $imgDirPath = IMG . "/coperti/$simpleName.jpg";
     if (file_exists($imgDirPath)) {
         return $imgDirPath;
     } else return IMG . "/coperti/default.jpg";
+}
+
+function makeEditiiInfo($countArhiva, $countTotal) {
+    $countTotal = explode(" ", $countTotal, 2)[0];
+    if (!isset($countArhiva)) $countArhiva = "0";
+    return "$countArhiva / $countTotal";
 }
 
 function makeImgUrl($imagePath, $revistaId) {
