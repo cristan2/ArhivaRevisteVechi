@@ -1,7 +1,7 @@
 <?php
 DEFINE("ROOT", "..");
 require("../resources/config.php");
-require_once LIB . "/helper_tables.php";
+require_once HELPERS . "/h_tables.php";
 
 $editieId = $_GET["editie"];
 

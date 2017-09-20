@@ -2,4 +2,6 @@
 DEFINE ("ROOT"       , ".");
 require(ROOT ."/resources/config.php");
 
-include_once TEMPL . "/home_reviste.php";
+include_once ARHIVA . "/reviste.php";
+
+// TODO: fix TODOs

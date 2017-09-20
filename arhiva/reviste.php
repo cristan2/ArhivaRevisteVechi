@@ -1,7 +1,8 @@
 <?php
-
-require_once(RESOURCES . "/config.php");
-require_once LIB . "/helper_tables.php";
+// ROOT si config.php sunt definite de index.php
+//DEFINE("ROOT", "..");
+//require_once(RESOURCES . "/config.php");
+require_once HELPERS . "/h_tables.php";
 
 $toaterevistele = $db->query("
     SELECT rev.*, ed.cnt
@@ -26,6 +27,8 @@ $tabelHead = array(
 $tabelBody = buildRowsDinamic($toaterevistele, $tabelHead);
 
 include_once TEMPL . "/tpl_tabel.php";
+
+/* --- internals --- */
 
 function getNumeFisier($numeRevista) {
     $simpleName = preg_replace('/[^a-z0-9 ]+/', "", strtolower($numeRevista));

@@ -1,7 +1,7 @@
 <?php
 DEFINE("ROOT", "..");
 require("../resources/config.php");
-require_once LIB . "/helper_tables.php";
+require_once HELPERS . "/h_tables.php";
 
 $revistaId = $_GET["revista"];
 
@@ -32,6 +32,8 @@ $tabelHead = array(
 $tabelBody = buildRowsDinamic($toateEditiile, $tabelHead);
 
 include_once TEMPL . "/tpl_tabel.php";
+
+/* --- internals --- */
 
 // TODO refactor
 function makeImgUrl($nume_revista, $an, $luna, $pgNo, $editieId) {

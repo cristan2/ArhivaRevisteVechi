@@ -1,10 +1,13 @@
 <?php
-// root
+// arhiva
 DEFINE ("ARHIVA"    , ROOT . "/arhiva");
-DEFINE ("RESOURCES" , ROOT . "/resources");
+
+// lib
 DEFINE ("LIB"       , ROOT ."/lib");
+DEFINE ("HELPERS"   , LIB ."/helpers");
 
 // resources
+DEFINE ("RESOURCES" , ROOT . "/resources");
 DEFINE ("DB_FILE"   , RESOURCES . "/db/arhiva_reviste_v4.2.db");
 DEFINE ("TEMPL"     , RESOURCES ."/templates");
 DEFINE ("IMG"       , RESOURCES ."/img");
