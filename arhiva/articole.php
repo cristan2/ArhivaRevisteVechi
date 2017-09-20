@@ -20,4 +20,4 @@ $tabelHead = array(
 
 $tabelBody = buildRowsDinamic($toateArticolele, $tabelHead);
 
-include_once TEMPL . "/tpl_tabel.php";
+include_once TEMPL . "/tpl_dual_div.php";
