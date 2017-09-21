@@ -14,13 +14,16 @@
         }
 
         .cuprins {
-            width: 40%;
-            background-color:#7e8547;
+            width: 50%;
         }
 
         .imagini {
-            width: 50%;
+            width: 40%;
             background-color:#4f443a;
+        }
+
+        img.minithumb {
+            width: 7%;
         }
 
         table, th, td {
