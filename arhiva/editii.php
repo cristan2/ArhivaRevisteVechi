@@ -2,6 +2,7 @@
 DEFINE("ROOT", "..");
 require("../resources/config.php");
 require_once HELPERS . "/h_tables.php";
+require_once HELPERS . "/h_images.php";
 
 $revistaId = $_GET["revista"];
 
@@ -16,7 +17,6 @@ $toateEditiile = $db->query("
 ");
 
 $tabelHead = array(
-
     "Id"        => function ($row) {return getColData($row, 'editie_id');},
     "An"        => function ($row) {return getColData($row, 'an');},
     "Luna"      => function ($row) {return getColData($row, 'luna');},
@@ -33,26 +33,15 @@ $tabelBody = buildRowsDinamic($toateEditiile, $tabelHead);
 
 include_once TEMPL . "/tpl_tabel.php";
 
+
 /* --- internals --- */
 
-// TODO refactor
 function makeImgUrl($nume_revista, $an, $luna, $pgNo, $editieId) {
-    $nume_revista = strtolower($nume_revista);
+    $baseImgName = getBaseImageName($nume_revista, $an, $luna, $pgNo);
+    $imgDir = getImageDir($nume_revista, $an, $luna);
 
-    $paddedPage = str_pad($pgNo, 3, '0', STR_PAD_LEFT);
-    $paddedMonth = str_pad($luna, 2, '0', STR_PAD_LEFT);
+    $imgThumbSrc = getImageThumbPath($imgDir, $baseImgName);
+    $targetLink = ARHIVA."/articole.php?editie=$editieId";
 
-    $baseImgName = $nume_revista . $an . $paddedMonth . $paddedPage;
-    $imgDirPath = IMG . "/$nume_revista/$an/$paddedMonth";
-
-    $imgSrc = "$imgDirPath/$baseImgName.jpg";
-    $imgThumbSrc = "$imgDirPath/th/$baseImgName" . "_th.jpg";
-
-    $targetLink = ARHIVA . "/articole.php" . "?editie=$editieId";
-
-    if (file_exists($imgSrc)) {
-        return "<a href=\"$targetLink\"><img src=\"$imgThumbSrc\" alt=\"Image\" /></a>";
-    } else {
-        return "n/a";
-    }
+    return getImageWithLink($imgThumbSrc, $targetLink);
 }
