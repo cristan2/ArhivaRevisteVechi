@@ -24,7 +24,14 @@
             </table>
         </div>
         <div class="col imagini">
-            <img class = "paginafull" src = "<?php echo $paginaCurentaImagePath ?>" />
+            <div class = "main-img-nav"><p>Aici butoane nav pentru imagini</p></div>
+            <div>
+                <?php
+                    echo "<a href='$paginaCurentaImagePath'><img
+                              src='$paginaCurentaImagePath'
+                              class = 'paginafull' alt='Image' /></a>";
+                ?>
+            </div>
         </div>
     </div>
 </body>

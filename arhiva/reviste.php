@@ -4,6 +4,7 @@
 //require_once(RESOURCES . "/config.php");
 require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_html.php";
+require_once HELPERS . "/h_images.php";
 
 $revisteDbResult = $db->query("
     SELECT rev.*, ed.cnt
@@ -23,7 +24,7 @@ $revisteCardRecipe = array(
                                                             getColData($row, 'aparitii'));},
     "Imagine"     => function ($row) {return makeImgUrl(getNumeFisier(getColData($row, 'revista_nume')),
                                                                       getColData($row, 'revista_id'));},
-    "HtmlClasses" => array("inlineDiv")
+    "HtmlClasses" => array("inline-div")
 );
 
 $revisteCards = buildCards($revisteDbResult, $revisteCardRecipe);
@@ -32,6 +33,7 @@ include_once TEMPL . "/tpl_tabel.php";
 
 /* --- internals --- */
 
+// TODO move to helper
 function getNumeFisier($numeRevista) {
     $simpleName = preg_replace('/[^a-z0-9 ]+/', "", strtolower($numeRevista));
     $imgDirPath = IMG . "/coperti/$simpleName.jpg";
@@ -49,5 +51,5 @@ function makeEditiiInfo($countArhiva, $countTotal) {
 // TODO scoate html
 function makeImgUrl($imagePath, $revistaId) {
     $targetLink = ARHIVA . "/editii.php" . "?revista=$revistaId";
-    return "<a href='$targetLink'><img src='$imagePath' alt='Image' style = 'max-width:20%'/></a>";
+    return getImageWithLink($imagePath, $targetLink, "card-img");
 }

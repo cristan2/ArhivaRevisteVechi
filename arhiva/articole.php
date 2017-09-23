@@ -43,10 +43,10 @@ $toateArticolele = $db->query("
 
 $tabelHead = array(
     "Pg."       => function ($row) {return getColData($row, "pg_toc");},
-    "Rubrica."  => function ($row) {return getColData($row, "rubrica");},
-    "Titlu."    => function ($row) {return getColData($row, "titlu");},
-    "Autor."    => function ($row) {return getColData($row, "autor");},
-    "Pagini"    => function ($row) {return extractPagesForArticle(getColData($row, 'pg_toc'),
+    "Rubrica"   => function ($row) {return getColData($row, "rubrica");},
+    "Titlu"     => function ($row) {return getColData($row, "titlu");},
+    "Autor"     => function ($row) {return getColData($row, "autor");},
+    "Pagini"    => function ($row) {return extractThumbPages(getColData($row, 'pg_toc'),
                                                                   getColData($row, 'pg_count'));}
     );
 
@@ -64,7 +64,7 @@ include_once TEMPL . "/tpl_dual_div.php";
  * Construieste thumbnails pagini cu linkuri catre imaginea mare
  * Returneaza un string cu html pentru afisare in tabel
  */
-function extractPagesForArticle($startPage, $pageCount) {
+function extractThumbPages($startPage, $pageCount) {
     global $editie;
     $imgDir = getImageDir($editie['nume'], $editie['an'],$editie['luna']);
 
@@ -89,7 +89,7 @@ function getPaginaCurentaImage($numeRevista, $an, $luna, $pagina) {
     return getImage($numeRevista, $an, $luna, $pagina);
 }
 
-// TODO extract to helper class
+// TODO extract to helper
 function convertLuna($lunaNumar) {
     switch ($lunaNumar) {
         case 1:  return "ianuarie";

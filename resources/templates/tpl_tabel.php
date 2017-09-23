@@ -7,20 +7,8 @@
 </head>
 
 <body>
-    <div>
+    <div class = "card-container">
         <?php echo isset($revisteCards) ? $revisteCards : "" ?>
     </div>
-
-<table>
-    <thead>
-    <tr>
-        <?php foreach ($tabelHead as $colKey => $colValue) echo "<th>$colKey</th>";?>
-    </tr>
-    </thead>
-
-    <tbody>
-        <?php echo $tabelBody ?>
-    </tbody>
-</table>
 </body>
 </html>

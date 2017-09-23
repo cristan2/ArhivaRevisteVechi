@@ -7,10 +7,9 @@
  * Construieste link html catre destinatia specificata
  */
 function getImageWithLink($displayedImagePath, $targetLink, ...$htmlClasses) {
-    if (! file_exists($displayedImagePath)) return "–" /*"n/a"*/ ;
+    if (! file_exists($displayedImagePath)) return "–";
     else {
         $htmlClassList = getClassList($htmlClasses);
-//        if (!empty($htmlClasses)) $htmlClassList = " class = '".implode(" ", $htmlClasses)."''";
         return "<a href='$targetLink'><img src='$displayedImagePath' $htmlClassList alt='Image' /></a>";
     }
 

@@ -3,6 +3,7 @@ DEFINE("ROOT", "..");
 require("../resources/config.php");
 require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_images.php";
+require_once HELPERS . "/h_html.php";
 
 $revistaId = $_GET["revista"];
 
@@ -16,32 +17,19 @@ $editiiDbResult = $db->query("
     AND e.tip = 'revista'
 ");
 
-$tabelHead = array(
-    "Id"        => function ($row) {return getColData($row, 'editie_id');},
-    "An"        => function ($row) {return getColData($row, 'an');},
-    "Luna"      => function ($row) {return getColData($row, 'luna');},
-    "Nr."       => function ($row) {return getColData($row, 'numar');},
-    "Joc full"  => function ($row) {return getColData($row, 'joc_complet');},
+$revisteCardRecipe = array(
+    "Titlu"     => function ($row) {return makeCardTitle(getColData($row, 'an'),
+                                                         getColData($row, 'luna') );},
+    "Subtitlu"  => function ($row) {return "Nr. " . getColData($row, 'numar');},
     "Imagine"   => function ($row) {return makeImgUrl(getColData($row, 'revista_nume'),
                                                       getColData($row, 'an'),
                                                       getColData($row, 'luna'),
                                                       1,
-                                                      getColData($row, 'editie_id'));}
-    );
-
-$tabelBody = buildRowsDinamic($editiiDbResult, $tabelHead);
-
-$revisteCards = array(
-    "An"        => function ($row) {return getColData($row, 'an');},
-    "Luna"      => function ($row) {return getColData($row, 'luna');},
-    "Imagine"   => function ($row) {return makeImgUrl(getColData($row, 'revista_nume'),
-                                                      getColData($row, 'an'),
-                                                      getColData($row, 'luna'),
-                                                      1,
-                                                      getColData($row, 'editie_id'));}
+                                                      getColData($row, 'editie_id'));},
+    "HtmlClasses" => array("inline-div")
 );
 
-$revisteCards = buildCards($editiiDbResult, $revisteCards);
+$revisteCards = buildCards($editiiDbResult, $revisteCardRecipe);
 
 include_once TEMPL . "/tpl_tabel.php";
 
@@ -58,5 +46,9 @@ function makeImgUrl($nume_revista, $an, $luna, $pgNo, $editieId) {
     $imgThumbSrc = getImageThumbPath($imgDir, $baseImgName);
     $targetLink = ARHIVA."/articole.php?editie=$editieId";
 
-    return getImageWithLink($imgThumbSrc, $targetLink, "editie_thumb");
+    return getImageWithLink($imgThumbSrc, $targetLink, "card-img");
+}
+
+function makeCardTitle($an, $luna) {
+    return "$luna / $an";
 }

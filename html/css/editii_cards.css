@@ -1,19 +1,25 @@
 
-div.inlineDiv {
+div.card-container {
+    width: 50%;
+    margin: 0 auto;
+}
+
+div.inline-div {
     display: inline-block;
-    width: 200px;
-    margin: 1em;
+    width: 15%;
+    margin: 0.5em;
     box-shadow: 0 4px 8px grey;
     font-family: 'Roboto Condensed', sans-serif;
     text-align: center;
+    vertical-align: top;
 }
 
-div.inlineDiv h1,h2 {
+div.inline-div h1,h2 {
     font-size: 1em;
     line-height: 1;
 }
 
-img.editie_thumb {
+img.card-img {
     width: 100%;
 }
 
