@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta content="text/html; charset=utf-8">
-    <style>
-      table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        min-height: 1em;
-      }
-    </style>
-  </head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo CSSLIB.'/editii_cards.css'; ?>" >
+</head>
 
-  <body>
-    <table>
-      <thead>
-        <tr>
-          <?php
-            foreach ($tabelHead as $colKey => $colValue) echo "<th>$colKey</th>";
-          ?>
-        </tr>
-      </thead>
+<body>
+    <div>
+        <?php echo isset($revisteCards) ? $revisteCards : "" ?>
+    </div>
 
-      <tbody>
+<table>
+    <thead>
+    <tr>
+        <?php foreach ($tabelHead as $colKey => $colValue) echo "<th>$colKey</th>";?>
+    </tr>
+    </thead>
+
+    <tbody>
         <?php echo $tabelBody ?>
-      </tbody>
-    </table>
-  </body>
+    </tbody>
+</table>
+</body>
 </html>

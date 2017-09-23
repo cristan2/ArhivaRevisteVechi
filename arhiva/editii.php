@@ -6,7 +6,7 @@ require_once HELPERS . "/h_images.php";
 
 $revistaId = $_GET["revista"];
 
-$toateEditiile = $db->query("
+$editiiDbResult = $db->query("
     SELECT r.revista_nume, e.*
     FROM editii e
     LEFT JOIN reviste r
@@ -29,7 +29,19 @@ $tabelHead = array(
                                                       getColData($row, 'editie_id'));}
     );
 
-$tabelBody = buildRowsDinamic($toateEditiile, $tabelHead);
+$tabelBody = buildRowsDinamic($editiiDbResult, $tabelHead);
+
+$revisteCards = array(
+    "An"        => function ($row) {return getColData($row, 'an');},
+    "Luna"      => function ($row) {return getColData($row, 'luna');},
+    "Imagine"   => function ($row) {return makeImgUrl(getColData($row, 'revista_nume'),
+                                                      getColData($row, 'an'),
+                                                      getColData($row, 'luna'),
+                                                      1,
+                                                      getColData($row, 'editie_id'));}
+);
+
+$revisteCards = buildCards($editiiDbResult, $revisteCards);
 
 include_once TEMPL . "/tpl_tabel.php";
 
@@ -46,5 +58,5 @@ function makeImgUrl($nume_revista, $an, $luna, $pgNo, $editieId) {
     $imgThumbSrc = getImageThumbPath($imgDir, $baseImgName);
     $targetLink = ARHIVA."/articole.php?editie=$editieId";
 
-    return getImageWithLink($imgThumbSrc, $targetLink);
+    return getImageWithLink($imgThumbSrc, $targetLink, "editie_thumb");
 }

@@ -15,6 +15,24 @@ function buildRowsDinamic($dbResultSet, $tabelHead) {
     return $allRows;
 }
 
+function buildCards($dbResultSet, $divsHead) {
+    $allDivs = "";
+
+    while ($row = $dbResultSet->fetchArray(SQLITE3_ASSOC)) {
+        $currentDiv = "<div class = 'inlineDiv'>";
+        $an = $divsHead['An']($row);
+        $luna = $divsHead['Luna']($row);
+        $imagine = $divsHead['Imagine']($row);
+
+        $currentDiv .= $imagine;
+        $currentDiv .= "<p>$an-$luna</p>";
+
+        $currentDiv .= "</div>";
+        $allDivs .= $currentDiv . PHP_EOL;
+    }
+    return $allDivs;
+}
+
 function getColData($row, $colName) {
     return $row[$colName];
 }
