@@ -1,8 +1,10 @@
 <?php
 
+// TODO refactor names
+
 // TODO scoate html
 /**
- * returneaza link html catre destinatia specificata
+ * Construieste link html catre destinatia specificata
  */
 function getImageWithLink($displayedImagePath, $targetLink, ...$htmlClasses) {
     if (! file_exists($displayedImagePath)) return "–" /*"n/a"*/ ;
@@ -15,7 +17,24 @@ function getImageWithLink($displayedImagePath, $targetLink, ...$htmlClasses) {
 }
 
 /**
- * returneaza numele imaginii fara extensie
+ * Construieste calea catre o imagine
+ */
+function getImage($numeRevista, $an, $luna, $pagina) {
+    $imageDir      = getImageDir($numeRevista, $an, $luna);
+    $imageBaseName = getBaseImageName($numeRevista, $an, $luna, $pagina);
+    return _getImagePath($imageDir, $imageBaseName);
+}
+
+/**
+ * Construieste calea catre o imagine
+ * (ex img/level/1999/12/Level199912002.jpg)
+ */
+function _getImagePath($imageDir, $imageBaseName) {
+    return $imageDir."/".$imageBaseName.".jpg";
+}
+
+/**
+ * Construieste numele imaginii fara extensie
  * (ex: 'Level 1999 12 002' fara spatii)
  */
 function getBaseImageName($numeRevista, $an, $luna, $pagina) {
@@ -26,7 +45,7 @@ function getBaseImageName($numeRevista, $an, $luna, $pagina) {
 }
 
 /**
- * returneaza calea catre directorul imaginilor unei reviste
+ * Construieste calea catre directorul imaginilor unei reviste
  * (ex img/level/1999/12)
  */
 function getImageDir($numeRevista, $an, $luna) {
@@ -34,15 +53,7 @@ function getImageDir($numeRevista, $an, $luna) {
 }
 
 /**
- * returneaza calea catre o imagin
- * (ex img/level/1999/12/Level199912002.jpg)
- */
-function getImagePath($imageDir, $imageBaseName) {
-    return $imageDir."/".$imageBaseName.".jpg";
-}
-
-/**
- * returneaza calea catre thumbnailul unei imagini
+ * Construieste calea catre thumbnailul unei imagini
  * (ex img/level/1999/12/th/Level199912002_th.jpg)
  */
 function getImageThumbPath($imageDir, $imageBaseName) {
@@ -50,7 +61,7 @@ function getImageThumbPath($imageDir, $imageBaseName) {
 }
 
 /**
- * returneaza numele paginii cu 3 cifre
+ * Construieste numele paginii cu 3 cifre
  * (ex: 3 -> 003, 24 -> 024))
  */
 function getPaddedPage($pgNo) {
@@ -58,7 +69,7 @@ function getPaddedPage($pgNo) {
 }
 
 /**
- * returneaza numele lunii cu 2 cifre
+ * Construieste numele lunii cu 2 cifre
  * (ex: 2 -> 02)
  */
 function getPaddedMonth($luna) {

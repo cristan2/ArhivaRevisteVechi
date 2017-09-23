@@ -36,6 +36,9 @@ include_once TEMPL . "/tpl_tabel.php";
 
 /* --- internals --- */
 
+/*
+ * Construieste thumbnail cu link catre revista
+ */
 function makeImgUrl($nume_revista, $an, $luna, $pgNo, $editieId) {
     $baseImgName = getBaseImageName($nume_revista, $an, $luna, $pgNo);
     $imgDir = getImageDir($nume_revista, $an, $luna);

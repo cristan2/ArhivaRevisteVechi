@@ -23,7 +23,14 @@
         }
 
         img.minithumb {
-            width: 7%;
+            border: 1px solid black;
+            max-width: 50px;
+            min-width: 20px;
+        }
+
+        img.paginafull {
+            width: 100%;
+            max-width: 600px;
         }
 
         table, th, td {
@@ -40,9 +47,9 @@
             <h1>Div 1</h1>
             <table>
                 <thead>
-                    <tr>
-                        <?php foreach ($tabelHead as $colKey => $colValue) echo "<th>$colKey</th>"; ?>
-                    </tr>
+                <tr>
+                    <?php foreach ($tabelHead as $colKey => $colValue) echo "<th>$colKey</th>"; ?>
+                </tr>
                 </thead>
 
                 <tbody>
@@ -51,7 +58,7 @@
             </table>
         </div>
         <div class="col imagini">
-            <h1>Div 2</h1>
+            <img class = "paginafull" src = "<?php echo $paginaCurentaImagePath ?>" />
         </div>
     </div>
 </body>
