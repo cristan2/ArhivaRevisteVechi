@@ -1,0 +1,42 @@
+
+/* --- divs --- */
+
+.col {
+    border: 2px solid black;
+    display: inline-block;
+    vertical-align: top;
+    min-height: 700px;
+}
+
+.cuprins {
+    width: 50%;
+    overflow-y: scroll;
+}
+
+.imagini {
+    width: 40%;
+    /*background-color:#4f443a;*/
+}
+
+
+/* --- imagini --- */
+
+img.minithumb {
+    border: 1px solid black;
+    max-width: 50px;
+    min-width: 20px;
+}
+
+img.paginafull {
+    width: 100%;
+    max-width: 600px;
+}
+
+
+/* --- tabele --- */
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    min-height: 1em;
+}
