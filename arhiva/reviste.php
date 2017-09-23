@@ -3,8 +3,9 @@
 //DEFINE("ROOT", "..");
 //require_once(RESOURCES . "/config.php");
 require_once HELPERS . "/h_tables.php";
+require_once HELPERS . "/h_html.php";
 
-$toaterevistele = $db->query("
+$revisteDbResult = $db->query("
     SELECT rev.*, ed.cnt
     FROM reviste rev
     LEFT JOIN (
@@ -16,15 +17,16 @@ $toaterevistele = $db->query("
     GROUP BY rev.revista_id
   ");
 
-$tabelHead = array(
-    "Nume"          => function ($row) {return getColData($row, 'revista_nume');},
-    "Editii Arhiva" => function ($row) {return makeEditiiInfo(getColData($row, 'cnt'),
-                                                              getColData($row, 'aparitii'));},
-    "Coperta"       => function ($row) {return makeImgUrl(getNumeFisier(getColData($row, 'revista_nume')),
-                                                          getColData($row, 'revista_id'));}
+$revisteCardRecipe = array(
+    "Titlu"       => function ($row) {return getColData($row, 'revista_nume');},
+    "Subtitlu"    => function ($row) {return makeEditiiInfo(getColData($row, 'cnt'),
+                                                            getColData($row, 'aparitii'));},
+    "Imagine"     => function ($row) {return makeImgUrl(getNumeFisier(getColData($row, 'revista_nume')),
+                                                                      getColData($row, 'revista_id'));},
+    "HtmlClasses" => array("inlineDiv")
 );
 
-$tabelBody = buildRowsDinamic($toaterevistele, $tabelHead);
+$revisteCards = buildCards($revisteDbResult, $revisteCardRecipe);
 
 include_once TEMPL . "/tpl_tabel.php";
 
@@ -44,7 +46,8 @@ function makeEditiiInfo($countArhiva, $countTotal) {
     return "$countArhiva / $countTotal";
 }
 
+// TODO scoate html
 function makeImgUrl($imagePath, $revistaId) {
     $targetLink = ARHIVA . "/editii.php" . "?revista=$revistaId";
-    return "<a href=\"$targetLink\"><img src=\"$imagePath\" alt=\"Image\" style = \"max-width:20%\"/></a>";
+    return "<a href='$targetLink'><img src='$imagePath' alt='Image' style = 'max-width:20%'/></a>";
 }

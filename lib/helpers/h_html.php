@@ -5,3 +5,8 @@ function getBaseUrl() {
     $urlParts = explode("?", $urlWithParams, 2);
     return $urlParts[0];
 }
+
+function getClassList($classList) {
+    if (empty($classList)) return "";
+    else return " class = '".implode(" ", $classList)."' ";
+}

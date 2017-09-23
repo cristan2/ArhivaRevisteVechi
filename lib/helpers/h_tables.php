@@ -15,19 +15,18 @@ function buildRowsDinamic($dbResultSet, $tabelHead) {
     return $allRows;
 }
 
-function buildCards($dbResultSet, $divsHead) {
+function buildCards($dbResultSet, $divRecipe) {
     $allDivs = "";
-
     while ($row = $dbResultSet->fetchArray(SQLITE3_ASSOC)) {
-        $currentDiv = "<div class = 'inlineDiv'>";
-        $an = $divsHead['An']($row);
-        $luna = $divsHead['Luna']($row);
-        $imagine = $divsHead['Imagine']($row);
+        $currentDiv = "<div".getClassList($divRecipe['HtmlClasses']) .">";
 
-        $currentDiv .= $imagine;
-        $currentDiv .= "<p>$an-$luna</p>";
+        $titluCard    = "<h1>{$divRecipe['Titlu']($row)}</h1>";
+        $subtitluCard = "<h2>{$divRecipe['Subtitlu']($row)}</h2>";
+        $imagineCard  = $divRecipe['Imagine']($row);
 
+        $currentDiv .= $imagineCard . $titluCard . $subtitluCard;
         $currentDiv .= "</div>";
+
         $allDivs .= $currentDiv . PHP_EOL;
     }
     return $allDivs;

@@ -8,6 +8,11 @@ div.inlineDiv {
     text-align: center;
 }
 
+div.inlineDiv h1,h2 {
+    font-size: 1em;
+    line-height: 1;
+}
+
 img.editie_thumb {
     width: 100%;
 }
