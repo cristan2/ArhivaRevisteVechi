@@ -12,7 +12,7 @@ $paginaCurentaNr = "1";
 if (isset($_GET['pagina'])) $paginaCurentaNr = $_GET['pagina'];
 
 $editieFromDb = $db->query("
-    SELECT r.revista_nume, e.an, e.luna FROM editii e
+    SELECT r.revista_nume, e.an, e.luna, e.numar FROM editii e
     LEFT JOIN reviste r
     USING ('revista_id')
     WHERE e.editie_id = $editieId
@@ -20,13 +20,17 @@ $editieFromDb = $db->query("
 
 $editie = $editieFromDb->fetchArray(SQLITE3_ASSOC);
 $editie = array(
-    'id'   => $editieId,
-    "nume" => getColData($editie, "revista_nume"),
-    "an"   => getColData($editie, "an"),
-    "luna" => getColData($editie, "luna"),
+    'id'    => $editieId,
+    "nume"  => getColData($editie, "revista_nume"),
+    "an"    => getColData($editie, "an"),
+    "luna"  => getColData($editie, "luna"),
+    "numar" => getColData($editie, "numar"),
 );
 
 $paginaCurentaImagePath = getImage($editie['nume'], $editie['an'], $editie['luna'], $paginaCurentaNr);
+
+$titluEditieCurenta = "{$editie['nume']} nr. {$editie['numar']}";
+$lunaEditieCurenta = "(". convertLuna($editie['luna']) ." {$editie['an']})";
 
 /* --- cuprins articole --- */
 $toateArticolele = $db->query("
@@ -83,4 +87,23 @@ function extractPagesForArticle($startPage, $pageCount) {
 
 function getPaginaCurentaImage($numeRevista, $an, $luna, $pagina) {
     return getImage($numeRevista, $an, $luna, $pagina);
+}
+
+// TODO extract to helper class
+function convertLuna($lunaNumar) {
+    switch ($lunaNumar) {
+        case 1:  return "ianuarie";
+        case 2:  return "februarie";
+        case 3:  return "martie";
+        case 4:  return "aprilie";
+        case 5:  return "mai";
+        case 6:  return "iunie";
+        case 7:  return "iulie";
+        case 8:  return "august";
+        case 9:  return "septembrie";
+        case 10: return "octombrie";
+        case 11: return "noiembrie";
+        case 12: return "decembrie";
+    }
+    return $lunaNumar;
 }

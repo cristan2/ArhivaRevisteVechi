@@ -7,8 +7,9 @@
 
 <body>
     <div>
+        <h1><?php echo $titluEditieCurenta?></h1>
+        <h2><?php echo $lunaEditieCurenta?></h2>
         <div class="col cuprins">
-            <h1>Div 1</h1>
             <table>
                 <thead>
                 <tr>
