@@ -6,13 +6,44 @@ div.col {
     vertical-align: top;
     max-height: 800px;
     margin: 1em;
-
 }
 
 div.cuprins {
     width: 50%;
     overflow-y: scroll;
     font-family: 'Roboto Condensed', sans-serif;
+}
+
+div.articol-card-row {
+    width: 100%;
+    margin: 0.3em;
+    box-shadow: 0 4px 8px grey;
+    background: rgb(240,240,240);
+}
+
+div.articol-card-cell {
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+}
+
+div.articol-card-pagina {
+    width: 5%;
+    text-align: center;
+}
+div.articol-card-rubrica {
+    width: 10%;
+}
+div.articol-card-titlu {
+    width: 40%;
+    font-weight: bold;
+}
+div.articol-card-autor {
+    width: 15%;
+}
+div.articol-card-pagini-count {
+    width: 30%;
+    min-width: 50px;
 }
 
 div.imagini {
@@ -30,6 +61,7 @@ img.minithumb {
     border: 1px solid black;
     max-width: 50px;
     min-width: 20px;
+    vertical-align: middle;
 }
 
 img.paginafull {

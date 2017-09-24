@@ -11,17 +11,7 @@
         <h1><?php echo $titluEditieCurenta?></h1>
         <h2><?php echo $lunaEditieCurenta?></h2>
         <div class="col cuprins">
-            <table>
-                <thead>
-                <tr>
-                    <?php foreach ($tabelHead as $colKey => $colValue) echo "<th>$colKey</th>"; ?>
-                </tr>
-                </thead>
-
-                <tbody>
-                    <?php echo $tabelBody ?>
-                </tbody>
-            </table>
+            <?php echo $articoleCardRows ?>
         </div>
         <div class="col imagini">
             <div class = "main-img-nav"><p>Aici butoane nav pentru imagini</p></div>

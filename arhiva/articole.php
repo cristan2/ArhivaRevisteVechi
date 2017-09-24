@@ -33,7 +33,7 @@ $titluEditieCurenta = "{$editie['nume']} nr. {$editie['numar']}";
 $lunaEditieCurenta = "(". convertLuna($editie['luna']) ." {$editie['an']})";
 
 /* --- cuprins articole --- */
-$toateArticolele = $db->query("
+$articoleDbResult = $db->query("
     SELECT a.*, e.an, e.luna
     FROM articole a
     LEFT JOIN editii e
@@ -41,16 +41,16 @@ $toateArticolele = $db->query("
     WHERE editie_id = $editieId
 ");
 
-$tabelHead = array(
-    "Pg."       => function ($row) {return getColData($row, "pg_toc");},
-    "Rubrica"   => function ($row) {return getColData($row, "rubrica");},
-    "Titlu"     => function ($row) {return getColData($row, "titlu");},
-    "Autor"     => function ($row) {return getColData($row, "autor");},
-    "Pagini"    => function ($row) {return extractThumbPages(getColData($row, 'pg_toc'),
+$articoleCardRecipe = array(
+    "pagina"        => function ($row) {return getColData($row, "pg_toc");},
+    "rubrica"       => function ($row) {return getColData($row, "rubrica");},
+    "titlu"         => function ($row) {return getColData($row, "titlu");},
+    "autor"         => function ($row) {return getColData($row, "autor");},
+    "pagini-count"  => function ($row) {return extractThumbPages(getColData($row, 'pg_toc'),
                                                                   getColData($row, 'pg_count'));}
     );
 
-$tabelBody = buildRowsDinamic($toateArticolele, $tabelHead);
+$articoleCardRows = buildCardRows($articoleDbResult, $articoleCardRecipe);
 
 
 /* --- afisare in pagina --- */

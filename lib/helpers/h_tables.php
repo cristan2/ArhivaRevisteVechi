@@ -1,20 +1,12 @@
 <?php
 
 // TODO scoate html
-function buildRowsDinamic($dbResultSet, $tabelHead) {
-    $allRows = "";
 
-    while ($row = $dbResultSet->fetchArray(SQLITE3_ASSOC)) {
-        $currentRow = "<tr>";
-        foreach($tabelHead as $colNume => $colValue) {
-            $currentRow .= getTd($colValue($row));
-        }
-        $currentRow .= "</tr>";
-        $allRows .= $currentRow . PHP_EOL;
-    }
-    return $allRows;
-}
-
+/**
+ * Construieste carduri reviste
+ * Cu 3 sectiuni: Imagine, Titlu si Subtitlu
+ * In plus, primeste un array cu clasele CSS
+ */
 function buildCards($dbResultSet, $divRecipe) {
     $allDivs = "";
     while ($row = $dbResultSet->fetchArray(SQLITE3_ASSOC)) {
@@ -32,12 +24,24 @@ function buildCards($dbResultSet, $divRecipe) {
     return $allDivs;
 }
 
-function getColData($row, $colName) {
-    return $row[$colName];
+function buildCardRows($dbResultSet, $divRecipe) {
+    $allRows = "<div class = 'articol-card-container'>" . PHP_EOL;
+
+    while ($row = $dbResultSet->fetchArray(SQLITE3_ASSOC)) {
+        $currentRow = "<div class = 'articol-card-row'>" . PHP_EOL;
+
+        foreach($divRecipe as $colNume => $colValue) {
+            $currentRow .= "<div class = 'articol-card-cell articol-card-$colNume'>";
+            $currentRow .= $colValue($row);
+            $currentRow .= "</div>";      // end div articol-card-cell
+        }
+        $currentRow .= "</div>";          // end div articol-card-row
+        $allRows .= $currentRow . PHP_EOL;
+    }
+    return $allRows . "</div>" . PHP_EOL; // end div articol-card-container
 }
 
-// TODO scoate html
-function getTd($cellValue) {
-    return "<td>$cellValue</td>";
+function getColData($row, $colName) {
+    return $row[$colName];
 }
 
