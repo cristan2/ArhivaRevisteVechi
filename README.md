@@ -1,28 +1,28 @@
 # ArhivaRevisteVechi
 
 ## Baza de date
-E funda?ia site-ului ?i are un proiect dedicat: https://github.com/adakaleh/revistevechi-db
+E fundaţia site-ului şi are un proiect dedicat: https://github.com/adakaleh/revistevechi-db
 
 ## Proiecte conexe
-[Reviste Vechi Wiki](https://revistevechi.awiki.org/doku.php?id=index): un wiki dedicat revistelor vechi, plec�nd de la aceea?i baz? de date.
+[Reviste Vechi Wiki](https://revistevechi.awiki.org/doku.php?id=index): un wiki dedicat revistelor vechi, plecând de la aceeaşi bază de date.
 
 ## Road map
 
 ### General
-* Header vizibil �n toate paginile, cu op?iuni de c?utare.
-* Separare mai bun? MCV
+* Header vizibil în toate paginile, cu opţiuni de căutare.
+* Separare mai bună MCV
 * Clase
 
-### Reviste * edi?ii
-* Copert? default pentru toate
+### Reviste * ediţii
+* Copertă default pentru toate
 
 ### Articole
 * Navigator imagini + titlu deasupra la page viewer
-* Links `<` ?i `>` �n header pentru a trece la urm?toarea revist?
-* Numele autorilor sunt linkuri c?tre un search pentru toate articolele acelui autor.
-* Fiecare rand/card e link c?tre articol (deschide prima pagin?)
-* Separ? query-urile �n fi?iere .php separate
-* AJAX pentru �nc?rcarea imaginilor, sau
+* Links `<` şi `>` în header pentru a trece la următoarea revistă
+* Numele autorilor sunt linkuri către un search pentru toate articolele acelui autor.
+* Fiecare rand/card e link către articol (deschide prima pagină)
+* Separă query-urile în fişiere .php separate
+* AJAX pentru încărcarea imaginilor, sau
 * Modul mobile-friendly pentru o galerie de imagini la fiecare articol
 
 ### Search
@@ -35,4 +35,4 @@ De implementat
     - reviste cu pagini lipsa
     - scanate necorespunzator
   
-* Download CSV baza de date, eventual cu op?iuni de personalizare
+* Download CSV baza de date, eventual cu opţiuni de personalizare
