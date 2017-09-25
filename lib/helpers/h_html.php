@@ -12,6 +12,5 @@ function getClassList($classList) {
 }
 
 function getEditieUrl($editieId) {
-    if ($editieId <= 1) $editieId = 1;
     return ARHIVA."/articole.php?editie=$editieId";
 }

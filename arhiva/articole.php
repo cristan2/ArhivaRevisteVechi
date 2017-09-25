@@ -5,8 +5,6 @@ require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_html.php";
 
-include_once TEMPL . "/tpl_header_home_link.php";
-
 $editieId = $_GET["editie"];
 
 /* --- info revista + pagina curenta --- */
