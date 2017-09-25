@@ -15,9 +15,10 @@ div.cuprins {
 }
 
 div.articol-card-row {
-    width: 100%;
+    width: 99%;
+    height: 2.5em;
     margin: 0.3em;
-    box-shadow: 0 4px 8px grey;
+    box-shadow: 0 2px 4px grey;
     background: rgb(240,240,240);
 }
 
@@ -31,23 +32,34 @@ div.articol-card-pagina {
     width: 5%;
     text-align: center;
 }
+
 div.articol-card-rubrica {
     width: 10%;
 }
+
 div.articol-card-titlu {
     width: 40%;
     font-weight: bold;
 }
+
 div.articol-card-autor {
     width: 15%;
 }
+
 div.articol-card-pagini-count {
     width: 30%;
     min-width: 50px;
 }
 
-div.imagini {
+div.main-img-container {
     width: 40%;
+    height: 100%;
+}
+div.main-img-nav {
+    width: 100%;
+}
+div.main-img {
+    height: 750px;
 }
 
 /* --- text --- */
@@ -59,14 +71,18 @@ h1, h2 {
 
 img.minithumb {
     border: 1px solid black;
-    max-width: 50px;
-    min-width: 20px;
+/*    max-width: 50px;
+    min-width: 20px;*/
+    height: 100%;
     vertical-align: middle;
 }
 
-img.paginafull {
-    width: 100%;
-    object-fit: contain;
+img.fullthumb {
+    /*width: 100%;*/
+/*    max-height: 100%;*/
+/*    object-fit: contain;*/
+    height: 100%;
+    vertical-align: middle;
 }
 
 

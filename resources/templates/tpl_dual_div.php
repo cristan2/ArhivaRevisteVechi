@@ -13,13 +13,13 @@
         <div class="col cuprins">
             <?php echo $articoleCardRows ?>
         </div>
-        <div class="col imagini">
+        <div class="col main-img-container">
             <div class = "main-img-nav"><p>Aici butoane nav pentru imagini</p></div>
-            <div>
+            <div class = "main-img">
                 <?php
                     echo "<a href='$paginaCurentaImagePath'><img
                               src='$paginaCurentaImagePath'
-                              class = 'paginafull' alt='Image' /></a>";
+                              class = 'fullthumb' alt='Image' /></a>";
                 ?>
             </div>
         </div>
