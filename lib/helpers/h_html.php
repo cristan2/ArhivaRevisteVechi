@@ -10,3 +10,8 @@ function getClassList($classList) {
     if (empty($classList)) return "";
     else return " class = '".implode(" ", $classList)."' ";
 }
+
+function getEditieUrl($editieId) {
+    if ($editieId <= 1) $editieId = 1;
+    return ARHIVA."/articole.php?editie=$editieId";
+}

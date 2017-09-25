@@ -1,15 +1,36 @@
 
+/* --- override defaults --- */
+* {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+/* --- divs --- */
+
+div.home-link-container {
+    background-color: brown;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.home-link {
+    text-align: left;
+    font-size: 1.5em;
+}
+
 div.card-container {
-    width: 50%;
+    width: 70%;
     margin: 0 auto;
 }
 
 div.inline-div {
     display: inline-block;
     width: 15%;
+    max-width: 200px;
     margin: 0.5em;
     box-shadow: 0 4px 8px grey;
-    font-family: 'Roboto Condensed', sans-serif;
     text-align: center;
     vertical-align: top;
 }

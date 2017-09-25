@@ -1,5 +1,46 @@
 
+/* --- override defaults --- */
+
+* {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
 /* --- divs --- */
+
+div.home-link-container {
+    background-color: brown;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.home-link {
+    text-align: left;
+    font-size: 1.5em;
+}
+
+div.header-nav-container {
+    background-color: lightgray;
+    display: flex;
+    justify-content:center;
+    align-items: stretch;
+}
+
+div.header-nav-elem {
+    height: 100%;
+    margin: auto;
+}
+
+div.header-nav-current {
+    width: 40%;
+    background-color: darkgrey;
+}
+
+div.header-nav-prev, div.header-nav-next {
+    width: 25%;
+}
 
 div.col {
     display: inline-block;
@@ -11,7 +52,6 @@ div.col {
 div.cuprins {
     width: 50%;
     overflow-y: scroll;
-    font-family: 'Roboto Condensed', sans-serif;
 }
 
 div.articol-card-row {
@@ -55,7 +95,9 @@ div.main-img-container {
     width: 40%;
     height: 100%;
 }
+
 div.main-img-nav {
+    background: grey;
     width: 100%;
 }
 div.main-img {

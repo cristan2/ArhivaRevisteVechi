@@ -5,6 +5,8 @@ require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_html.php";
 
+include_once TEMPL . "/tpl_header_home_link.php";
+
 $editieId = $_GET["editie"];
 
 /* --- info revista + pagina curenta --- */
@@ -18,19 +20,23 @@ $editieFromDb = $db->query("
     WHERE e.editie_id = $editieId
 ");
 
-$editie = $editieFromDb->fetchArray(SQLITE3_ASSOC);
-$editie = array(
+$editiaCurenta = $editieFromDb->fetchArray(SQLITE3_ASSOC);
+$editiaCurenta = array(
     'id'    => $editieId,
-    "nume"  => getColData($editie, "revista_nume"),
-    "an"    => getColData($editie, "an"),
-    "luna"  => getColData($editie, "luna"),
-    "numar" => getColData($editie, "numar"),
+    "nume"  => getColData($editiaCurenta, "revista_nume"),
+    "an"    => getColData($editiaCurenta, "an"),
+    "luna"  => getColData($editiaCurenta, "luna"),
+    "numar" => getColData($editiaCurenta, "numar"),
 );
 
-$paginaCurentaImagePath = getImage($editie['nume'], $editie['an'], $editie['luna'], $paginaCurentaNr);
+$paginaCurentaImagePath = getImage($editiaCurenta['nume'], $editiaCurenta['an'], $editiaCurenta['luna'], $paginaCurentaNr);
 
-$titluEditieCurenta = "{$editie['nume']} nr. {$editie['numar']}";
-$lunaEditieCurenta = "(". convertLuna($editie['luna']) ." {$editie['an']})";
+$titluEditieCurenta = "{$editiaCurenta['nume']} nr. {$editiaCurenta['numar']}";
+$lunaEditieCurenta = "(". convertLuna($editiaCurenta['luna']) ." {$editiaCurenta['an']})";
+
+// TODO: redo, nu e ok, id-urile editiilor nu sunt neaparat consecutive
+$navLinkNext = getEditieUrl($editieId+1);
+$navLinkPrev = getEditieUrl($editieId-1);
 
 /* --- cuprins articole --- */
 $articoleDbResult = $db->query("
@@ -55,7 +61,7 @@ $articoleCardRows = buildCardRows($articoleDbResult, $articoleCardRecipe);
 
 /* --- afisare in pagina --- */
 
-include_once HTMLLIB . "/tpl_dual_div.html";
+include_once HTMLLIB . "/tpl_dual_div.php";
 
 
 /* --- internals --- */
@@ -65,20 +71,20 @@ include_once HTMLLIB . "/tpl_dual_div.html";
  * Returneaza un string cu html pentru afisare in tabel
  */
 function extractThumbPages($startPage, $pageCount) {
-    global $editie;
-    $imgDir = getImageDir($editie['nume'], $editie['an'],$editie['luna']);
+    global $editiaCurenta;
+    $imgDir = getImageDir($editiaCurenta['nume'], $editiaCurenta['an'],$editiaCurenta['luna']);
 
     $pageThumbLinks = "";
 
     for ($pgIndex = 0; $pgIndex < $pageCount; $pgIndex++) {
         $thisPageNo = $startPage + $pgIndex;
-        $imageBaseName = getBaseImageName($editie['nume'],
-                                            $editie['an'],
-                                            $editie['luna'],
+        $imageBaseName = getBaseImageName($editiaCurenta['nume'],
+                                            $editiaCurenta['an'],
+                                            $editiaCurenta['luna'],
                                             $thisPageNo);
         $imageThumb = getImageThumbPath($imgDir, $imageBaseName);
 
-        $destinationLink = getBaseUrl() . "?editie={$editie['id']}" . "&pagina=$thisPageNo";
+        $destinationLink = getBaseUrl() . "?editie={$editiaCurenta['id']}" . "&pagina=$thisPageNo";
 
         $pageThumbLinks .= getImageWithLink($imageThumb, $destinationLink, "minithumb")."  ";
     }

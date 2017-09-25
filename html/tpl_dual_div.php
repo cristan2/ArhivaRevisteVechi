@@ -7,9 +7,28 @@
 </head>
 
 <body>
-    <div>
-        <h1><?php echo $titluEditieCurenta?></h1>
-        <h2><?php echo $lunaEditieCurenta?></h2>
+    <div class = "home-link-container">
+        <h2 class = "home-link">
+            <?php
+                if (isset($homeLink)) echo "<a href='$homeLink'>ARHIVA REVISTE VECHI</a>";
+                else echo "ARHIVA REVISTE VECHI";
+            ?>
+        </h2>
+    </div>
+    <div class = "header-nav-container">
+        <div class = "header-nav-elem header-nav-prev">
+            <h2><?php echo "<a href='$navLinkPrev'>Prev</a>"; ?></h2>
+        </div>
+        <div class = "header-nav-current">
+            <h1><?php echo $titluEditieCurenta?></h1>
+            <h2><?php echo $lunaEditieCurenta?></h2>
+        </div>
+        <div class = "header-nav-elem header-nav-next">
+            <h2><?php echo "<a href='$navLinkNext'>Next</a>"; ?></h2>
+        </div>
+    </div>
+
+    <div class = "column-container">
         <div class="col cuprins">
             <?php echo $articoleCardRows ?>
         </div>

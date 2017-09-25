@@ -5,6 +5,8 @@ require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_html.php";
 
+include_once TEMPL . "/tpl_header_home_link.php";
+
 $revistaId = $_GET["revista"];
 
 $editiiDbResult = $db->query("
@@ -44,7 +46,8 @@ function makeImgUrl($nume_revista, $an, $luna, $pgNo, $editieId) {
     $imgDir = getImageDir($nume_revista, $an, $luna);
 
     $imgThumbSrc = getImageThumbPath($imgDir, $baseImgName);
-    $targetLink = ARHIVA."/articole.php?editie=$editieId";
+//    $targetLink = ARHIVA."/articole.php?editie=$editieId";
+    $targetLink = getEditieUrl($editieId);
 
     return getImageWithLink($imgThumbSrc, $targetLink, "card-img");
 }
