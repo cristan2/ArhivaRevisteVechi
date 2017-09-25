@@ -31,7 +31,7 @@ $revisteCardRecipe = array(
 
 $revisteCards = buildCards($editiiDbResult, $revisteCardRecipe);
 
-include_once TEMPL . "/tpl_tabel.php";
+include_once HTMLLIB . "/tpl_tabel.html";
 
 
 /* --- internals --- */

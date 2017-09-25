@@ -55,7 +55,7 @@ $articoleCardRows = buildCardRows($articoleDbResult, $articoleCardRecipe);
 
 /* --- afisare in pagina --- */
 
-include_once TEMPL . "/tpl_dual_div.php";
+include_once HTMLLIB . "/tpl_dual_div.html";
 
 
 /* --- internals --- */
