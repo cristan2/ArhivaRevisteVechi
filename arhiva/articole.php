@@ -4,6 +4,7 @@ require("../resources/config.php");
 require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_html.php";
+require_once HELPERS . "/h_misc.php";
 
 $editieId = $_GET["editie"];
 
@@ -35,6 +36,7 @@ $lunaEditieCurenta = "(". convertLuna($editiaCurenta['luna']) ." {$editiaCurenta
 // TODO: redo, nu e ok, id-urile editiilor nu sunt neaparat consecutive
 $navLinkNext = getEditieUrl($editieId+1);
 $navLinkPrev = getEditieUrl($editieId-1);
+// TODO: trebuie sa existe si un max(editie_id) pentru disable la navLinkNext
 
 /* --- cuprins articole --- */
 $articoleDbResult = $db->query("
@@ -91,23 +93,4 @@ function extractThumbPages($startPage, $pageCount) {
 
 function getPaginaCurentaImage($numeRevista, $an, $luna, $pagina) {
     return getImage($numeRevista, $an, $luna, $pagina);
-}
-
-// TODO extract to helper
-function convertLuna($lunaNumar) {
-    switch ($lunaNumar) {
-        case 1:  return "ianuarie";
-        case 2:  return "februarie";
-        case 3:  return "martie";
-        case 4:  return "aprilie";
-        case 5:  return "mai";
-        case 6:  return "iunie";
-        case 7:  return "iulie";
-        case 8:  return "august";
-        case 9:  return "septembrie";
-        case 10: return "octombrie";
-        case 11: return "noiembrie";
-        case 12: return "decembrie";
-    }
-    return $lunaNumar;
 }

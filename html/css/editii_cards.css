@@ -45,7 +45,15 @@ img.card-img {
 }
 
 table, th, td {
+    text-align: center;
     border: 1px solid black;
     border-collapse: collapse;
     min-height: 1em;
+    margin: 1em;
+    padding: 0.2em;
+}
+
+
+tr.empty-row {
+    background-color: lightgreen;
 }

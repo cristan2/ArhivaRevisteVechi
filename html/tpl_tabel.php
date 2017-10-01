@@ -7,16 +7,10 @@
 </head>
 
 <body>
-    <div class = "home-link-container">
-        <h2 class = "home-link">
-            <?php
-                    if (isset($homeLink)) echo "<a href='$homeLink'>ARHIVA REVISTE VECHI</a>";
-            else echo "ARHIVA REVISTE VECHI";
-            ?>
-        </h2>
-    </div>
+    <?php include TEMPL . "/tpl_header_home_link.php"; ?>
     <div class = "card-container">
         <?php echo isset($revisteCards) ? $revisteCards : "" ?>
+        <?php echo isset($content) ? $content : "" ?>
     </div>
 </body>
 </html>

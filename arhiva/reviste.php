@@ -29,7 +29,7 @@ $revisteCardRecipe = array(
 
 $revisteCards = buildCards($revisteDbResult, $revisteCardRecipe);
 
-include_once HTMLLIB . "/tpl_tabel.html";
+include_once HTMLLIB . "/tpl_tabel.php";
 
 /* --- internals --- */
 

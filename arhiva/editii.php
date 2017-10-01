@@ -5,8 +5,6 @@ require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_html.php";
 
-include_once TEMPL . "/tpl_header_home_link.php";
-
 $revistaId = $_GET["revista"];
 
 $editiiDbResult = $db->query("
@@ -33,7 +31,7 @@ $revisteCardRecipe = array(
 
 $revisteCards = buildCards($editiiDbResult, $revisteCardRecipe);
 
-include_once HTMLLIB . "/tpl_tabel.html";
+include_once HTMLLIB . "/tpl_tabel.php";
 
 
 /* --- internals --- */
