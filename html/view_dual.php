@@ -14,14 +14,7 @@
             <?php echo $articoleCardRows ?>
         </div>
         <div class="col main-img-container">
-            <div class = "main-img-nav"><p>Aici butoane nav pentru imagini</p></div>
-            <div class = "main-img">
-                <?php
-                    echo "<a href='$paginaCurentaImagePath'><img
-                              src='$paginaCurentaImagePath'
-                              class = 'fullthumb' alt='Image' /></a>";
-                ?>
-            </div>
+            <?php include TEMPL . "/tpl_page_viewer.php"; ?>
         </div>
     </div>
 </body>

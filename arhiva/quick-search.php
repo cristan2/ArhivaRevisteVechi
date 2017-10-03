@@ -7,14 +7,14 @@ require_once HELPERS . "/h_html.php";
 require_once HELPERS . "/h_misc.php";
 
 if (!isset($_GET["search"])) {
-    $content = '<a href = "?search=scan-status">Scan status</a>';
+    $pageContent = '<a href = "?search=scan-status">Scan status</a>';
 } else {
     $searchParam = $_GET["search"];
     switch ($searchParam) {
         case "scan-status":
             $dbResult = getScanStatusDbResult();
             $dbFiltered = filterDbResult($dbResult);
-            $content = buildHtmlTableFromArray($dbFiltered);
+            $pageContent = buildHtmlTableFromArray($dbFiltered);
 //            $content = buildDokuWikiTableFromArray($dbFiltered);
     }
 }
@@ -22,7 +22,7 @@ if (!isset($_GET["search"])) {
 
 /* --- afisare in pagina --- */
 
-include_once HTMLLIB . "/tpl_tabel.php";
+include_once HTMLLIB . "/view_simple.php";
 
 
 /* --- internals --- */

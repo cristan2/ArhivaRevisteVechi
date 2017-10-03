@@ -27,9 +27,9 @@ $revisteCardRecipe = array(
     "HtmlClasses" => array("inline-div")
 );
 
-$revisteCards = buildCards($revisteDbResult, $revisteCardRecipe);
+$pageContent = buildCards($revisteDbResult, $revisteCardRecipe);
 
-include_once HTMLLIB . "/tpl_tabel.php";
+include_once HTMLLIB . "/view_simple.php";
 
 /* --- internals --- */
 

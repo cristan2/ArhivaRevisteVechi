@@ -9,8 +9,7 @@
 <body>
     <?php include TEMPL . "/tpl_header_home_link.php"; ?>
     <div class = "card-container">
-        <?php echo isset($revisteCards) ? $revisteCards : "" ?>
-        <?php echo isset($content) ? $content : "" ?>
+        <?php echo isset($pageContent) ? $pageContent : "" ?>
     </div>
 </body>
 </html>
