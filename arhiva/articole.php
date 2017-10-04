@@ -1,10 +1,18 @@
 <?php
+
 DEFINE("ROOT", "..");
 require("../resources/config.php");
 require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_html.php";
 require_once HELPERS . "/h_misc.php";
+
+// load classes
+require_once DB_DIR. "/DbConstants.php";
+require_once LIB . "/Articol.php";
+use ArhivaRevisteVechi\resources\db\DbConstants as DBC;
+use ArhivaRevisteVechi\lib\Articol;
+
 
 $editieId = $_GET["editie"];
 
@@ -39,26 +47,32 @@ $navLinkPrev = getEditieUrl($editieId-1);
 // TODO: trebuie sa existe si un max(editie_id) pentru disable la navLinkNext
 
 /* --- cuprins articole --- */
-$articoleDbResult = $db->query("
-    SELECT a.*, e.an, e.luna
-    FROM articole a
-    LEFT JOIN editii e
-    USING (editie_id)
-    WHERE editie_id = $editieId
-");
+//$articoleDbResult = $db->query("
+//    SELECT a.*, e.an, e.luna
+//    FROM articole a
+//    LEFT JOIN editii e
+//    USING (editie_id)
+//    WHERE editie_id = $editieId
+//");
+
+$articoleDbResult = $db->query(Articol::getRegularDbQuery($editieId));
 
 $articoleCardRecipe = array(
-    "pagina"        => function ($row) {return getColData($row, "pg_toc");},
-    "rubrica"       => function ($row) {return getColData($row, "rubrica");},
-    "titlu"         => function ($row) {return getColData($row, "titlu");},
-    "autor"         => function ($row) {return getColData($row, "autor");},
-    "pagini-count"  => function ($row) {return extractThumbPages(getColData($row, 'pg_toc'),
-                                                                  getColData($row, 'pg_count'));}
+    "pagina"        => function ($row) {return getColData($row, DBC::ART_PG_TOC);},
+    "rubrica"       => function ($row) {return getColData($row, DBC::ART_RUBRICA);},
+    "titlu"         => function ($row) {return getColData($row, DBC::ART_TITLU);},
+    "autor"         => function ($row) {return getColData($row, DBC::ART_AUTOR);},
+    "pagini-count"  => function ($row) {return extractThumbPages(getColData($row, DBC::ART_PG_TOC),
+                                                                  getColData($row, DBC::ART_PG_CNT));}
     );
 
 $articoleCardRows = buildCardRows($articoleDbResult, $articoleCardRecipe);
 
-
+$articoleArray = array();
+while ($dbRow = $articoleDbResult->fetchArray(SQLITE3_ASSOC)) {
+    $articoleArray[] = new Articol($dbRow);
+}
+//var_dump($articoleArray);
 /* --- afisare in pagina --- */
 
 include_once HTMLLIB . "/view_dual.php";

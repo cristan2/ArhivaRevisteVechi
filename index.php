@@ -1,4 +1,6 @@
 <?php
+namespace ArhivaRevisteVechi;
+
 DEFINE ("ROOT"       , ".");
 require(ROOT ."/resources/config.php");
 
