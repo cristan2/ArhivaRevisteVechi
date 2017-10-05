@@ -13,38 +13,19 @@ require_once LIB . "/Articol.php";
 require_once LIB . "/Editie.php";
 use ArhivaRevisteVechi\resources\db\DBC;
 use ArhivaRevisteVechi\lib\Articol;
-use ArhivaRevisteVechi\lib\Editie;
-
 
 $editieId = $_GET["editie"];
 
 
 /* --- info editia curenta --- */
-
-$editiaCurenta = $db->getFirstRowFromResult($db->getEditie($editieId));
-$editiaCurenta = new Editie($editiaCurenta);
-
-// next & prev links
-// TODO: trebuie sa existe si un max(editie_id) pentru disable la navLinkNext
-$prevEditieId = $db->getFirstRowFromResult($db->getEditieIdFromNumar($editiaCurenta->revistaId, ($editiaCurenta->numar) - 1));
-$navLinkPrev = getEditieUrl($prevEditieId[DBC::ED_ID]);
-
-$nextEditieId = $db->getFirstRowFromResult($db->getEditieIdFromNumar($editiaCurenta->revistaId, ($editiaCurenta->numar) + 1));
-$navLinkNext = getEditieUrl($nextEditieId[DBC::ED_ID]);
-
-$titluEditieCurenta = "{$editiaCurenta->numeRevista} nr. {$editiaCurenta->numar}";
-$lunaEditieCurenta = "(". convertLuna($editiaCurenta->luna) ." {$editiaCurenta->an})";
+include_once "articole_bit_editia_curenta.php";
 
 
 /* --- info pagina curenta --- */
-
-$paginaCurentaNr = "1";
-if (isset($_GET['pagina'])) $paginaCurentaNr = $_GET['pagina'];
-$paginaCurentaImagePath = getImage($editiaCurenta, $paginaCurentaNr);
+include_once "articole_bit_pagina_curenta.php";
 
 
 /* --- cuprins articole --- */
-
 $articoleDbResult = $db->getArticoleDinEditie($editieId);
 
 $articoleCardRecipe = array(
@@ -68,7 +49,6 @@ while ($dbRow = $articoleDbResult->fetchArray(SQLITE3_ASSOC)) {
 
 
 /* --- afisare in pagina --- */
-
 include_once HTMLLIB . "/view_dual.php";
 
 
