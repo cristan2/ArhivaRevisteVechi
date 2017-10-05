@@ -8,9 +8,9 @@ require_once HELPERS . "/h_html.php";
 require_once HELPERS . "/h_misc.php";
 
 // load classes
-require_once DB_DIR. "/DbConstants.php";
+require_once DB_DIR. "/DBC.php";
 require_once LIB . "/Articol.php";
-use ArhivaRevisteVechi\resources\db\DbConstants as DBC;
+use ArhivaRevisteVechi\resources\db\DBC;
 use ArhivaRevisteVechi\lib\Articol;
 
 
@@ -20,12 +20,7 @@ $editieId = $_GET["editie"];
 $paginaCurentaNr = "1";
 if (isset($_GET['pagina'])) $paginaCurentaNr = $_GET['pagina'];
 
-$editieFromDb = $db->query("
-    SELECT r.revista_nume, e.an, e.luna, e.numar FROM editii e
-    LEFT JOIN reviste r
-    USING ('revista_id')
-    WHERE e.editie_id = $editieId
-");
+$editieFromDb = $db->getEditie($editieId);
 
 $editiaCurenta = $editieFromDb->fetchArray(SQLITE3_ASSOC);
 $editiaCurenta = array(
@@ -47,15 +42,7 @@ $navLinkPrev = getEditieUrl($editieId-1);
 // TODO: trebuie sa existe si un max(editie_id) pentru disable la navLinkNext
 
 /* --- cuprins articole --- */
-//$articoleDbResult = $db->query("
-//    SELECT a.*, e.an, e.luna
-//    FROM articole a
-//    LEFT JOIN editii e
-//    USING (editie_id)
-//    WHERE editie_id = $editieId
-//");
-
-$articoleDbResult = $db->query(Articol::getRegularDbQuery($editieId));
+$articoleDbResult = $db->getArticoleDinEditie($editieId);
 
 $articoleCardRecipe = array(
     "pagina"        => function ($row) {return getColData($row, DBC::ART_PG_TOC);},
@@ -68,11 +55,13 @@ $articoleCardRecipe = array(
 
 $articoleCardRows = buildCardRows($articoleDbResult, $articoleCardRecipe);
 
+// test
 $articoleArray = array();
 while ($dbRow = $articoleDbResult->fetchArray(SQLITE3_ASSOC)) {
     $articoleArray[] = new Articol($dbRow);
 }
-//var_dump($articoleArray);
+// var_dump($articoleArray);
+// end test
 /* --- afisare in pagina --- */
 
 include_once HTMLLIB . "/view_dual.php";

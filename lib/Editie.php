@@ -1,11 +1,10 @@
 <?php
 
 namespace ArhivaRevisteVechi\lib;
-use ArhivaRevisteVechi\resources\db\DbConstants as DBC;
+use ArhivaRevisteVechi\resources\db\DBC;
 
 class Editie
 {
-
     public $numeRevista, $an, $luna, $numar, $editieId;
 
 
@@ -17,19 +16,4 @@ class Editie
         $this->numar        = $dbRow[DBC::ED_NUMAR];
         $this->editieId     = $dbRow[DBC::ED_ID];
     }
-
-
-    public static function getRegularDbQuery($revistaId)
-    {
-        return "
-            SELECT r.revista_nume, e.*
-            FROM editii e
-            LEFT JOIN reviste r
-            USING ('revista_id')
-            WHERE 1
-            AND e.revista_id = '$revistaId'
-            AND e.tip = 'revista'
-        ";
-    }
-
 }

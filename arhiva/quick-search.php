@@ -12,8 +12,8 @@ if (!isset($_GET["search"])) {
     $searchParam = $_GET["search"];
     switch ($searchParam) {
         case "scan-status":
-            $dbResult = getScanStatusDbResult();
-            $dbFiltered = filterDbResult($dbResult);
+            $dbResult = $db->special_getScanStatus();
+            $dbFiltered = filterScanStatusDbResult($dbResult);
             $pageContent = buildHtmlTableFromArray($dbFiltered);
 //            $content = buildDokuWikiTableFromArray($dbFiltered);
     }
@@ -21,28 +21,14 @@ if (!isset($_GET["search"])) {
 
 
 /* --- afisare in pagina --- */
-
 include_once HTMLLIB . "/view_simple.php";
 
 
 /* --- internals --- */
 
-function getScanStatusDbResult() {
-    global $db;
-    return $db->query("
-        SELECT r.revista_nume, r.aparitii,
-        e.editie_id, e.numar, e.an, e.luna, e.luna_sfarsit, e.nr_pagini, e.scan_info_nr_pg, e.scan_info_pg_lipsa, e.scan_info_observatii,
-        COUNT(a.articol_id) AS nr_articole
-        FROM editii e
-        LEFT JOIN reviste r USING ('revista_id')
-        LEFT JOIN articole a USING ('editie_id')
-        WHERE e.numar <> ''
-		GROUP BY editie_id
-		ORDER BY r.revista_nume, e.an
-    ");
-}
-
-// TODO vezi daca poti s-o refactorizezi
+// TODO de refactorizat
+// TODO use DB constants - acum foloseste
+// col names din $db->special_getScanStatus
 /*
  * Construieste un array de reviste cu probleme de arhivare de tipul
  * array (
@@ -56,7 +42,7 @@ function getScanStatusDbResult() {
  *      "Games4Kids" => array (...)
  * )
  */
-function filterDbResult($dbResult) {
+function filterScanStatusDbResult($dbResult) {
     $filteredDbRows = array();
 
     while ($dbRow = $dbResult->fetchArray(SQLITE3_ASSOC)) {

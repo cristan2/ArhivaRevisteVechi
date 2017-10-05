@@ -15,7 +15,10 @@ DEFINE ("RESOURCES" , ROOT . "/resources");
 DEFINE ("TEMPL"     , RESOURCES ."/templates");
 DEFINE ("IMG"       , RESOURCES ."/img");
 
+// db
 DEFINE ("DB_DIR"    , RESOURCES . "/db");
 DEFINE ("DB_FILE"   , DB_DIR . "/arhiva_reviste_v4.4.db");
 
-$db = new SQLite3(DB_FILE, SQLITE3_OPEN_READONLY) or die;
+require_once DB_DIR . "/DBC.php";
+use ArhivaRevisteVechi\resources\db\DBC;
+$db = new DBC(DB_FILE);

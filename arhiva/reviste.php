@@ -1,22 +1,13 @@
 <?php
 // ROOT si config.php sunt definite de index.php
-//DEFINE("ROOT", "..");
-//require_once(RESOURCES . "/config.php");
+/*DEFINE("ROOT", "..");
+require_once(RESOURCES . "/config.php");*/
+
 require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_html.php";
 require_once HELPERS . "/h_images.php";
 
-$revisteDbResult = $db->query("
-    SELECT rev.*, ed.cnt
-    FROM reviste rev
-    LEFT JOIN (
-        SELECT revista_id, COUNT(editie_id) cnt
-        FROM editii
-        WHERE tip = 'revista'
-        GROUP BY revista_id) ed
-    USING (revista_id)
-    GROUP BY rev.revista_id
-  ");
+$revisteDbResult = $db->getToateRevistele();
 
 $revisteCardRecipe = array(
     "Titlu"       => function ($row) {return getColData($row, 'revista_nume');},
@@ -42,6 +33,7 @@ function getNumeFisier($numeRevista) {
     } else return IMG . "/coperti/default.jpg";
 }
 
+// TODO move to Editie.php
 function makeEditiiInfo($countArhiva, $countTotal) {
     $countTotal = explode(" ", $countTotal, 2)[0];
     if (!isset($countArhiva)) $countArhiva = "0";

@@ -1,10 +1,9 @@
 <?php
 namespace ArhivaRevisteVechi\lib;
-use ArhivaRevisteVechi\resources\db\DbConstants as DBC;
+use ArhivaRevisteVechi\resources\db\DBC;
 
 class Articol
 {
-
     public $titlu, $rubrica, $autor;
     public $pageToc, $pageCount;
 
