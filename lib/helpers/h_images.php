@@ -12,15 +12,14 @@ function getImageWithLink($displayedImagePath, $targetLink, ...$htmlClasses) {
         $htmlClassList = getClassList($htmlClasses);
         return "<a href='$targetLink'><img src='$displayedImagePath' $htmlClassList alt='Image' /></a>";
     }
-
 }
 
 /**
  * Construieste calea catre o imagine
  */
-function getImage($numeRevista, $an, $luna, $pagina) {
-    $imageDir      = getImageDir($numeRevista, $an, $luna);
-    $imageBaseName = getBaseImageName($numeRevista, $an, $luna, $pagina);
+function getImage($editie, $pagina) {
+    $imageDir      = getImageDir($editie->numeRevista, $editie->an, $editie->luna);
+    $imageBaseName = getBaseImageName($editie->numeRevista, $editie->an, $editie->luna, $pagina);
     return _getImagePath($imageDir, $imageBaseName);
 }
 

@@ -10,6 +10,7 @@ class DBC
     const ART_AUTOR     = "autor";
 
     const ED_NUME_REV   = "revista_nume";
+    const ED_ID_REV     = "revista_id";
     const ED_AN         = "an";
     const ED_LUNA       = "luna";
     const ED_NUMAR      = "numar";
@@ -59,10 +60,22 @@ class DBC
     public function getEditie($editieId)
     {
         return $this->directQuery("
-            SELECT r.revista_nume, e.an, e.luna, e.numar FROM editii e
+            SELECT r.revista_nume, e.editie_id,
+            e.revista_id, e.an, e.luna, e.numar
+            FROM editii e
             LEFT JOIN reviste r
             USING ('revista_id')
             WHERE e.editie_id = $editieId
+        ");
+    }
+
+    public function getEditieIdFromNumar($revistaId, $editieNumar)
+    {
+        return $this->directQuery("
+            SELECT editie_id
+            FROM editii
+            WHERE revista_id = '$revistaId'
+            AND numar = '$editieNumar'
         ");
     }
 
@@ -94,4 +107,8 @@ class DBC
         ");
     }
 
+    public function getFirstRowFromResult($dbResult)
+    {
+        return $dbResult->fetchArray(SQLITE3_ASSOC);
+    }
 }

@@ -17,15 +17,4 @@ class Articol
         $this->titlu      = $dbRow[DBC::ART_TITLU];
         $this->autor      = $dbRow[DBC::ART_AUTOR];
     }
-
-    public static function getRegularDbQuery($editieId)
-    {
-        return "
-            SELECT a.*, e.an, e.luna
-            FROM articole a
-            LEFT JOIN editii e
-            USING (editie_id)
-            WHERE editie_id = $editieId
-        ";
-    }
 }
