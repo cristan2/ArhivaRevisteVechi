@@ -1,4 +1,4 @@
-<div class = "main-img-nav"><p>Aici butoane nav pentru imagini</p></div>
+<div class = "main-img-nav"><?php echo $thumbsArticolCurent ?></div>
 <div class = "main-img">
     <?php
     echo "<a href='$paginaCurentaImagePath'><img

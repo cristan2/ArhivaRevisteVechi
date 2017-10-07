@@ -3,6 +3,7 @@ namespace ArhivaRevisteVechi\resources\db;
 
 class DBC
 {
+    const ART_ID        = "articol_id";
     const ART_PG_TOC    = "pg_toc";
     const ART_PG_CNT    = "pg_count";
     const ART_RUBRICA   = "rubrica";
@@ -90,6 +91,7 @@ class DBC
             LEFT JOIN editii e USING (editie_id)
             LEFT JOIN reviste r USING (revista_id)
             WHERE editie_id = $editieId
+            ORDER BY a.pg_toc
         ");
     }
 

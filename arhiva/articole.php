@@ -15,17 +15,12 @@ use ArhivaRevisteVechi\lib\Articol;
 $editieId = $_GET["editie"];
 
 
-/* --- info editia curenta --- */
+/* ------- info editia curenta ------- */
 include_once "articole_bit_editia_curenta.php";
 
 
-/* --- info pagina curenta --- */
-include_once "articole_bit_pagina_curenta.php";
-
-
-/* --- cuprins articole --- */
+/* ------- cuprins articole ------- */
 $articoleDbResult = $db->queryArticoleDinEditie($editiaCurenta->editieId);
-
 
 $articoleArray = array();
 
@@ -37,5 +32,9 @@ while ($dbRow = $db->getNextRow($articoleDbResult)) {
 $articoleCardRows = buildDivRows($articoleArray, "articol-card-container");
 
 
-/* --- afisare in pagina --- */
+/* ------- info pagina curenta ------- */
+include_once "articole_bit_pagina_curenta.php";
+
+
+/* ------- afisare in pagina ------- */
 include_once HTMLLIB . "/view_dual.php";

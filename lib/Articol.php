@@ -9,7 +9,7 @@ use ArhivaRevisteVechi\resources\db\DBC;
 class Articol implements HtmlPrintable
 {
     public $titlu, $rubrica, $autor;
-    public $pageToc, $pageCount;
+    public $articolId, $pageToc, $pageCount;
     public $listaPagini;
 
     private $editiaParinte;
@@ -21,6 +21,7 @@ class Articol implements HtmlPrintable
         $this->editiaParinte = $editiaParinte;
 
         // info articol
+        $this->articolId     = $dbRow[DBC::ART_ID];
         $this->pageToc       = $dbRow[DBC::ART_PG_TOC];
         $this->rubrica       = $dbRow[DBC::ART_RUBRICA];
         $this->titlu         = $dbRow[DBC::ART_TITLU];
@@ -29,6 +30,9 @@ class Articol implements HtmlPrintable
 
         // info pagini
         $this->listaPagini   = $this->buildPagini();
+
+        // adauga articol in lista din editia-parinte
+        $this->editiaParinte->listaArticole[$this->articolId] = $this;
     }
 
     private function buildPagini ()
@@ -69,10 +73,12 @@ class Articol implements HtmlPrintable
      * Construieste thumbnails pagini cu linkuri catre imaginea mare
      * Returneaza un string cu html pentru afisare in tabel
      */
-    private function buildHtmlPagesThumbnails()
+    public function buildHtmlPagesThumbnails()
     {
-        $thumbsRow = "<div class = 'articol-card-cell', 'articol-card-lista-minithumb'>" . PHP_EOL;
-        $baseDestinationLink = getBaseUrl() . "?editie={$this->editiaParinte->editieId}";
+        $thumbsRow = "<div class = 'articol-card-cell articol-card-lista-minithumb'>" . PHP_EOL;
+        $baseDestinationLink = getBaseUrl()
+                                . "?editie={$this->editiaParinte->editieId}"
+                                . "&articol={$this->articolId}";
         // genereaza fiecare minithumb cu link catre imaginea mare
         foreach($this->listaPagini as $pageNo => $imageBaseName)
         {
@@ -94,7 +100,6 @@ class Articol implements HtmlPrintable
             "rubrica"         => $this->rubrica,
             "titlu"           => $this->titlu,
             "autor"           => $this->autor,
-//            "lista-minithumb" => implode(", ", $this->listaPagini)
         );
     }
 

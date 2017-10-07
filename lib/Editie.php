@@ -14,6 +14,8 @@ class Editie
     public $editieDirPath;
     public $editieBaseName;
 
+    public $listaArticole;
+
     public function __construct($dbRow)
     {
         $this->numeRevista    = $dbRow[DBC::REV_NUME];
@@ -26,6 +28,9 @@ class Editie
 
         $this->editieDirPath  = $this->buildEditieBaseDir();
         $this->editieBaseName = $this->buildEditieBaseName();
+
+        // fiecare articol se adauga singur in acest array
+        $listaArticole = array();
     }
 
     /**
