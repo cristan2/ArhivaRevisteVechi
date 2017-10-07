@@ -7,7 +7,7 @@ require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_html.php";
 require_once HELPERS . "/h_images.php";
 
-$revisteDbResult = $db->getToateRevistele();
+$revisteDbResult = $db->queryToateRevistele();
 
 $revisteCardRecipe = array(
     "Titlu"       => function ($row) {return getColData($row, 'revista_nume');},

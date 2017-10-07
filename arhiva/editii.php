@@ -11,7 +11,7 @@ use ArhivaRevisteVechi\lib\Editie;
 
 $revistaId = $_GET["revista"];
 
-$editiiDbResult = $db->getToateEditiile($revistaId);
+$editiiDbResult = $db->queryToateEditiile($revistaId);
 
 $revisteCardRecipe = array(
     "Titlu"     => function ($row) {return makeCardTitle(getColData($row, 'an'),
@@ -44,7 +44,7 @@ include_once HTMLLIB . "/view_simple.php";
  */
 function makeImgUrl($nume_revista, $an, $luna, $pgNo, $editieId) {
     $baseImgName = getBaseImageName($nume_revista, $an, $luna, $pgNo);
-    $imgDir = getImageDir($nume_revista, $an, $luna);
+    $imgDir = buildImageDir($nume_revista, $an, $luna);
 
     $imgThumbSrc = getImageThumbPath($imgDir, $baseImgName);
 //    $targetLink = ARHIVA."/articole.php?editie=$editieId";

@@ -9,12 +9,13 @@ class DBC
     const ART_TITLU     = "titlu";
     const ART_AUTOR     = "autor";
 
-    const ED_NUME_REV   = "revista_nume";
     const ED_ID_REV     = "revista_id";
     const ED_AN         = "an";
     const ED_LUNA       = "luna";
     const ED_NUMAR      = "numar";
     const ED_ID         = "editie_id";
+
+    const REV_NUME      = "revista_nume";
 
     public $db;
 
@@ -29,7 +30,7 @@ class DBC
         return $this->db->query($query);
     }
 
-    public function getToateRevistele()
+    public function queryToateRevistele()
     {
         return $this->directQuery("
             SELECT rev.*, ed.cnt
@@ -44,7 +45,7 @@ class DBC
         ");
     }
 
-    public function getToateEditiile($revistaId)
+    public function queryToateEditiile($revistaId)
     {
         return $this->directQuery("
             SELECT r.revista_nume, e.*
@@ -57,7 +58,7 @@ class DBC
         ");
     }
 
-    public function getEditie($editieId)
+    public function queryEditie($editieId)
     {
         return $this->directQuery("
             SELECT r.revista_nume, e.editie_id,
@@ -69,7 +70,7 @@ class DBC
         ");
     }
 
-    public function getEditieIdFromNumar($revistaId, $editieNumar)
+    public function queryEditieIdFromNumar($revistaId, $editieNumar)
     {
         return $this->directQuery("
             SELECT editie_id
@@ -79,18 +80,20 @@ class DBC
         ");
     }
 
-    public function getArticoleDinEditie($editieId)
+    public function queryArticoleDinEditie($editieId)
     {
         return $this->directQuery("
-            SELECT a.*, e.an, e.luna
+            SELECT a.*,
+            e.an, e.luna,
+            r.revista_nume
             FROM articole a
-            LEFT JOIN editii e
-            USING (editie_id)
+            LEFT JOIN editii e USING (editie_id)
+            LEFT JOIN reviste r USING (revista_id)
             WHERE editie_id = $editieId
         ");
     }
 
-    public function special_getScanStatus()
+    public function specialQueryScanStatus()
     {
         return $this->directQuery("
             SELECT r.revista_nume, r.aparitii,
@@ -107,7 +110,7 @@ class DBC
         ");
     }
 
-    public function getFirstRowFromResult($dbResult)
+    public function getNextRow($dbResult)
     {
         return $dbResult->fetchArray(SQLITE3_ASSOC);
     }

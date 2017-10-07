@@ -12,7 +12,7 @@ if (!isset($_GET["search"])) {
     $searchParam = $_GET["search"];
     switch ($searchParam) {
         case "scan-status":
-            $dbResult = $db->special_getScanStatus();
+            $dbResult = $db->specialQueryScanStatus();
             $dbFiltered = filterScanStatusDbResult($dbResult);
             $pageContent = buildHtmlTableFromArray($dbFiltered);
 //            $content = buildDokuWikiTableFromArray($dbFiltered);

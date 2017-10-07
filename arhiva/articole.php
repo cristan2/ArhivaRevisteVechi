@@ -1,7 +1,7 @@
 <?php
 
 DEFINE("ROOT", "..");
-require("../resources/config.php");
+require_once("../resources/config.php");
 require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_html.php";
@@ -26,8 +26,9 @@ include_once "articole_bit_pagina_curenta.php";
 
 
 /* --- cuprins articole --- */
-$articoleDbResult = $db->getArticoleDinEditie($editieId);
+$articoleDbResult = $db->queryArticoleDinEditie($editiaCurenta->editieId);
 
+// TODO delete
 $articoleCardRecipe = array(
     "pagina"        => function ($row) {return getColData($row, DBC::ART_PG_TOC);},
     "rubrica"       => function ($row) {return getColData($row, DBC::ART_RUBRICA);},
@@ -37,15 +38,17 @@ $articoleCardRecipe = array(
                                                                   getColData($row, DBC::ART_PG_CNT));}
     );
 
-$articoleCardRows = buildCardRows($articoleDbResult, $articoleCardRecipe);
+// TODO delete
+//$articoleCardRows = buildCardRows($articoleDbResult, $articoleCardRecipe);
 
-// test
 $articoleArray = array();
-while ($dbRow = $articoleDbResult->fetchArray(SQLITE3_ASSOC)) {
-    $articoleArray[] = new Articol($dbRow);
+
+while ($dbRow = $db->getNextRow($articoleDbResult)) {
+    $articol = new Articol($dbRow, $editiaCurenta);
+    $articoleArray[] = $articol->getHtmlOutput();
 }
-// var_dump($articoleArray);
-// end test
+
+$articoleCardRows = buildDivRows($articoleArray, "articol-card-container");
 
 
 /* --- afisare in pagina --- */
@@ -60,7 +63,7 @@ include_once HTMLLIB . "/view_dual.php";
  */
 function extractThumbPages($startPage, $pageCount) {
     global $editiaCurenta;
-    $imgDir = getImageDir($editiaCurenta->numeRevista,
+    $imgDir = buildImageDir($editiaCurenta->numeRevista,
                             $editiaCurenta->an,
                             $editiaCurenta->luna);
 

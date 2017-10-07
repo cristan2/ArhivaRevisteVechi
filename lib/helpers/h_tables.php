@@ -24,6 +24,7 @@ function buildCards($dbResultSet, $divRecipe) {
     return $allDivs;
 }
 
+// TODO delete
 function buildCardRows($dbResultSet, $divRecipe) {
     $allRows = "<div class = 'articol-card-container'>" . PHP_EOL;
 
@@ -39,6 +40,15 @@ function buildCardRows($dbResultSet, $divRecipe) {
         $allRows .= $currentRow . PHP_EOL;
     }
     return $allRows . "</div>" . PHP_EOL; // end div articol-card-container
+}
+
+function buildDivRows($divArray, ...$containerClasses)
+{
+    $htmlClasses = getClassList($containerClasses);
+    $divRowsContainer = "<div $htmlClasses>" . PHP_EOL;
+    $divRowsContainer .= implode(PHP_EOL, $divArray);
+    $divRowsContainer .= "</div>" . PHP_EOL;
+    return $divRowsContainer;
 }
 
 function getColData($row, $colName) {
