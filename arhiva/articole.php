@@ -1,96 +1,41 @@
 <?php
+
 DEFINE("ROOT", "..");
-require("../resources/config.php");
+require_once("../resources/config.php");
 require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_html.php";
 require_once HELPERS . "/h_misc.php";
 
+// load classes
+require_once LIB . "/Articol.php";
+require_once LIB . "/Editie.php";
+use ArhivaRevisteVechi\lib\Articol;
+
 $editieId = $_GET["editie"];
 
-/* --- info revista + pagina curenta --- */
-$paginaCurentaNr = "1";
-if (isset($_GET['pagina'])) $paginaCurentaNr = $_GET['pagina'];
 
-$editieFromDb = $db->query("
-    SELECT r.revista_nume, e.an, e.luna, e.numar FROM editii e
-    LEFT JOIN reviste r
-    USING ('revista_id')
-    WHERE e.editie_id = $editieId
-");
+/* --- info editia curenta --- */
+include_once "articole_bit_editia_curenta.php";
 
-$editiaCurenta = $editieFromDb->fetchArray(SQLITE3_ASSOC);
-$editiaCurenta = array(
-    'id'    => $editieId,
-    "nume"  => getColData($editiaCurenta, "revista_nume"),
-    "an"    => getColData($editiaCurenta, "an"),
-    "luna"  => getColData($editiaCurenta, "luna"),
-    "numar" => getColData($editiaCurenta, "numar"),
-);
 
-$paginaCurentaImagePath = getImage($editiaCurenta['nume'], $editiaCurenta['an'], $editiaCurenta['luna'], $paginaCurentaNr);
+/* --- info pagina curenta --- */
+include_once "articole_bit_pagina_curenta.php";
 
-$titluEditieCurenta = "{$editiaCurenta['nume']} nr. {$editiaCurenta['numar']}";
-$lunaEditieCurenta = "(". convertLuna($editiaCurenta['luna']) ." {$editiaCurenta['an']})";
-
-// TODO: redo, nu e ok, id-urile editiilor nu sunt neaparat consecutive
-$navLinkNext = getEditieUrl($editieId+1);
-$navLinkPrev = getEditieUrl($editieId-1);
-// TODO: trebuie sa existe si un max(editie_id) pentru disable la navLinkNext
 
 /* --- cuprins articole --- */
-$articoleDbResult = $db->query("
-    SELECT a.*, e.an, e.luna
-    FROM articole a
-    LEFT JOIN editii e
-    USING (editie_id)
-    WHERE editie_id = $editieId
-");
+$articoleDbResult = $db->queryArticoleDinEditie($editiaCurenta->editieId);
 
-$articoleCardRecipe = array(
-    "pagina"        => function ($row) {return getColData($row, "pg_toc");},
-    "rubrica"       => function ($row) {return getColData($row, "rubrica");},
-    "titlu"         => function ($row) {return getColData($row, "titlu");},
-    "autor"         => function ($row) {return getColData($row, "autor");},
-    "pagini-count"  => function ($row) {return extractThumbPages(getColData($row, 'pg_toc'),
-                                                                  getColData($row, 'pg_count'));}
-    );
 
-$articoleCardRows = buildCardRows($articoleDbResult, $articoleCardRecipe);
+$articoleArray = array();
+
+while ($dbRow = $db->getNextRow($articoleDbResult)) {
+    $articol = new Articol($dbRow, $editiaCurenta);
+    $articoleArray[] = $articol->getHtmlOutput();
+}
+
+$articoleCardRows = buildDivRows($articoleArray, "articol-card-container");
 
 
 /* --- afisare in pagina --- */
-
 include_once HTMLLIB . "/view_dual.php";
-
-
-/* --- internals --- */
-
-/**
- * Construieste thumbnails pagini cu linkuri catre imaginea mare
- * Returneaza un string cu html pentru afisare in tabel
- */
-function extractThumbPages($startPage, $pageCount) {
-    global $editiaCurenta;
-    $imgDir = getImageDir($editiaCurenta['nume'], $editiaCurenta['an'],$editiaCurenta['luna']);
-
-    $pageThumbLinks = "";
-
-    for ($pgIndex = 0; $pgIndex < $pageCount; $pgIndex++) {
-        $thisPageNo = $startPage + $pgIndex;
-        $imageBaseName = getBaseImageName($editiaCurenta['nume'],
-                                            $editiaCurenta['an'],
-                                            $editiaCurenta['luna'],
-                                            $thisPageNo);
-        $imageThumb = getImageThumbPath($imgDir, $imageBaseName);
-
-        $destinationLink = getBaseUrl() . "?editie={$editiaCurenta['id']}" . "&pagina=$thisPageNo";
-
-        $pageThumbLinks .= getImageWithLink($imageThumb, $destinationLink, "minithumb")."  ";
-    }
-    return $pageThumbLinks;
-}
-
-function getPaginaCurentaImage($numeRevista, $an, $luna, $pagina) {
-    return getImage($numeRevista, $an, $luna, $pagina);
-}

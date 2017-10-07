@@ -14,3 +14,9 @@ function getClassList($classList) {
 function getEditieUrl($editieId) {
     return ARHIVA."/articole.php?editie=$editieId";
 }
+
+function wrapDiv($elementValue, ...$htmlClasses)
+{
+    $htmlClassList = getClassList($htmlClasses);
+    return "<div $htmlClassList>$elementValue</div>";
+}

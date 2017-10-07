@@ -5,17 +5,13 @@ require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_html.php";
 
+require_once LIB . "/Editie.php";
+require_once DB_DIR. "/DBC.php";
+use ArhivaRevisteVechi\lib\Editie;
+
 $revistaId = $_GET["revista"];
 
-$editiiDbResult = $db->query("
-    SELECT r.revista_nume, e.*
-    FROM editii e
-    LEFT JOIN reviste r
-    USING ('revista_id')
-    WHERE 1
-    AND e.revista_id = '$revistaId'
-    AND e.tip = 'revista'
-");
+$editiiDbResult = $db->queryToateEditiile($revistaId);
 
 $revisteCardRecipe = array(
     "Titlu"     => function ($row) {return makeCardTitle(getColData($row, 'an'),
@@ -31,20 +27,27 @@ $revisteCardRecipe = array(
 
 $pageContent = buildCards($editiiDbResult, $revisteCardRecipe);
 
+// test
+//$editiiArray = array();
+//while ($dbRow = $editiiDbResult->fetchArray(SQLITE3_ASSOC)) {
+//    $editiiArray[] = new Editie($dbRow);
+//}
+// end test
+
 include_once HTMLLIB . "/view_simple.php";
 
 
 /* --- internals --- */
 
-/*
+// TODO move to Editie
+/**
  * Construieste thumbnail cu link catre revista
  */
 function makeImgUrl($nume_revista, $an, $luna, $pgNo, $editieId) {
     $baseImgName = getBaseImageName($nume_revista, $an, $luna, $pgNo);
-    $imgDir = getImageDir($nume_revista, $an, $luna);
+    $imgDir = buildImageDir($nume_revista, $an, $luna);
 
     $imgThumbSrc = getImageThumbPath($imgDir, $baseImgName);
-//    $targetLink = ARHIVA."/articole.php?editie=$editieId";
     $targetLink = getEditieUrl($editieId);
 
     return getImageWithLink($imgThumbSrc, $targetLink, "card-img");

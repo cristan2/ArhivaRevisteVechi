@@ -1,5 +1,8 @@
 <?php
 
+define ("LUNA_PAD",   2);
+define ("PAGINA_PAD", 3);
+
 // TODO refactor names
 
 // TODO scoate html
@@ -12,15 +15,14 @@ function getImageWithLink($displayedImagePath, $targetLink, ...$htmlClasses) {
         $htmlClassList = getClassList($htmlClasses);
         return "<a href='$targetLink'><img src='$displayedImagePath' $htmlClassList alt='Image' /></a>";
     }
-
 }
 
 /**
  * Construieste calea catre o imagine
  */
-function getImage($numeRevista, $an, $luna, $pagina) {
-    $imageDir      = getImageDir($numeRevista, $an, $luna);
-    $imageBaseName = getBaseImageName($numeRevista, $an, $luna, $pagina);
+function getImage($editie, $pagina) {
+    $imageDir      = buildImageDir($editie->numeRevista, $editie->an, $editie->luna);
+    $imageBaseName = getBaseImageName($editie->numeRevista, $editie->an, $editie->luna, $pagina);
     return _getImagePath($imageDir, $imageBaseName);
 }
 
@@ -39,16 +41,20 @@ function _getImagePath($imageDir, $imageBaseName) {
 function getBaseImageName($numeRevista, $an, $luna, $pagina) {
     return strtolower($numeRevista)
             .$an
-            .getPaddedMonth($luna)
-            .getPaddedPage($pagina);
+            .padLeft($luna, LUNA_PAD)
+            .padLeft($pagina, PAGINA_PAD);
 }
 
+// TODO delete (exista deja in Editii.php)
 /**
  * Construieste calea catre directorul imaginilor unei reviste
  * (ex img/level/1999/12)
  */
-function getImageDir($numeRevista, $an, $luna) {
-    return IMG."/".strtolower($numeRevista)."/".$an."/".getPaddedMonth($luna);
+function buildImageDir($numeRevista, $an, $luna) {
+    return  IMG .DIRECTORY_SEPARATOR
+            .strtolower($numeRevista).DIRECTORY_SEPARATOR
+            .$an. DIRECTORY_SEPARATOR
+            .padLeft($luna, LUNA_PAD);
 }
 
 /**
@@ -60,17 +66,11 @@ function getImageThumbPath($imageDir, $imageBaseName) {
 }
 
 /**
- * Construieste numele paginii cu 3 cifre
- * (ex: 3 -> 003, 24 -> 024))
+ * Adauga padding la numarul lunii sau paginii
+ * (ex luna: 2 -> 02)
+ * (ex pagina: 3 -> 003, 24 -> 024)
  */
-function getPaddedPage($pgNo) {
-    return str_pad($pgNo, 3, '0', STR_PAD_LEFT);
-}
-
-/**
- * Construieste numele lunii cu 2 cifre
- * (ex: 2 -> 02)
- */
-function getPaddedMonth($luna) {
-    return str_pad($luna, 2, '0', STR_PAD_LEFT);
+function padLeft($targetNo, $padLength)
+{
+    return str_pad($targetNo, $padLength, '0', STR_PAD_LEFT);
 }
