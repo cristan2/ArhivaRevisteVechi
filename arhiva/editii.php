@@ -28,10 +28,10 @@ $revisteCardRecipe = array(
 $pageContent = buildCards($editiiDbResult, $revisteCardRecipe);
 
 // test
-$editiiArray = array();
-while ($dbRow = $editiiDbResult->fetchArray(SQLITE3_ASSOC)) {
-    $editiiArray[] = new Editie($dbRow);
-}
+//$editiiArray = array();
+//while ($dbRow = $editiiDbResult->fetchArray(SQLITE3_ASSOC)) {
+//    $editiiArray[] = new Editie($dbRow);
+//}
 // end test
 
 include_once HTMLLIB . "/view_simple.php";
@@ -39,7 +39,8 @@ include_once HTMLLIB . "/view_simple.php";
 
 /* --- internals --- */
 
-/*
+// TODO move to Editie
+/**
  * Construieste thumbnail cu link catre revista
  */
 function makeImgUrl($nume_revista, $an, $luna, $pgNo, $editieId) {
@@ -47,7 +48,6 @@ function makeImgUrl($nume_revista, $an, $luna, $pgNo, $editieId) {
     $imgDir = buildImageDir($nume_revista, $an, $luna);
 
     $imgThumbSrc = getImageThumbPath($imgDir, $baseImgName);
-//    $targetLink = ARHIVA."/articole.php?editie=$editieId";
     $targetLink = getEditieUrl($editieId);
 
     return getImageWithLink($imgThumbSrc, $targetLink, "card-img");

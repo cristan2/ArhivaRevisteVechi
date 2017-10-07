@@ -74,19 +74,3 @@ function padLeft($targetNo, $padLength)
 {
     return str_pad($targetNo, $padLength, '0', STR_PAD_LEFT);
 }
-
-///**
-// * Construieste numele paginii cu 3 cifre
-// * (ex: 3 -> 003, 24 -> 024))
-// */
-//function getPaddedPage($pgNo) {
-//    return str_pad($pgNo, 3, '0', STR_PAD_LEFT);
-//}
-//
-///**
-// * Construieste numele lunii cu 2 cifre
-// * (ex: 2 -> 02)
-// */
-//function getPaddedMonth($luna) {
-//    return str_pad($luna, 2, '0', STR_PAD_LEFT);
-//}

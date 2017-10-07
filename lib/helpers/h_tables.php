@@ -24,24 +24,6 @@ function buildCards($dbResultSet, $divRecipe) {
     return $allDivs;
 }
 
-// TODO delete
-function buildCardRows($dbResultSet, $divRecipe) {
-    $allRows = "<div class = 'articol-card-container'>" . PHP_EOL;
-
-    while ($row = $dbResultSet->fetchArray(SQLITE3_ASSOC)) {
-        $currentRow = "<div class = 'articol-card-row'>" . PHP_EOL;
-
-        foreach($divRecipe as $colNume => $colValue) {
-            $currentRow .= "<div class = 'articol-card-cell articol-card-$colNume'>";
-            $currentRow .= $colValue($row);
-            $currentRow .= "</div>";      // end div articol-card-cell
-        }
-        $currentRow .= "</div>";          // end div articol-card-row
-        $allRows .= $currentRow . PHP_EOL;
-    }
-    return $allRows . "</div>" . PHP_EOL; // end div articol-card-container
-}
-
 function buildDivRows($divArray, ...$containerClasses)
 {
     $htmlClasses = getClassList($containerClasses);

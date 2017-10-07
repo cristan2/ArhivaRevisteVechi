@@ -28,7 +28,7 @@ include_once HTMLLIB . "/view_simple.php";
 
 // TODO de refactorizat
 // TODO use DB constants - acum foloseste
-// col names din $db->special_getScanStatus
+// col names din $db->specialQueryScanStatus
 /*
  * Construieste un array de reviste cu probleme de arhivare de tipul
  * array (
