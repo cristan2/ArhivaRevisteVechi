@@ -8,7 +8,7 @@
  * In plus, primeste un array cu clasele CSS
  */
 function buildCards($dbResultSet, $divRecipe) {
-    $allDivs = "";
+    $allDivs = "<div class = 'card-container'>" . PHP_EOL;
     while ($row = $dbResultSet->fetchArray(SQLITE3_ASSOC)) {
         $currentDiv = "<div".getClassList($divRecipe['HtmlClasses']) .">";
 
@@ -17,11 +17,11 @@ function buildCards($dbResultSet, $divRecipe) {
         $imagineCard  = $divRecipe['Imagine']($row);
 
         $currentDiv .= $imagineCard . $titluCard . $subtitluCard;
-        $currentDiv .= "</div>";
+        $currentDiv .= "</div>" . PHP_EOL;
 
         $allDivs .= $currentDiv . PHP_EOL;
     }
-    return $allDivs;
+    return $allDivs . "</div>" . PHP_EOL;
 }
 
 function buildDivRows($divArray, ...$containerClasses)
@@ -44,7 +44,9 @@ function buildHtmlTableFromDbResult($dbResultSet) {
 
     // RANDURI TABEL -----
     $randuriTabel = "";
+    $numRows = 0;
     while ($dbRow = $dbResultSet->fetchArray(SQLITE3_ASSOC)) {
+        $numRows++;
         $htmlRow = "<tr>";
         foreach($dbRow as $dbCellValue) {
             $htmlRow .= "<td>$dbCellValue</td>";
@@ -54,11 +56,12 @@ function buildHtmlTableFromDbResult($dbResultSet) {
     }
 
     // TABEL FINAL -----
+    $sumar = "<p>$numRows rezultate</p>" . PHP_EOL;
     $tabel = "<div><table>" . PHP_EOL;
 //    $tabel .= $headerTabel . PHP_EOL;
     $tabel .= $randuriTabel . PHP_EOL;
     $tabel .= "</table></div>" . PHP_EOL;
-    return $tabel;
+    return $sumar . $tabel;
 }
 
 /*
@@ -85,9 +88,7 @@ function buildHtmlTableFromArray($arrToDisplay) {
 
         // RANDURI TABEL ----------
         $randuriTabel = "";
-//        $anulCurent = $arrRevistaCurenta[0]['An'];
         $anulCurent = "";
-    //    $anulCurent = '';
         foreach ($arrRevistaCurenta as $arrRow) {
             // adauga un rand gol intre ani
             if ($arrRow['An'] != $anulCurent) {

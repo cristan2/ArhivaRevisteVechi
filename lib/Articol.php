@@ -51,9 +51,11 @@ class Articol implements HtmlPrintable
      * atributele printabile ale obiectului impachetate in
      * sub-elemente <div> separate
      */
-    public function getHtmlOutput()
+    public function getHtmlOutput($showSearchProperties = false)
     {
-        $propertiesToDisplay = $this->getDefaultPrintableProperties();
+        $propertiesToDisplay = $showSearchProperties
+            ? $this->getSearchResultProperties()
+            : $this->getDefaultPrintableProperties();
         $row = "<div class = 'articol-card-row'>" . PHP_EOL;
 
         // afisare atribute articol
@@ -96,10 +98,22 @@ class Articol implements HtmlPrintable
     private function getDefaultPrintableProperties()
     {
         return array(
-            "pagina"          => $this->pageToc,
-            "rubrica"         => $this->rubrica,
-            "titlu"           => $this->titlu,
-            "autor"           => $this->autor,
+            "pagina"  => $this->pageToc,
+            "rubrica" => $this->rubrica,
+            "titlu"   => $this->titlu,
+            "autor"   => $this->autor,
+        );
+    }
+
+    private function getSearchResultProperties()
+    {
+        return array(
+            "nume"    => $this->editiaParinte->numeRevista,
+            "an"      => $this->editiaParinte->an,
+            "luna"    => $this->editiaParinte->luna,
+            "rubrica" => $this->rubrica,
+            "titlu"   => $this->titlu,
+            "autor"   => $this->autor,
         );
     }
 

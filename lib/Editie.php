@@ -19,8 +19,8 @@ class Editie
     public function __construct($dbRow)
     {
         $this->numeRevista    = $dbRow[DBC::REV_NUME];
+        $this->revistaId      = $dbRow[DBC::REV_ID];
 
-        $this->revistaId      = $dbRow[DBC::ED_ID_REV];
         $this->an             = $dbRow[DBC::ED_AN];
         $this->luna           = $dbRow[DBC::ED_LUNA];
         $this->numar          = $dbRow[DBC::ED_NUMAR];

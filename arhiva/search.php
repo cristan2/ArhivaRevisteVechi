@@ -1,0 +1,70 @@
+<?php
+
+DEFINE("ROOT", "..");
+require("../resources/config.php");
+require_once HELPERS . "/h_tables.php";
+require_once HELPERS . "/h_html.php";
+require_once HELPERS . "/h_misc.php";
+
+$urlWithParams = $_SERVER['REQUEST_URI'];
+$paramsRaw = parse_url($urlWithParams, PHP_URL_QUERY);
+
+
+if (empty($paramsRaw)) {
+
+    // add simple search
+    $simpleSearchContent = buildHtmlSimpleSearch();
+
+    // add quick search
+    $quickSearchContent = buildHtmlQuickSearch();
+
+    // add custom search
+
+
+
+} else {
+    parse_str($paramsRaw, $params);
+    $pageContent = processSearchRequest($params);
+}
+
+
+/* --- afisare in pagina --- */
+include_once HTMLLIB . "/view_simple.php";
+
+
+/* --- internals --- */
+
+function buildHtmlSimpleSearch()
+{
+    $searchPage = ARHIVA . "/search.php";
+    return <<<START_HTML
+	<form action = "$searchPage">
+		 <input type = "text" name = "filter" />
+         <input type = "submit" value = "Cauta" />
+      </form>
+
+START_HTML;
+
+}
+
+function buildHtmlQuickSearch()
+{
+    return '<a href = "?type=quick-search&target=scan-status">Scan status</a>'
+        . ' (format <a href = "?type=quick-search&target=scan-status&option=doku">DokuWiki</a>?)';
+}
+
+function processSearchRequest($params)
+{
+    $searchType = !empty($params['type']) ? $params['type'] : "";
+    switch($searchType)
+    {
+        case "quick-search":
+            include ARHIVABITS . "/search_bit_quick_search.php";
+            return performQuickSearch($params);
+
+        default:
+            include ARHIVABITS . "/search_bit_simple_search.php";
+            return performSimpleSearch($params);
+    }
+}
+

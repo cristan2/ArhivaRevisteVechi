@@ -1,30 +1,22 @@
 <?php
 
-DEFINE("ROOT", "..");
-require("../resources/config.php");
-require_once HELPERS . "/h_tables.php";
-require_once HELPERS . "/h_html.php";
-require_once HELPERS . "/h_misc.php";
+function performQuickSearch($params)
+{
+    global $db;
 
-if (!isset($_GET["search"])) {
-    $pageContent = '<a href = "?search=scan-status">Scan status</a>';
-} else {
-    $searchParam = $_GET["search"];
-    switch ($searchParam) {
+    if (empty($params['target'])) return "Empty search";
+    $hasOption = !empty($params['option']);
+    $option = $hasOption ? $params['option'] : "";
+    switch ($params['target']) {
         case "scan-status":
-            $dbResult = $db->specialQueryScanStatus();
-            $dbFiltered = filterScanStatusDbResult($dbResult);
-            $pageContent = buildHtmlTableFromArray($dbFiltered);
-//            $content = buildDokuWikiTableFromArray($dbFiltered);
+            $dbResult = specialQueryScanStatus($db);
+            $dbFiltered = processScanStatusDbResult($dbResult);
+
+            if ($hasOption && $option === 'doku') return buildDokuWikiTableFromArray($dbFiltered);
+            else return buildHtmlTableFromArray($dbFiltered);
     }
+
 }
-
-
-/* --- afisare in pagina --- */
-include_once HTMLLIB . "/view_simple.php";
-
-
-/* --- internals --- */
 
 // TODO de refactorizat
 // TODO use DB constants - acum foloseste
@@ -36,13 +28,13 @@ include_once HTMLLIB . "/view_simple.php";
  *                          'An'            => '1997',
  *                          'Luna'          => 'septembrie',
  *                          'Pagini Lipsa'  => '1 (pg. 3),
- *                          'Cuprins'       => '•',
+ *                          'Cuprins'       => 'ï¿½',
  *                          'Calitate Scan' => 'LQ - rescan'
  *                      ),
  *      "Games4Kids" => array (...)
  * )
  */
-function filterScanStatusDbResult($dbResult) {
+function processScanStatusDbResult($dbResult) {
     $filteredDbRows = array();
 
     while ($dbRow = $dbResult->fetchArray(SQLITE3_ASSOC)) {
@@ -93,4 +85,21 @@ function filterScanStatusDbResult($dbResult) {
     } // end iterating db row
 
     return $filteredDbRows;
+}
+
+function specialQueryScanStatus($db)
+{
+    return $db->directQuery("
+            SELECT r.revista_nume, r.aparitii,
+                e.editie_id, e.numar, e.an, e.luna,
+                e.luna_sfarsit, e.nr_pagini, e.scan_info_nr_pg,
+                e.scan_info_pg_lipsa, e.scan_info_observatii,
+                COUNT(a.articol_id) AS nr_articole
+            FROM editii e
+            LEFT JOIN reviste r USING ('revista_id')
+            LEFT JOIN articole a USING ('editie_id')
+            WHERE e.numar <> ''
+            GROUP BY editie_id
+            ORDER BY r.revista_nume, e.an
+        ");
 }

@@ -10,12 +10,12 @@ class DBC
     const ART_TITLU     = "titlu";
     const ART_AUTOR     = "autor";
 
-    const ED_ID_REV     = "revista_id";
     const ED_AN         = "an";
     const ED_LUNA       = "luna";
     const ED_NUMAR      = "numar";
     const ED_ID         = "editie_id";
 
+    const REV_ID        = "revista_id";
     const REV_NUME      = "revista_nume";
 
     public $db;
@@ -92,23 +92,6 @@ class DBC
             LEFT JOIN reviste r USING (revista_id)
             WHERE editie_id = $editieId
             ORDER BY a.pg_toc
-        ");
-    }
-
-    public function specialQueryScanStatus()
-    {
-        return $this->directQuery("
-            SELECT r.revista_nume, r.aparitii,
-                e.editie_id, e.numar, e.an, e.luna,
-                e.luna_sfarsit, e.nr_pagini, e.scan_info_nr_pg,
-                e.scan_info_pg_lipsa, e.scan_info_observatii,
-                COUNT(a.articol_id) AS nr_articole
-            FROM editii e
-            LEFT JOIN reviste r USING ('revista_id')
-            LEFT JOIN articole a USING ('editie_id')
-            WHERE e.numar <> ''
-            GROUP BY editie_id
-            ORDER BY r.revista_nume, e.an
         ");
     }
 
