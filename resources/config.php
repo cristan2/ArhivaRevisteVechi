@@ -1,6 +1,7 @@
 <?php
 // arhiva
 DEFINE ("ARHIVA"    , ROOT . "/arhiva");
+DEFINE ("ARHIVABITS", ARHIVA . "/bits");
 
 // lib
 DEFINE ("LIB"       , ROOT ."/lib");
@@ -9,6 +10,7 @@ DEFINE ("HELPERS"   , LIB ."/helpers");
 // html + css
 DEFINE ("HTMLLIB"   , ROOT ."/html");
 DEFINE ("CSSLIB"    , HTMLLIB ."/css");
+DEFINE ("HTMLBITS"  , HTMLLIB ."/bits");
 
 // resources
 DEFINE ("RESOURCES" , ROOT . "/resources");

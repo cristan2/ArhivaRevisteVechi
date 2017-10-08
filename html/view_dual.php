@@ -7,14 +7,14 @@
 </head>
 
 <body>
-    <?php include TEMPL . "/tpl_header_home_link.php"; ?>
-    <?php include TEMPL . "/tpl_header_main_nav.php"; ?>
+    <?php include HTMLBITS . "/html_bit_header_home_link.php"; ?>
+    <?php include HTMLBITS . "/html_bit_header_main_nav.php"; ?>
     <div class = "column-container">
         <div class="col cuprins">
             <?php echo $articoleCardRows ?>
         </div>
         <div class="col main-img-container">
-            <?php include TEMPL . "/tpl_page_viewer.php"; ?>
+            <?php include HTMLBITS . "/html_bit_page_viewer.php"; ?>
         </div>
     </div>
 </body>

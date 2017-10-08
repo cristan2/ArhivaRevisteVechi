@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <?php include TEMPL . "/tpl_header_home_link.php"; ?>
+    <?php include HTMLBITS . "/html_bit_header_home_link.php"; ?>
     <div class = "card-container">
         <?php echo isset($pageContent) ? $pageContent : "" ?>
     </div>

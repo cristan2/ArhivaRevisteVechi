@@ -16,7 +16,7 @@ $editieId = $_GET["editie"];
 
 
 /* ------- info editia curenta ------- */
-include_once "articole_bit_editia_curenta.php";
+include_once ARHIVABITS . "/articole_bit_editia_curenta.php";
 
 
 /* ------- cuprins articole ------- */
@@ -33,7 +33,7 @@ $articoleCardRows = buildDivRows($articoleArray, "articol-card-container");
 
 
 /* ------- info pagina curenta ------- */
-include_once "articole_bit_pagina_curenta.php";
+include_once ARHIVABITS . "/articole_bit_pagina_curenta.php";
 
 
 /* ------- afisare in pagina ------- */

@@ -13,6 +13,12 @@ if (!empty($_GET['articol'])) {
     $articolCurent = $_GET['articol'];
     $articolCurent = $editiaCurenta->listaArticole[$articolCurent];
     $thumbsArticolCurent = $articolCurent->buildHtmlPagesThumbnails();
+
+    // TODO
+    $navLinkPagePrev;
+    $navLinkPageNext;
+    $navLinkArticolPrev;
+    $navLinkArticolNext;
 }
 
 
