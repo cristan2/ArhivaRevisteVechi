@@ -10,27 +10,28 @@ define ("PAGINA_PAD", 3);
  * Construieste link html catre destinatia specificata
  */
 function getImageWithLink($displayedImagePath, $targetLink, ...$htmlClasses) {
-    if (! file_exists($displayedImagePath)) return "–";
+    if (! file_exists($displayedImagePath)) return "ï¿½";
     else {
         $htmlClassList = getClassList($htmlClasses);
         return "<a href='$targetLink'><img src='$displayedImagePath' $htmlClassList alt='Image' /></a>";
     }
 }
 
+// TODO delete; imageDir exista in Editie, imageBaseName exista in Articol
 /**
  * Construieste calea catre o imagine
  */
 function getImage($editie, $pagina) {
     $imageDir      = buildImageDir($editie->numeRevista, $editie->an, $editie->luna);
     $imageBaseName = getBaseImageName($editie->numeRevista, $editie->an, $editie->luna, $pagina);
-    return _getImagePath($imageDir, $imageBaseName);
+    return getImagePath($imageDir, $imageBaseName);
 }
 
 /**
  * Construieste calea catre o imagine
  * (ex img/level/1999/12/Level199912002.jpg)
  */
-function _getImagePath($imageDir, $imageBaseName) {
+function getImagePath($imageDir, $imageBaseName) {
     return $imageDir."/".$imageBaseName.".jpg";
 }
 

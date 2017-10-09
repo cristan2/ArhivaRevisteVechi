@@ -64,7 +64,7 @@ class Articol implements HtmlPrintable
         }
 
         // afisare lista imagini
-        $row .= $this->buildHtmlPagesThumbnails();
+        $row .= $this->buildHtmlPagesThumbnails($showSearchProperties);
 
         $row .= "</div>" . PHP_EOL;
         return $row;
@@ -75,16 +75,24 @@ class Articol implements HtmlPrintable
      * Construieste thumbnails pagini cu linkuri catre imaginea mare
      * Returneaza un string cu html pentru afisare in tabel
      */
-    public function buildHtmlPagesThumbnails()
+    public function buildHtmlPagesThumbnails($useDirectLinkToImage = false)
     {
         $thumbsRow = "<div class = 'articol-card-cell articol-card-lista-minithumb'>" . PHP_EOL;
-        $baseDestinationLink = getBaseUrl()
-                                . "?editie={$this->editiaParinte->editieId}"
-                                . "&articol={$this->articolId}";
+        if ($useDirectLinkToImage) {
+            $baseDestinationLink = $this->editiaParinte->editieDirPath;
+        } else {
+            $baseDestinationLink = getBaseUrl()
+                                    . "?editie={$this->editiaParinte->editieId}"
+                                    . "&articol={$this->articolId}";
+        }
         // genereaza fiecare minithumb cu link catre imaginea mare
         foreach($this->listaPagini as $pageNo => $imageBaseName)
         {
-            $destinationLink = $baseDestinationLink . "&pagina=$pageNo";
+            if ($useDirectLinkToImage) {
+                $destinationLink = getImagePath($baseDestinationLink, $imageBaseName);
+            } else {
+                $destinationLink = $baseDestinationLink . "&pagina=$pageNo";
+            }
             $imageThumb = getImageThumbPath($this->editiaParinte->editieDirPath, $imageBaseName);
             $thumbsRow .= getImageWithLink($imageThumb, $destinationLink, "minithumb")."  ";
         }

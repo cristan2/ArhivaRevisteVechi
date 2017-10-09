@@ -10,16 +10,15 @@ $urlWithParams = $_SERVER['REQUEST_URI'];
 $paramsRaw = parse_url($urlWithParams, PHP_URL_QUERY);
 
 
-if (empty($paramsRaw)) {
+// add simple search (always show)
+$simpleSearchContent = buildHtmlSimpleSearch();
 
-    // add simple search
-    $simpleSearchContent = buildHtmlSimpleSearch();
+if (empty($paramsRaw)) {
 
     // add quick search
     $quickSearchContent = buildHtmlQuickSearch();
 
     // add custom search
-
 
 
 } else {
