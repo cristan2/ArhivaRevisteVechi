@@ -15,7 +15,7 @@ $revisteCardRecipe = array(
                                                             getColData($row, 'aparitii'));},
     "Imagine"     => function ($row) {return makeImgUrl(getNumeFisier(getColData($row, 'revista_nume')),
                                                                       getColData($row, 'revista_id'));},
-    "HtmlClasses" => array("inline-div")
+    "HtmlClasses" => array("reviste-cards")
 );
 
 $pageContent = buildCards($revisteDbResult, $revisteCardRecipe);

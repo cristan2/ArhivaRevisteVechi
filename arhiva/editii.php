@@ -22,7 +22,7 @@ $revisteCardRecipe = array(
                                                       getColData($row, 'luna'),
                                                       1,
                                                       getColData($row, 'editie_id'));},
-    "HtmlClasses" => array("inline-div")
+    "HtmlClasses" => array("reviste-cards")
 );
 
 $pageContent = buildCards($editiiDbResult, $revisteCardRecipe);

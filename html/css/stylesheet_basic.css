@@ -1,13 +1,17 @@
 
 /* --- override defaults --- */
-
 * {
     margin-top: 0;
     margin-bottom: 0;
     font-family: 'Roboto Condensed', sans-serif;
 }
 
-/* --- divs --- */
+/* --- text --- */
+h1, h2 {
+    text-align: center;
+}
+
+/* --- home navigation --- */
 
 div.home-link-container {
     background-color: brown;
@@ -20,6 +24,53 @@ div.home-link-container {
     text-align: left;
     font-size: 1.5em;
 }
+
+
+div.reviste-cards {
+    display: inline-block;
+    width: 15%;
+    max-width: 200px;
+    margin: 0.5em;
+    box-shadow: 0 4px 8px grey;
+    text-align: center;
+    vertical-align: top;
+}
+
+div.reviste-cards h1,h2 {
+    font-size: 1em;
+    line-height: 1;
+}
+
+
+/* --- reviste cards --- */
+
+div.card-container, div.search-container, div.page-content {
+    width: 70%;
+    margin: 0 auto;
+}
+
+img.card-img {
+    width: 100%;
+}
+
+
+/* --- tabele --- */
+
+table, th, td {
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+    min-height: 1em;
+    margin: 1em;
+    padding: 0.2em;
+}
+
+tr.empty-row {
+    background-color: lightgreen;
+}
+
+
+/* --- dual-divs - cols --- */
 
 div.header-nav-container {
     background-color: lightgray;
@@ -65,6 +116,7 @@ div.articol-card-row {
 div.articol-card-cell {
     display: inline-block;
     vertical-align: middle;
+    width: 5%;
     /*height: 100%;*/
 }
 
@@ -78,7 +130,7 @@ div.articol-card-rubrica {
 }
 
 div.articol-card-titlu {
-    width: 40%;
+    min-width: 30%;
     font-weight: bold;
 }
 
@@ -87,9 +139,22 @@ div.articol-card-autor {
 }
 
 div.articol-card-lista-minithumb {
-    width: 30%;
+    width: 20%;
     min-width: 50px;
 }
+
+img.minithumb {
+    border: 1px solid black;
+    /*    max-width: 50px;
+        min-width: 20px;*/
+    /*  height: 100%;*/
+    max-height: 40px;
+    min-height: 15px;
+    vertical-align: middle;
+}
+
+
+/* --- image viewer --- */
 
 div.main-img-container {
     width: 40%;
@@ -100,40 +165,15 @@ div.main-img-nav {
     background: grey;
     width: 100%;
 }
+
 div.main-img {
     height: 750px;
 }
 
-/* --- text --- */
-h1, h2 {
-    text-align: center;
-}
-
-/* --- imagini --- */
-
-img.minithumb {
-    border: 1px solid black;
-/*    max-width: 50px;
-    min-width: 20px;*/
-/*  height: 100%;*/
-    max-height: 40px;
-    min-height: 15px;
-    vertical-align: middle;
-}
-
 img.fullthumb {
     /*width: 100%;*/
-/*    max-height: 100%;*/
-/*    object-fit: contain;*/
+    /*    max-height: 100%;*/
+    /*    object-fit: contain;*/
     height: 100%;
     vertical-align: middle;
-}
-
-
-/* --- tabele --- */
-
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    min-height: 1em;
 }
