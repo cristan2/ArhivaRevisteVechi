@@ -4,9 +4,10 @@ namespace ArhivaRevisteVechi\lib;
 use ArhivaRevisteVechi\resources\db\DBC;
 
 require_once("../resources/config.php");
+require_once LIB . "/HtmlPrintable.php";
 require_once HELPERS . "/h_images.php";
 
-class Editie
+class Editie implements HtmlPrintable
 {
     public $numeRevista, $revistaId;
     public $an, $luna, $numar, $editieId;
@@ -59,5 +60,48 @@ class Editie
         return  $this->numeRevista
                 .$this->an
                 .padLeft($this->luna, LUNA_PAD);
+    }
+
+
+    /**
+     * Construieste carduri reviste
+     * Cu 3 sectiuni: Imagine, Titlu si Subtitlu
+     * In plus, primeste un array cu clasele CSS
+     */
+    function getHtmlOutput() {
+        $card = "<div class = 'reviste-cards'>" . PHP_EOL;
+
+        $titluCard    = "<h1>{$this->makeTitle()}</h1>";
+        $subtitluCard = "<h2>{$this->makeNumar()}</h2>";
+        $imagineCard  = $this->makeCoperta();
+
+        $card .= $imagineCard . $titluCard . $subtitluCard;
+        $card .= "</div>" . PHP_EOL;
+
+        return $card;
+    }
+
+    private function makeTitle()
+    {
+        return "$this->luna / $this->an";
+    }
+
+    private function makeNumar()
+    {
+        return "Nr. " . $this->numar;
+    }
+
+    private function makeCoperta()
+    {
+        $targetLink = getEditieUrl($this->editieId);
+
+        // nume baza pentru imaginea copertii
+        $copertaBaseImg = $this->editieBaseName . padLeft(1, PAGINA_PAD);
+
+        // calea catre thumbnail
+        $imgThumbSrc = getImageThumbPath($this->editieDirPath, $copertaBaseImg);
+
+        // imaginea copertii: thumb cu link catre imaginea full
+        return getImageWithLink($imgThumbSrc, $targetLink, "card-img");
     }
 }
