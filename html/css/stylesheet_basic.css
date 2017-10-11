@@ -26,7 +26,7 @@ div.home-link-container {
 }
 
 
-div.reviste-cards {
+div.reviste-cards, div.reviste-cards-search {
     display: inline-block;
     width: 15%;
     max-width: 200px;
@@ -41,6 +41,20 @@ div.reviste-cards h1,h2 {
     line-height: 1;
 }
 
+div.reviste-cards-search {
+    display: inline-block;
+    width: 10%;
+    max-width: 100px;
+    margin: 0.5em;
+    box-shadow: 0 4px 8px grey;
+    text-align: center;
+    vertical-align: top;
+}
+
+div.reviste-cards-search h1,h2 {
+    font-size: 0.8em;
+    line-height: 0.8;
+}
 
 /* --- reviste cards --- */
 
@@ -52,7 +66,6 @@ div.card-container, div.search-container, div.page-content {
 img.card-img {
     width: 100%;
 }
-
 
 /* --- tabele --- */
 
@@ -139,7 +152,7 @@ div.articol-card-autor {
 }
 
 div.articol-card-lista-minithumb {
-    width: 20%;
+    width: 30%;
     min-width: 50px;
 }
 

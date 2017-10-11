@@ -50,6 +50,10 @@ class Articol implements HtmlPrintable
      * Construieste un container de tip <div> ce contine
      * atributele printabile ale obiectului impachetate in
      * sub-elemente <div> separate
+     *
+     * @param $showSearchProperties - determina daca vor fi
+     * afisate si informatiile referitoare la editia din care
+     * face parte, in listele agregate (rezultat cautare)
      */
     public function getHtmlOutput($showSearchProperties = false)
     {
@@ -93,7 +97,9 @@ class Articol implements HtmlPrintable
             } else {
                 $destinationLink = $baseDestinationLink . "&pagina=$pageNo";
             }
-            $imageThumb = getImageThumbPath($this->editiaParinte->editieDirPath, $imageBaseName);
+
+            $imageDir = $this->editiaParinte->editieDirPath;
+            $imageThumb = getImageThumbPath($imageDir, $imageBaseName);
             $thumbsRow .= getImageWithLink($imageThumb, $destinationLink, "minithumb")."  ";
         }
         $thumbsRow .= "</div>" . PHP_EOL;

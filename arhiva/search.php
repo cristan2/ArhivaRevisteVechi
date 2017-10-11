@@ -21,7 +21,7 @@ if (empty($paramsRaw)) {
     $quickSearchContent = buildHtmlQuickSearch();
 
     // add custom search
-
+    // TODO implement
 
 } else {
     parse_str($paramsRaw, $params);

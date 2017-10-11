@@ -10,7 +10,7 @@ define ("PAGINA_PAD", 3);
  * Construieste link html catre destinatia specificata
  */
 function getImageWithLink($displayedImagePath, $targetLink, ...$htmlClasses) {
-    if (! file_exists($displayedImagePath)) return "�";
+    if (! file_exists($displayedImagePath)) return "n/a";
     else {
         $htmlClassList = getClassList($htmlClasses);
         return "<a href='$targetLink'><img src='$displayedImagePath' $htmlClassList alt='Image' /></a>";
