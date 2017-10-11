@@ -15,14 +15,18 @@ function performSimpleSearch($params)
     if (empty($params['filter'])) return "Empty filter";
     else {
         $dbResult = specialQuerySimpleSearch($db, $params['filter']);
-        $processedResult = processSimpleSearchDbResult($dbResult);
+        $processedResult = processSimpleSearchDbResult($db, $dbResult);
 //        return buildHtmlTableFromArray($processedResult);
 //        return buildHtmlTableFromDbResult($dbResult);
 //        return buildDivRows($processedResult['articole'], "articol-card-container");
         $output = "";
         foreach($processedResult as $categ => $results ) {
-            $output .= "<h1>$categ</h1>";
-            $output .= buildDivRowsFromArray($results['divArray'], $results['divClasses'], true);
+            $numarRezultate = count($results['divArray']);
+            if ($numarRezultate > 0) {
+                $output .= "<h1>$categ</h1>";
+                $output .= "<h2>($numarRezultate rezultate)</h2>";
+                $output .= buildDivRowsFromArray($results['divArray'], $results['divClasses'], true);
+            }
         }
         return $output;
     }
@@ -32,48 +36,65 @@ function performSimpleSearch($params)
 function specialQuerySimpleSearch($db, $searchFilter)
 {
     $searchFilter = strtolower($searchFilter);
-    $query = "
+    $queryArticole = "
         SELECT e.*, a.*
         FROM articole a
         LEFT JOIN editii e USING ('editie_id')
-        WHERE lower(e.an)  LIKE '%$searchFilter%'
-        OR lower(e.luna)  LIKE '%$searchFilter%'
-        OR lower(e.joc_complet)  LIKE '%$searchFilter%'
-        OR lower(a.rubrica)  LIKE '%$searchFilter%'
+        WHERE lower(a.rubrica)  LIKE '%$searchFilter%'
         OR lower(a.titlu)  LIKE '%$searchFilter%'
         OR lower(a.joc_platforma)  LIKE '%$searchFilter%'
         OR lower(a.autor)  LIKE '%$searchFilter%'
     ";
-//        LEFT JOIN reviste r USING ('revista_id')
-//        AND lower(r.revista_nume)  LIKE '%$searchFilter%'
-//    echo ($query);
-    return $db->directQuery($query);
+
+    $queryEditii = "
+        SELECT e.*, r.*
+        FROM editii e
+        LEFT JOIN reviste r USING ('revista_id')
+        WHERE lower(e.an)  LIKE '%$searchFilter%'
+        OR lower(e.luna)  LIKE '%$searchFilter%'
+        OR lower(e.joc_complet)  LIKE '%$searchFilter%'
+    ";
+
+    $rezultatDbEditii = $db->directQuery($queryEditii);
+    $rezultatDbArticole = $db->directQuery($queryArticole);
+
+    return array(
+        "rezultatEditii"   => $rezultatDbEditii,
+        "rezultatArticole" => $rezultatDbArticole);
 }
 
 
-function processSimpleSearchDbResult($dbResult)
+function processSimpleSearchDbResult($db, $dbResultTuple)
 {
-    $listaEditii = array();
-    $listaEditiiHtml = array();
-    $listaArticoleHtml = array();
+    $articoleDbResult = $dbResultTuple['rezultatArticole'];
+    $editiiDbResult = $dbResultTuple['rezultatEditii'];
 
-    while ($dbRow = $dbResult->fetchArray(SQLITE3_ASSOC)) {
+    // rezultat editii
+    $listaEditii = array();
+    while ($dbRow = $db->getNextRow($editiiDbResult)) {
+        $listaEditii[] = new Editie($dbRow);
+    }
+
+    // rezultat articole
+    $listaEditiileArticolelor = array();
+    $listaArticole = array();
+    while ($dbRow = $db->getNextRow($articoleDbResult)) {
         $idEditiaCurenta = $dbRow[DBC::ED_ID];
 
-        if (isset($listaEditii[$idEditiaCurenta])) {
-            $editiaCurenta = $listaEditii[$idEditiaCurenta];
+        if (isset($listaEditiileArticolelor[$idEditiaCurenta])) {
+            $editiaCurenta = $listaEditiileArticolelor[$idEditiaCurenta];
         } else {
             $editiaCurenta = new Editie($dbRow);
-            $listaEditii[$idEditiaCurenta] = $editiaCurenta;
+            $listaEditiileArticolelor[$idEditiaCurenta] = $editiaCurenta;
         }
 
         $articolCurent = new Articol($dbRow, $editiaCurenta);
-        $listaArticoleHtml[] = $articolCurent;
+        $listaArticole[] = $articolCurent;
     }
 
     // TODO poate gasesti alta solutie
     return array(
-        'editii'   => array("divArray" => $listaEditii, "divClasses" => array("search-card-container")),
-        'articole' => array("divArray" => $listaArticoleHtml, "divClasses" => array("search-articol-card-container"))
+        'Ediții'   => array("divArray" => $listaEditii, "divClasses" => array("search-card-container")),
+        'Articole' => array("divArray" => $listaArticole, "divClasses" => array("search-articol-card-container"))
     );
 }
