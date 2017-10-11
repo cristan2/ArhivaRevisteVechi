@@ -17,8 +17,14 @@ function performSimpleSearch($params)
         $dbResult = specialQuerySimpleSearch($db, $params['filter']);
         $processedResult = processSimpleSearchDbResult($dbResult);
 //        return buildHtmlTableFromArray($processedResult);
-        return buildDivRows($processedResult['articole'], "articol-card-container");
 //        return buildHtmlTableFromDbResult($dbResult);
+//        return buildDivRows($processedResult['articole'], "articol-card-container");
+        $output = "";
+        foreach($processedResult as $categ => $results ) {
+            $output .= "<h1>$categ</h1>";
+            $output .= buildDivRowsFromArray($results['divArray'], $results['divClasses'], true);
+        }
+        return $output;
     }
 
 }
@@ -26,7 +32,7 @@ function performSimpleSearch($params)
 function specialQuerySimpleSearch($db, $searchFilter)
 {
     $searchFilter = strtolower($searchFilter);
-    return $db->directQuery("
+    $query = "
         SELECT e.*, a.*
         FROM articole a
         LEFT JOIN editii e USING ('editie_id')
@@ -37,19 +43,23 @@ function specialQuerySimpleSearch($db, $searchFilter)
         OR lower(a.titlu)  LIKE '%$searchFilter%'
         OR lower(a.joc_platforma)  LIKE '%$searchFilter%'
         OR lower(a.autor)  LIKE '%$searchFilter%'
-    ");
+    ";
 //        LEFT JOIN reviste r USING ('revista_id')
 //        AND lower(r.revista_nume)  LIKE '%$searchFilter%'
+//    echo ($query);
+    return $db->directQuery($query);
 }
+
 
 function processSimpleSearchDbResult($dbResult)
 {
-
     $listaEditii = array();
-    $listaArticole = array();
+    $listaEditiiHtml = array();
+    $listaArticoleHtml = array();
 
     while ($dbRow = $dbResult->fetchArray(SQLITE3_ASSOC)) {
         $idEditiaCurenta = $dbRow[DBC::ED_ID];
+
         if (isset($listaEditii[$idEditiaCurenta])) {
             $editiaCurenta = $listaEditii[$idEditiaCurenta];
         } else {
@@ -58,10 +68,12 @@ function processSimpleSearchDbResult($dbResult)
         }
 
         $articolCurent = new Articol($dbRow, $editiaCurenta);
-        $listaArticole[] = $articolCurent->getHtmlOutput(true);
+        $listaArticoleHtml[] = $articolCurent;
     }
+
+    // TODO poate gasesti alta solutie
     return array(
-        'editii'   => $listaEditii,
-        'articole' => $listaArticole
+        'editii'   => array("divArray" => $listaEditii, "divClasses" => array("search-card-container")),
+        'articole' => array("divArray" => $listaArticoleHtml, "divClasses" => array("search-articol-card-container"))
     );
 }

@@ -6,6 +6,8 @@ require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_html.php";
 require_once HELPERS . "/h_misc.php";
 
+require_once LIB . "/HtmlPrintable.php";
+
 $urlWithParams = $_SERVER['REQUEST_URI'];
 $paramsRaw = parse_url($urlWithParams, PHP_URL_QUERY);
 

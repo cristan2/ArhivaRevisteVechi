@@ -16,9 +16,9 @@ $editiiDbResult = $db->queryToateEditiile($revistaId);
 $editiiArray = array();
 while ($dbRow = $db->getNextRow($editiiDbResult)) {
     $editie = new Editie($dbRow /*, $revista*/);
-    $editiiArray[] = $editie->getHtmlOutput();
+    $editiiArray[] = $editie;
 }
 
-$pageContent = buildDivRows($editiiArray, "card-container");
+$pageContent = buildDivRowsFromArray($editiiArray, array("card-container"));
 
 include_once HTMLLIB . "/view_simple.php";

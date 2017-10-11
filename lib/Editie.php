@@ -68,8 +68,11 @@ class Editie implements HtmlPrintable
      * Cu 3 sectiuni: Imagine, Titlu si Subtitlu
      * In plus, primeste un array cu clasele CSS
      */
-    function getHtmlOutput() {
-        $card = "<div class = 'reviste-cards'>" . PHP_EOL;
+    function getHtmlOutput($useSearchLayout = false) {
+
+        $htmlClass = $useSearchLayout ? "reviste-cards-search" : "reviste-cards";
+
+        $card = "<div class = '$htmlClass'>" . PHP_EOL;
 
         $titluCard    = "<h1>{$this->makeTitle()}</h1>";
         $subtitluCard = "<h2>{$this->makeNumar()}</h2>";

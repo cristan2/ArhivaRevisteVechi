@@ -26,10 +26,10 @@ $articoleArray = array();
 
 while ($dbRow = $db->getNextRow($articoleDbResult)) {
     $articol = new Articol($dbRow, $editiaCurenta);
-    $articoleArray[] = $articol->getHtmlOutput();
+    $articoleArray[] = $articol;
 }
 
-$articoleCardRows = buildDivRows($articoleArray, "articol-card-container");
+$articoleCardRows = buildDivRowsFromArray($articoleArray, array("articol-card-container"));
 
 
 /* ------- info pagina curenta ------- */

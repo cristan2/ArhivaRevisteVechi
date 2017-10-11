@@ -1,5 +1,7 @@
 <?php
 
+
+
 // TODO scoate html
 
 /**
@@ -31,6 +33,24 @@ function buildDivRows($divArray, ...$containerClasses)
     $divRowsContainer .= implode(PHP_EOL, $divArray);
     $divRowsContainer .= "</div>" . PHP_EOL;
     return $divRowsContainer;
+}
+
+// TODO enforce type
+// elementele din $divArray pot fi de tip Articole sau Editie
+// ambele de tip HtmlPrintable
+function buildDivRowsFromArray($divArray, $containerClasses, $showSearchResult = false)
+{
+
+    $extractHtmlOutput = function ($elem) use ($showSearchResult) {
+        return $elem->getHtmlOutput($showSearchResult);
+    };
+
+    $htmlClasses = getClassList($containerClasses);
+    $divRowsContainer = "<div $htmlClasses>" . PHP_EOL;
+    $divRowsContainer .= implode(PHP_EOL, array_map($extractHtmlOutput, $divArray));
+    $divRowsContainer .= "</div>" . PHP_EOL;
+    return $divRowsContainer;
+
 }
 
 function getColData($row, $colName) {
