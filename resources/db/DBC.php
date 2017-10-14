@@ -14,6 +14,7 @@ class DBC
     const ED_LUNA       = "luna";
     const ED_NUMAR      = "numar";
     const ED_ID         = "editie_id";
+    const ED_PG_CNT     = "nr_pagini";
 
     const REV_ID        = "revista_id";
     const REV_NUME      = "revista_nume";
@@ -63,7 +64,7 @@ class DBC
     {
         return $this->directQuery("
             SELECT r.revista_nume, e.editie_id,
-            e.revista_id, e.an, e.luna, e.numar
+            e.revista_id, e.an, e.luna, e.numar, e.nr_pagini
             FROM editii e
             LEFT JOIN reviste r
             USING ('revista_id')

@@ -151,12 +151,12 @@ div.articol-card-autor {
     width: 15%;
 }
 
-div.articol-card-lista-minithumb {
+div.articol-card-lista-microthumb {
     width: 30%;
     min-width: 50px;
 }
 
-img.minithumb {
+img.microthumb {
     border: 1px solid black;
     /*    max-width: 50px;
         min-width: 20px;*/

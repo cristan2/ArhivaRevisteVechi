@@ -11,6 +11,7 @@ class Editie implements HtmlPrintable
 {
     public $numeRevista, $revistaId;
     public $an, $luna, $numar, $editieId;
+    public $maxNumPages;
 
     public $editieDirPath;
     public $editieBaseName;
@@ -26,6 +27,7 @@ class Editie implements HtmlPrintable
         $this->luna           = $dbRow[DBC::ED_LUNA];
         $this->numar          = $dbRow[DBC::ED_NUMAR];
         $this->editieId       = $dbRow[DBC::ED_ID];
+        $this->maxNumPages    = $dbRow[DBC::ED_PG_CNT];
 
         $this->editieDirPath  = $this->buildEditieBaseDir();
         $this->editieBaseName = $this->buildEditieBaseName();
@@ -68,8 +70,8 @@ class Editie implements HtmlPrintable
      * Cu 3 sectiuni: Imagine, Titlu si Subtitlu
      * In plus, primeste un array cu clasele CSS
      */
-    function getHtmlOutput($useSearchLayout = false) {
-
+    function getHtmlOutput($useSearchLayout = false)
+    {
         $htmlClass = $useSearchLayout ? "reviste-cards-search" : "reviste-cards";
 
         $card = "<div class = '$htmlClass'>" . PHP_EOL;

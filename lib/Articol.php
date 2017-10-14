@@ -74,14 +74,14 @@ class Articol implements HtmlPrintable
         return $row;
     }
 
-    // TODO needs refactoring ('Image' class?)
+    // TODO needs refactoring ('Imagine'/'Pagina' class?)
     /**
      * Construieste thumbnails pagini cu linkuri catre imaginea mare
      * Returneaza un string cu html pentru afisare in tabel
      */
     public function buildHtmlPagesThumbnails($useDirectLinkToImage = false)
     {
-        $thumbsRow = "<div class = 'articol-card-cell articol-card-lista-minithumb'>" . PHP_EOL;
+        $thumbsRow = "<div class = 'articol-card-cell articol-card-lista-microthumb'>" . PHP_EOL;
         if ($useDirectLinkToImage) {
             $baseDestinationLink = $this->editiaParinte->editieDirPath;
         } else {
@@ -89,7 +89,7 @@ class Articol implements HtmlPrintable
                                     . "?editie={$this->editiaParinte->editieId}"
                                     . "&articol={$this->articolId}";
         }
-        // genereaza fiecare minithumb cu link catre imaginea mare
+        // genereaza fiecare microthumb cu link catre imaginea mare
         foreach($this->listaPagini as $pageNo => $imageBaseName)
         {
             if ($useDirectLinkToImage) {
@@ -100,7 +100,7 @@ class Articol implements HtmlPrintable
 
             $imageDir = $this->editiaParinte->editieDirPath;
             $imageThumb = getImageThumbPath($imageDir, $imageBaseName);
-            $thumbsRow .= getImageWithLink($imageThumb, $destinationLink, "minithumb")."  ";
+            $thumbsRow .= getImageWithLink($imageThumb, $destinationLink, "microthumb")."  ";
         }
         $thumbsRow .= "</div>" . PHP_EOL;
         return $thumbsRow;
