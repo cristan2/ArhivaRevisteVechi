@@ -18,7 +18,7 @@ $simpleSearchContent = buildHtmlSimpleSearch();
 if (empty($paramsRaw)) {
 
     // add quick search
-    $quickSearchContent = buildHtmlQuickSearch();
+    $quickSearchContent = buildHtmlPresetSearch();
 
     // add custom search
     // TODO implement
@@ -48,7 +48,7 @@ START_HTML;
 
 }
 
-function buildHtmlQuickSearch()
+function buildHtmlPresetSearch()
 {
     return '<a href = "?type=quick-search&target=scan-status">Scan status</a>'
         . ' (format <a href = "?type=quick-search&target=scan-status&option=doku">DokuWiki</a>?)';
@@ -60,7 +60,7 @@ function processSearchRequest($params)
     switch($searchType)
     {
         case "quick-search":
-            include ARHIVABITS . "/search_bit_quick_search.php";
+            include ARHIVABITS . "/search_bit_preset_search.php";
             return performQuickSearch($params);
 
         default:
