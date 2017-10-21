@@ -10,12 +10,15 @@ require_once HELPERS . "/h_misc.php";
 // load classes
 require_once LIB . "/Articol.php";
 require_once LIB . "/Editie.php";
+use ArhivaRevisteVechi\lib\Editie;
 use ArhivaRevisteVechi\lib\Articol;
 
 $editieId = $_GET["editie"];
 
 
 /* ------- info editia curenta ------- */
+$editiaCurenta = $db->getNextRow($db->queryEditie($editieId));
+$editiaCurenta = new Editie($editiaCurenta);
 include_once ARHIVABITS . "/articole_bit_editia_curenta.php";
 
 
@@ -38,3 +41,8 @@ include_once ARHIVABITS . "/articole_bit_pagina_curenta.php";
 
 /* ------- afisare in pagina ------- */
 include_once HTMLLIB . "/view_dual.php";
+
+
+function getEditieUrl($editieId) {
+    return ARHIVA."/articole.php?editie=$editieId";
+}

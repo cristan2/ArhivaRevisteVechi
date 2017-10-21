@@ -12,7 +12,7 @@
 function buildCards($dbResultSet, $divRecipe) {
     $allDivs = "<div class = 'card-container'>" . PHP_EOL;
     while ($row = $dbResultSet->fetchArray(SQLITE3_ASSOC)) {
-        $currentDiv = "<div".getClassList($divRecipe['HtmlClasses']) .">";
+        $currentDiv = "<div".getCssClassList($divRecipe['HtmlClasses']) .">";
 
         $titluCard    = "<h1>{$divRecipe['Titlu']($row)}</h1>";
         $subtitluCard = "<h2>{$divRecipe['Subtitlu']($row)}</h2>";
@@ -28,16 +28,14 @@ function buildCards($dbResultSet, $divRecipe) {
 
 function buildDivRows($divArray, ...$containerClasses)
 {
-    $htmlClasses = getClassList($containerClasses);
+    $htmlClasses = getCssClassList($containerClasses);
     $divRowsContainer = "<div $htmlClasses>" . PHP_EOL;
     $divRowsContainer .= implode(PHP_EOL, $divArray);
     $divRowsContainer .= "</div>" . PHP_EOL;
     return $divRowsContainer;
 }
 
-// TODO enforce type
-// elementele din $divArray pot fi de tip Articole sau Editie
-// ambele de tip HtmlPrintable
+// TODO replace with HtmlPrinter::buildDivFromArray
 function buildDivRowsFromArray($divArray, $containerClasses, $showSearchResult = false)
 {
 
@@ -45,12 +43,11 @@ function buildDivRowsFromArray($divArray, $containerClasses, $showSearchResult =
         return $elem->getHtmlOutput($showSearchResult);
     };
 
-    $htmlClasses = getClassList($containerClasses);
+    $htmlClasses = getCssClassList($containerClasses);
     $divRowsContainer = "<div $htmlClasses>" . PHP_EOL;
     $divRowsContainer .= implode(PHP_EOL, array_map($extractHtmlOutput, $divArray));
     $divRowsContainer .= "</div>" . PHP_EOL;
     return $divRowsContainer;
-
 }
 
 function getColData($row, $colName) {

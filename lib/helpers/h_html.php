@@ -6,17 +6,13 @@ function getBaseUrl() {
     return $urlParts[0];
 }
 
-function getClassList($classList) {
+function getCssClassList($classList) {
     if (empty($classList)) return "";
     else return " class = '".implode(" ", $classList)."' ";
 }
 
-function getEditieUrl($editieId) {
-    return ARHIVA."/articole.php?editie=$editieId";
-}
-
 function wrapDiv($elementValue, ...$htmlClasses)
 {
-    $htmlClassList = getClassList($htmlClasses);
+    $htmlClassList = getCssClassList($htmlClasses);
     return "<div $htmlClassList>$elementValue</div>";
 }

@@ -1,9 +1,5 @@
 <?php
 use ArhivaRevisteVechi\resources\db\DBC;
-use ArhivaRevisteVechi\lib\Editie;
-
-$editiaCurenta = $db->getNextRow($db->queryEditie($editieId));
-$editiaCurenta = new Editie($editiaCurenta);
 
 // next & prev links
 // TODO: trebuie sa existe si un max(editie_id) pentru disable la navLinkNext
