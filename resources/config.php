@@ -24,3 +24,7 @@ DEFINE ("DB_FILE"   , DB_DIR . "/arhiva_reviste_v4.4.db");
 require_once DB_DIR . "/DBC.php";
 use ArhivaRevisteVechi\resources\db\DBC;
 $db = new DBC(DB_FILE);
+
+// coperti default
+DEFINE ("COPERTI_DIR", IMG . "/coperti");
+DEFINE ("COPERTA_DEFAULT", IMG . "/coperti/default.jpg");

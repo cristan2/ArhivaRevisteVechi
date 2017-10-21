@@ -15,9 +15,12 @@ class DBC
     const ED_NUMAR      = "numar";
     const ED_ID         = "editie_id";
     const ED_PG_CNT     = "nr_pagini";
+    const ED_ART_CNT    = "art_cnt";
 
     const REV_ID        = "revista_id";
     const REV_NUME      = "revista_nume";
+    const REV_APARITII  = "aparitii";
+    const REV_CNT_ED    = "ed_cnt";
 
     public $db;
 
@@ -34,11 +37,12 @@ class DBC
 
     public function queryToateRevistele()
     {
+        $editiiCount = self::REV_CNT_ED;
         return $this->directQuery("
-            SELECT rev.*, ed.cnt
+            SELECT rev.*, ed.$editiiCount
             FROM reviste rev
             LEFT JOIN (
-                SELECT revista_id, COUNT(editie_id) cnt
+                SELECT revista_id, COUNT(editie_id) $editiiCount
                 FROM editii
                 WHERE tip = 'revista'
                 GROUP BY revista_id) ed
@@ -47,16 +51,27 @@ class DBC
         ");
     }
 
-    public function queryToateEditiile($revistaId)
+    public function queryRevistaNumeFromId($revistaId)
     {
         return $this->directQuery("
-            SELECT r.revista_nume, e.*
+            SELECT revista_nume, aparitii
+            FROM reviste
+            WHERE revista_id = '$revistaId'
+        ");
+    }
+
+    public function queryToateEditiile($revistaId)
+    {
+        $articleCountAlias = self::ED_ART_CNT;
+        return $this->directQuery("
+            SELECT r.revista_nume, e.*, count(a.articol_id) $articleCountAlias
             FROM editii e
-            LEFT JOIN reviste r
-            USING ('revista_id')
+            LEFT JOIN reviste r USING ('revista_id')
+            LEFT JOIN articole a USING ('editie_id')
             WHERE 1
             AND e.revista_id = '$revistaId'
             AND e.tip = 'revista'
+            GROUP BY editie_id
         ");
     }
 
@@ -69,6 +84,19 @@ class DBC
             LEFT JOIN reviste r
             USING ('revista_id')
             WHERE e.editie_id = $editieId
+        ");
+    }
+
+    public function queryEditieFromNumar($revistaId, $editieNumar)
+    {
+        return $this->directQuery("
+            SELECT r.revista_nume, e.editie_id,
+            e.revista_id, e.an, e.luna, e.numar, e.nr_pagini
+            FROM editii e
+            LEFT JOIN reviste r
+            USING ('revista_id')
+            WHERE e.revista_id = $revistaId
+            AND e.numar = $editieNumar
         ");
     }
 
