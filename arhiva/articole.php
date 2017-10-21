@@ -2,7 +2,6 @@
 
 DEFINE("ROOT", "..");
 require_once("../resources/config.php");
-require_once HELPERS . "/h_tables.php";
 require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_html.php";
 require_once HELPERS . "/h_misc.php";
@@ -10,8 +9,10 @@ require_once HELPERS . "/h_misc.php";
 // load classes
 require_once LIB . "/Articol.php";
 require_once LIB . "/Editie.php";
+require_once HELPERS . "/HtmlPrinter.php";
 use ArhivaRevisteVechi\lib\Editie;
 use ArhivaRevisteVechi\lib\Articol;
+use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
 $editieId = $_GET["editie"];
 
@@ -32,7 +33,7 @@ while ($dbRow = $db->getNextRow($articoleDbResult)) {
     $articoleArray[] = $articol;
 }
 
-$articoleCardRows = buildDivRowsFromArray($articoleArray, array("articol-card-container"));
+$articoleCardRows = HtmlPrinter::buildDivContainer($articoleArray, array("articol-card-container"));
 
 
 /* ------- info pagina curenta ------- */

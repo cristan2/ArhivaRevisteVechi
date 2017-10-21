@@ -11,6 +11,11 @@ h1, h2 {
     text-align: center;
 }
 
+pre {
+    background-color: lightgray;
+    font-family: monospace;
+}
+
 /* --- home navigation --- */
 
 div.home-link-container {

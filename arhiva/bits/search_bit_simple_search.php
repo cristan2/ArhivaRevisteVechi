@@ -3,9 +3,11 @@
 require_once LIB . "/Articol.php";
 require_once LIB . "/Editie.php";
 require_once DB_DIR. "/DBC.php";
+require_once HELPERS . "/HtmlPrinter.php";
 use ArhivaRevisteVechi\lib\Articol;
 use ArhivaRevisteVechi\lib\Editie;
 use ArhivaRevisteVechi\resources\db\DBC;
+use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
 // TODO clean search filter
 function performSimpleSearch($params)
@@ -16,21 +18,17 @@ function performSimpleSearch($params)
     else {
         $dbResult = specialQuerySimpleSearch($db, $params['filter']);
         $processedResult = processSimpleSearchDbResult($db, $dbResult);
-//        return buildHtmlTableFromArray($processedResult);
-//        return buildHtmlTableFromDbResult($dbResult);
-//        return buildDivRows($processedResult['articole'], "articol-card-container");
         $output = "";
         foreach($processedResult as $categ => $results ) {
             $numarRezultate = count($results['divArray']);
             if ($numarRezultate > 0) {
                 $output .= "<h1>$categ</h1>";
                 $output .= "<h2>($numarRezultate rezultate)</h2>";
-                $output .= buildDivRowsFromArray($results['divArray'], $results['divClasses'], true);
+                $output .= HtmlPrinter::buildDivContainer($results['divArray'], $results['divClasses'], true);
             }
         }
         return $output;
     }
-
 }
 
 function specialQuerySimpleSearch($db, $searchFilter)

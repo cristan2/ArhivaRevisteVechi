@@ -1,4 +1,6 @@
 <?php
+require_once HELPERS . "/HtmlPrinter.php";
+use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
 function performQuickSearch($params)
 {
@@ -12,10 +14,11 @@ function performQuickSearch($params)
             $dbResult = specialQueryScanStatus($db);
             $dbFiltered = processScanStatusDbResult($dbResult);
 
-            if ($hasOption && $option === 'doku') return buildDokuWikiTableFromArray($dbFiltered);
-            else return buildHtmlTableFromArray($dbFiltered);
+            if ($hasOption && $option === 'doku')
+                return HtmlPrinter::buildDokuWikiTableFromArray($dbFiltered);
+            else
+                return HtmlPrinter::buildHtmlTableFromArray($dbFiltered);
     }
-
 }
 
 // TODO de refactorizat
