@@ -2,11 +2,10 @@
 namespace ArhivaRevisteVechi\lib;
 
 require_once("../resources/config.php");
-require_once LIB . "/HtmlPrintable.php";
 require_once HELPERS . "/h_images.php";
 use ArhivaRevisteVechi\resources\db\DBC;
 
-class Articol implements HtmlPrintable
+class Articol
 {
     public $titlu, $rubrica, $autor;
     public $articolId, $pageToc, $pageCount;
