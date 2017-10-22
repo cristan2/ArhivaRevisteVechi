@@ -51,10 +51,10 @@ class DBC
         ");
     }
 
-    public function queryRevistaNumeFromId($revistaId)
+    public function queryRevista($revistaId)
     {
         return $this->directQuery("
-            SELECT revista_nume, aparitii
+            SELECT revista_id, revista_nume, aparitii
             FROM reviste
             WHERE revista_id = '$revistaId'
         ");

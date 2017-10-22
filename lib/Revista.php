@@ -34,7 +34,11 @@ class Revista {
         $this->revistaDirPath  = $this->buildRevistaBaseDir();
 
         // content attrs
-        $this->countEditiiScanate   = $dbRow[DBC::REV_CNT_ED];
+        if (isset($dbRow[DBC::REV_CNT_ED])) {
+            // coloana asta nu e inclusa in toate query-urile,
+            // e relevanta doar in pagina cu toate editiile (?)
+            $this->countEditiiScanate = $dbRow[DBC::REV_CNT_ED];
+        }
     }
 
     static function getSimpleName($numeRevista)

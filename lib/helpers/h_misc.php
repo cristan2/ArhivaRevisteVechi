@@ -22,3 +22,18 @@ function startsWith($haystack, $needle) {
     $length = strlen($needle);
     return (substr($haystack, 0, $length) === $needle);
 }
+
+function getImageFilesInDir($dirPath)
+{
+    /**
+     * // https://stackoverflow.com/questions/12801370/count-how-many-files-in-directory-php
+     */
+    // glob($directory . "*.{jpg,png,gif}",GLOB_BRACE)
+    // the GLOB_BRACE flag expands {a,b,c} to match 'a', 'b', or 'c'
+    return glob($dirPath . "/" . "*.{jpg,jpeg,png}", GLOB_BRACE);
+}
+
+function getDirsInPath($dirPath)
+{
+    return glob($dirPath . "/" . "*", GLOB_ONLYDIR);
+}
