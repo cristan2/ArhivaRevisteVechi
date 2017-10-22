@@ -7,8 +7,8 @@
         </h2>
     </div>
     <div class = "header-nav-current">
-        <h1><?php echo $editiaCurenta->getTitluDetaliat()?></h1>
-        <h2><?php echo $editiaCurenta->getInfoEditie()?></h2>
+        <h1><?php echo $editiaCurenta->outputTitluDetaliat()?></h1>
+        <h2><?php echo $editiaCurenta->outputInfoEditie()?></h2>
     </div>
     <div class = "header-nav-elem header-nav-next">
         <h2><?php
