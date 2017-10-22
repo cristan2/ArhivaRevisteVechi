@@ -20,6 +20,11 @@ $revistaId = $_GET["revista"];
 $editiiDbResult = $db->queryToateEditiile($revistaId);
 
 $editiiArray = array();
+while ($dbRow = $db->getNextRow($editiiDbResult)) {
+    $editie = new Editie($dbRow /*, $revista*/);
+    $editiiArray[] = $editie;
+}
+
 if (count($editiiArray) == 0) {
 
     // daca nu exista intrari in DB, folosim direct
@@ -27,12 +32,6 @@ if (count($editiiArray) == 0) {
     $revistaDbResult = $db->getNextRow($db->queryRevista($revistaId));
     $revista = new Revista($revistaDbResult);
     $editiiArray = Editie::getEditiiArrayFrom($revista);
-
-} else {
-    while ($dbRow = $db->getNextRow($editiiDbResult)) {
-        $editie = new Editie($dbRow /*, $revista*/);
-        $editiiArray[] = $editie;
-    }
 }
 
 $pageContent = HtmlPrinter::buildDivContainer($editiiArray, array("card-container"));

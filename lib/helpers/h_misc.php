@@ -23,6 +23,11 @@ function startsWith($haystack, $needle) {
     return (substr($haystack, 0, $length) === $needle);
 }
 
+function getCleanNumarEditieFromDirName($dirName)
+{
+    return substr($dirName, strlen("Nr. "));
+}
+
 function getImageFilesInDir($dirPath)
 {
     /**

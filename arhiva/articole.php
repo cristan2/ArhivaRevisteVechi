@@ -14,7 +14,7 @@ use ArhivaRevisteVechi\lib\Editie;
 use ArhivaRevisteVechi\lib\Articol;
 use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
-$editieId = $_GET["editie"];
+$editieId = $_GET["editie-id"];
 
 
 /* ------- info editia curenta ------- */

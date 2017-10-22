@@ -11,10 +11,7 @@ require_once HELPERS . "/HtmlPrinter.php";
 
 class Editie
 {
-    // constructor flag
-    private $isBuiltFromDisk = false;
-
-    // base attrs
+    // --- base attrs ---
     public  $numeRevista, $revistaId;
     public  $an, $luna, $numar, $editieId;
     public  $maxNumPages;
@@ -22,14 +19,27 @@ class Editie
 
     private $copertaPath;
 
-    // location attrs
+    // --- location attrs ---
     public  $editieDirPath;
+    public  $editieDirName;
     public  $editieBaseName;
 
-    // content attrs
-    public  $areArticoleIndexate, $arePaginiScanate;
+    // --- content attrs ---
     public  $listaArticole;
     public  $listaPagini;
+
+    // --- content flags ---
+
+    /* denota daca editia e construita doar citind
+       imaginile scanate, fara info din DB */
+    private $isBuiltFromDisk = false;
+
+    /* denota daca numele directorului este dat de luna
+       aparitiei (02 = luna februarie) sau numarul editiei
+       (ex: 02 = al doilea numar aparut) */
+    private $baseDirAreNumarulLunii = true;
+
+    public  $areArticoleIndexate, $arePaginiScanate;
 
     // TODO in functie de numarul de editii si numarul de aparitii total
     public  $isFirst, $isLast;
@@ -52,7 +62,8 @@ class Editie
         $this->maxNumPages    = $dbRow[DBC::ED_PG_CNT];
 
         /* ******** location attrs ******** */
-        $this->editieDirPath  = $this->buildEditieBaseDir();
+        $this->editieDirName  = $this->buildEditieBaseDirName();
+        $this->editieDirPath  = $this->buildEditieBaseDirPath();
         $this->editieBaseName = $this->buildEditieBaseName();
 
         /* ******** content attrs ******** */
@@ -70,12 +81,19 @@ class Editie
         }
     }
 
+    /**
+     * Construieste numele directorului unei reviste
+     * (ex img/level/1999/12)
+     */
+    private function buildEditieBaseDirName() {
+//        return
+    }
 
     /**
      * Construieste calea catre directorul imaginilor unei reviste
      * (ex img/level/1999/12)
      */
-    private function buildEditieBaseDir() {
+    private function buildEditieBaseDirPath() {
         return  IMG . DIRECTORY_SEPARATOR
         .strtolower($this->numeRevista) . DIRECTORY_SEPARATOR
         .$this->an . DIRECTORY_SEPARATOR
@@ -154,6 +172,9 @@ class Editie
      */
     private function outputTitluPeScurt()
     {
+        if ($this->isBuiltFromDisk) {
+            return "&#35;$this->numar / $this->an";
+        }
         return "$this->luna / $this->an";
     }
 
@@ -193,7 +214,11 @@ class Editie
      */
     public function getEditieUrl()
     {
-        return ARHIVA."/articole.php?editie=$this->editieId";
+        // TODO
+//        if ($this->isBuiltFromDisk) {
+//            return ARHIVA."/articole.php?revista=$this->numeRevista&an=$this->an&editie=NOED";
+//        }
+        return ARHIVA."/articole.php?editie-id=$this->editieId";
     }
 
 
@@ -216,7 +241,7 @@ class Editie
     static function getEditiiArrayFrom($revista)
     {
 
-        $isLunaSauNumar = function ($basename) { return startsWith($basename, "Nr. ");};
+        $isEditiaNumerotataCuLuna = function ($basename) { return startsWith($basename, "Nr. ");};
 
         $arrayEditiiSurogat = array();
 
@@ -230,7 +255,7 @@ class Editie
                 if ($directoareEditii) {
                     foreach($directoareEditii as $editiaCurenta) {
 
-                        $editiaIsLuna = $isLunaSauNumar($editiaCurenta);
+                        $editiaIsLuna = $isEditiaNumerotataCuLuna($editiaCurenta);
 
                         // citeste fisiere
                         // daca exista imagini scanate, construim editia
@@ -242,8 +267,8 @@ class Editie
                             $editieInfo[DBC::REV_NUME]      = $revista->numeRevista;
                             $editieInfo[DBC::REV_ID]        = "NOID";
                             $editieInfo[DBC::ED_AN]         = basename($anulCurent);
-                            $editieInfo[DBC::ED_LUNA]       = $editiaIsLuna ? "NOLUNA" : basename($editiaCurenta);
-                            $editieInfo[DBC::ED_NUMAR]      = $editiaIsLuna ? basename($editiaCurenta) : "NONR";
+                            $editieInfo[DBC::ED_LUNA]       = $editiaIsLuna ? basename($editiaCurenta) : "NOLUNA";
+                            $editieInfo[DBC::ED_NUMAR]      = $editiaIsLuna ? "NONR" : getCleanNumarEditieFromDirName(basename($editiaCurenta));
                             $editieInfo[DBC::ED_ID]         = "NOID";
                             $editieInfo[DBC::ED_PG_CNT]     = "NOCNT";
                             //$editieInfo[DBC::ED_ART_CNT]  = "";
@@ -259,10 +284,5 @@ class Editie
         }
 
         return $arrayEditiiSurogat;
-    }
-
-    static function getEditieFrom($revistaNume, $revistaAn, $revistaEditie)
-    {
-
     }
 }
