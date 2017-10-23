@@ -23,9 +23,14 @@ function startsWith($haystack, $needle) {
     return (substr($haystack, 0, $length) === $needle);
 }
 
-function getCleanNumarEditieFromDirName($dirName)
+function cleanPrefixFromName($dirName, $prefixArray)
 {
-    return substr($dirName, strlen("Nr. "));
+    foreach ($prefixArray as $prefix) {
+        if (startsWith($dirName, $prefix)) {
+            return substr($dirName, strlen($prefix));
+        }
+    }
+    return $dirName;
 }
 
 function getImageFilesInDir($dirPath)

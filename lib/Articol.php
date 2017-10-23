@@ -136,7 +136,7 @@ class Articol
      */
     private function buildPaginaBaseName($pageNo)
     {
-        return $this->editiaParinte->editieBaseName
+        return $this->editiaParinte->editieBaseNameForPages
                . padLeft($pageNo, PAGINA_PAD);
     }
 

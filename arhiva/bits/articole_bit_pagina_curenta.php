@@ -39,7 +39,7 @@ if (!empty($_GET['articol'])) {
 
         $destinationLink = getImagePath($editiaCurenta->editieDirPath, $imageBaseName);
 
-        $currImageBaseName = $editiaCurenta->editieBaseName . padLeft($pg, PAGINA_PAD);
+        $currImageBaseName = $editiaCurenta->editieBaseNameForPages . padLeft($pg, PAGINA_PAD);
         $imageThumb = getImageThumbPath($editiaCurenta->editieDirPath, $currImageBaseName);
         $paginiThumbsContent .= getImageWithLink($imageThumb, $destinationLink, "minithumb")."  ";
     }
