@@ -1,6 +1,7 @@
 <?php
 
 define ("LUNA_PAD",   2);
+define ("ISSUE_PAD",  3);
 define ("PAGINA_PAD", 3);
 
 // TODO refactor names
