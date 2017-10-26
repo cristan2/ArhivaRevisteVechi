@@ -1,4 +1,8 @@
 <?php
+
+// debug
+DEFINE ("IS_DEBUG", false);
+
 // arhiva
 DEFINE ("ARHIVA"    , ROOT . "/arhiva");
 DEFINE ("ARHIVABITS", ARHIVA . "/bits");

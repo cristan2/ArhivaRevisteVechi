@@ -2,12 +2,14 @@
 
 namespace ArhivaRevisteVechi\lib;
 use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
+use ArhivaRevisteVechi\lib\Pagina;
 use ArhivaRevisteVechi\resources\db\DBC;
 
 require_once("../resources/config.php");
 require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_misc.php";
 require_once HELPERS . "/HtmlPrinter.php";
+require_once LIB     . "/Pagina.php";
 
 
 /**
@@ -41,7 +43,7 @@ class Editie
     public  $maxNumPages;
     private $numarArticole;
 
-    private $copertaPath;
+    private $coperta;
 
 
     // --- location attrs ---
@@ -94,7 +96,6 @@ class Editie
         if (isset($dbRow['isBuiltFromDisk'])) {
             /* --- doar pentru revistele de pe disc --- */
             $this->isBuiltFromDisk      = true;
-            $this->copertaPath          = $dbRow['copertaPath'];
 
         } else {
             /* --- doar pentru revistele din DB --- */
@@ -115,8 +116,10 @@ class Editie
             $this->editieDirNameNumericVal      = $dbRow['$editieDirNo'];
 
             // check $editieDirNo as luna
-            $dirAsLuna = $this->getDirNameLuna($this->editieDirNameNumericVal);
+            $dirAsLuna = $this->getDirNameFromLuna($this->editieDirNameNumericVal);
             if ($dirAsLuna) {
+
+                if (IS_DEBUG) echo ("From Disk & dir is luna, dirAsLuna = $dirAsLuna <br>");
 
                 // deci numele directorului==numarul lunii
                 $this->editieDirName            = $dirAsLuna;
@@ -125,15 +128,17 @@ class Editie
 
             } else {
 
+                if (IS_DEBUG) echo ("From Disk & dir is NOT luna, dirAsLuna = $dirAsLuna <br>");
+
                 // check $editieDirNo as issue
-                $dirAsIssue = $this->getDirNameIssue($this->editieDirNameNumericVal);
+                $dirAsIssue = $this->getDirNameFromIssueNo($this->editieDirNameNumericVal);
                 if ($dirAsIssue) {
 
                     // deci numele directorului==numarul editiei
                     $this->editieDirName        = $dirAsIssue;
                     $this->numar                = $this->editieDirNameNumericVal;
                     // $this->luna;                     // nu avem de unde sa stim luna
-                    // $this->baseDirAreNumarulLunii;   // pastreaza valoarea default, false
+                    $this->baseDirAreNumarulLunii = false;
                 } else {
                     // TODO exceptie
                     // directorul nu a fost gasit - nu mai exista sau are alt prefix
@@ -146,8 +151,10 @@ class Editie
             $this->numar                        = $dbRow[DBC::ED_NUMAR];
 
             // check daca numele directorului==numarul lunii
-            $dirAsLuna = $this->getDirNameLuna($this->luna);
+            $dirAsLuna = $this->getDirNameFromLuna($this->luna);
             if ($dirAsLuna) {
+
+                if (IS_DEBUG) echo ("From DB & dir is luna, dirAsLuna = $dirAsLuna " . "<br>");
 
                 $this->editieDirName            = padLeft($this->luna, LUNA_PAD);
                 $this->editieDirNameNumericVal  = padLeft($this->luna, LUNA_PAD);
@@ -156,12 +163,14 @@ class Editie
             } else {
 
                 // check daca numele directorului==numarul editiei
-                $dirAsIssue = $this->getDirNameIssue($this->numar);
+                $dirAsIssue = $this->getDirNameFromIssueNo($this->numar);
                 if ($dirAsIssue) {
+
+                    if (IS_DEBUG) echo ("From DB & dir is NOT luna, dirAsIssue = $dirAsIssue <br>");
 
                     $this->editieDirName        = $dirAsIssue;
                     $this->editieDirNameNumericVal  = $this->numar;
-                    // $this->baseDirAreNumarulLunii;   // pastreaza valoarea default, false
+                    $this->baseDirAreNumarulLunii = false;
 
                 } else {
                     // directorul nu a fost gasit - nu mai exista sau are alt prefix
@@ -172,6 +181,7 @@ class Editie
         // TODO trebuie mutat in conditiile de mai sus
         $this->editieDirPath            = $this->buildEditieDirPath();
         $this->editieBaseNameForPages   = $this->buildEditieBaseName();
+        $this->coperta                  = new Pagina($this, 1);
 
 
         /* ******** content attrs ******** */
@@ -181,6 +191,13 @@ class Editie
 
         $this->arePaginiScanate = $this->countPaginiScanate() > 0;
 
+
+        /* ******** coperta ******** */
+//        if (isset($dbRow['isBuiltFromDisk'])) {
+//            $this->copertaPath          = $dbRow['copertaPath'];
+//        }
+
+        /* ******** extras ******** */
         if (isset($dbRow[DBC::ED_ART_CNT])) {
             // coloana asta nu e inclusa in toate query-urile,
             // e relevanta doar in pagina cu toate editiile (?)
@@ -211,21 +228,22 @@ class Editie
     }
 
 
-    private function getDirNameLuna($editieDirNo)
+    private function getDirNameFromLuna($editieDirNo)
     {
+        $editieDirNo = padLeft($editieDirNo, LUNA_PAD);
         $dirWithPath = $this->editieHomeDirPath
             . DIRECTORY_SEPARATOR . $editieDirNo;
-        if (is_dir($dirWithPath)) return $dirWithPath;
+        if (is_dir($dirWithPath)) return basename($dirWithPath);
         else return false;
     }
 
-    private function getDirNameIssue($editieDirNo)
+    private function getDirNameFromIssueNo($editieDirNo)
     {
         // check exact match
         foreach(self::$issuePrefixes as $prefix) {
             $tempDir = $this->editieHomeDirPath
                 . DIRECTORY_SEPARATOR . $prefix . $editieDirNo;
-            if (is_dir($tempDir)) return $tempDir ;
+            if (is_dir($tempDir)) return basename($tempDir);
         }
 
         // check partial match
@@ -235,7 +253,7 @@ class Editie
             foreach(self::$issuePrefixes as $prefix) {
                 $tempDir = $this->editieHomeDirPath
                     . DIRECTORY_SEPARATOR . $prefix . $editieDirNo;
-                if (startsWith($simpleDirName, $tempDir)) return $subDir ;
+                if (startsWith($simpleDirName, $tempDir)) return basename($subDir);
             }
         }
     }
@@ -246,8 +264,8 @@ class Editie
      */
     private function buildEditieDirPath() {
         return  $this->editieHomeDirPath . DIRECTORY_SEPARATOR
-            . $this->an . DIRECTORY_SEPARATOR
-            . $this->editieDirNameNumericVal;
+//            . $this->an . DIRECTORY_SEPARATOR
+            . $this->editieDirName;
     }
 
     /**
@@ -262,9 +280,9 @@ class Editie
      */
     private function buildEditieBaseName()
     {
-        return  $this->numeRevista
+        return  ucfirst(strtolower($this->numeRevista
         . $this->an
-        . $this->editieDirNameNumericVal;
+        . $this->editieDirNameNumericVal));
     }
 
     public function countPaginiScanate()
@@ -335,18 +353,22 @@ class Editie
     {
         $targetLink = $this->getEditieUrl();
 
-        if ($this->isBuiltFromDisk) {
-            $imgThumbSrc = $this->copertaPath;
-        } else {
-            // nume baza pentru imaginea copertii
-            $copertaBaseImg = $this->editieBaseNameForPages . padLeft(1, PAGINA_PAD);
+//        if ($this->isBuiltFromDisk) {
+//            $imgThumbSrc = $this->copertaPath;
+//        } else {
+//            // nume baza pentru imaginea copertii
+//            $copertaBaseImg = $this->editieBaseNameForPages . padLeft(1, PAGINA_PAD);
+//
+//            // calea catre thumbnail
+//            $imgThumbSrc = getImageThumbPath($this->editieDirPath, $copertaBaseImg);
+//        }
 
-            // calea catre thumbnail
-            $imgThumbSrc = getImageThumbPath($this->editieDirPath, $copertaBaseImg);
-        }
+        $copertaThumbPath = $this->coperta->thumbPath;
+
+        if (IS_DEBUG) var_dump($this->coperta);
 
         // imaginea copertii: thumb cu link catre imaginea full
-        return getImageWithLink($imgThumbSrc, $targetLink, "card-img");
+        return getImageWithLink($copertaThumbPath, $targetLink, "card-img");
     }
 
     /**
@@ -420,7 +442,7 @@ class Editie
                             // info exclusiv cand construim de pe disc
                             $editieInfo['isBuiltFromDisk']  = "true";
                             $editieInfo['$editieDirNo']     = cleanPrefixFromName(basename($editiaCurenta), self::$issuePrefixes);
-                            $editieInfo['copertaPath']      = $imaginiScanate[0];   // TODO replace w/ "new Pagina"
+                            // $editieInfo['copertaPath']      = $imaginiScanate[0];   // TODO replace w/ "new Pagina"
 
                             // informatiile astea nu le putem avea decat din baza de date
                             // $editieInfo[DBC::REV_ID]     = "NOID";

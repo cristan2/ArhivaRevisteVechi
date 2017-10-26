@@ -130,6 +130,7 @@ class Articol
         );
     }
 
+    // TODO delete, e o functie si in Pagina.php
     /**
      * Construieste numele imaginii fara extensie
      * (ex: 'Level 1999 12 002' fara spatii)

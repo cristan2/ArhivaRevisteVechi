@@ -76,5 +76,8 @@ function getImageThumbPath($imageDir, $imageBaseName) {
  */
 function padLeft($targetNo, $padLength)
 {
-    return str_pad($targetNo, $padLength, '0', STR_PAD_LEFT);
+//    echo "Padding Left " . $targetNo . "<br>";
+    $res = str_pad($targetNo, $padLength, '0', STR_PAD_LEFT);
+//    echo $res . "<br>";
+    return $res;
 }
