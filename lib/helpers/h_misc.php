@@ -18,6 +18,14 @@ function convertLuna($lunaNumar) {
     return $lunaNumar;
 }
 
+function convertTipPublicatie($tip)
+{
+    switch($tip) {
+        case "revista"   : return "";
+        case "supliment" : return " (suplim.)";
+    }
+}
+
 function startsWith($haystack, $needle) {
     $length = strlen($needle);
     return (substr($haystack, 0, $length) === $needle);
