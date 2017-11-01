@@ -30,5 +30,6 @@ use ArhivaRevisteVechi\resources\db\DBC;
 $db = new DBC(DB_FILE);
 
 // coperti default
-DEFINE ("COPERTI_DIR", IMG . "/coperti");
+DEFINE ("COPERTI_DIR"    , IMG . "/coperti");
 DEFINE ("COPERTA_DEFAULT", IMG . "/coperti/default.jpg");
+DEFINE ("THUMB_DEFAULT"  , IMG . "/coperti/default_th.jpg");

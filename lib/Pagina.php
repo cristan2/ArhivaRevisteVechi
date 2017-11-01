@@ -1,7 +1,7 @@
 <?php
 
 namespace ArhivaRevisteVechi\lib;
-
+require_once HELPERS . "/h_images.php";
 
 class Pagina
 {
@@ -37,12 +37,22 @@ class Pagina
 
     public function makePath($isForThumb = false)
     {
-        return $this->editiaParinte->editieDirPath
+        $imagePath = $this->editiaParinte->editieDirPath
             . DIRECTORY_SEPARATOR
-//            . $isForThumb ? "th" . DIRECTORY_SEPARATOR : ""
+            . ($isForThumb ? "th" . DIRECTORY_SEPARATOR : "")
             . $this->paginaBaseName
-//            . $isForThumb ? "_th" : ""
+            . ($isForThumb ? "_th" : "")
             . ".jpg";
+
+        if (!file_exists($imagePath)) {
+            return ($isForThumb ? THUMB_DEFAULT : COPERTA_DEFAULT);
+        }
+        return $imagePath;
+    }
+
+    public function getThumbWithLink()
+    {
+        return getImageWithLink($this->thumbPath, $this->path, "minithumb");
     }
 
 //    static function fromPath($editie, $path)

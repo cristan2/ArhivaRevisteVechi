@@ -113,7 +113,7 @@ class Editie
         if ($this->isBuiltFromDisk) {
             // construim Editia pe baza informatiilor scanate de pe disc
             // si trimise prin requestul GET
-            $this->editieDirNameNumericVal      = $dbRow['$editieDirNo'];
+            $this->editieDirNameNumericVal      = $dbRow['$editie'];
 
             // check $editieDirNo as luna
             $dirAsLuna = $this->getDirNameFromLuna($this->editieDirNameNumericVal);
@@ -196,6 +196,20 @@ class Editie
 //        if (isset($dbRow['isBuiltFromDisk'])) {
 //            $this->copertaPath          = $dbRow['copertaPath'];
 //        }
+
+        /* ******** pagini ******** */
+        if ($this->isBuiltFromDisk) {
+
+        } else {
+
+            // TODO si daca nu avem maxNumPages?
+            for ($i = 1; $i <= $this->maxNumPages; $i++) {
+                $this->listaPagini[$i] = new Pagina($this, $i);
+            }
+
+            if (IS_DEBUG) echo ("Printing lista pagini" . "<br>");
+            if (IS_DEBUG) var_dump($this->listaPagini);
+        }
 
         /* ******** extras ******** */
         if (isset($dbRow[DBC::ED_ART_CNT])) {
@@ -386,11 +400,15 @@ class Editie
      */
     public function getEditieUrl()
     {
-        // TODO
-//        if ($this->isBuiltFromDisk) {
-//            return ARHIVA."/articole.php?revista=$this->numeRevista&an=$this->an&editie=NOED";
-//        }
-        return ARHIVA."/articole.php?editie-id=$this->editieId";
+        if ($this->isBuiltFromDisk) {
+            $queryParams = DBC::REV_NUME . "=$this->numeRevista"
+                . "&" . DBC::ED_AN . "=$this->an"
+                . "&" . "editie=$this->editieDirNameNumericVal";
+        } else {
+            $queryParams = "editie-id=$this->editieId";
+        }
+
+        return ARHIVA."/articole.php?$queryParams";
     }
 
 
@@ -410,7 +428,7 @@ class Editie
      *      |- get prima imagine din fiecare
      *      |- make EditieSurogat doar cu imaginea aia
      */
-    static function getEditiiArrayFrom($revista)
+    static function getEditiiArrayFromNumeRevista($revista)
     {
 
         // $isEditiaNumerotataCuLuna = function ($basename) { return startsWith($basename, "Nr. ");};
@@ -434,25 +452,25 @@ class Editie
                         $imaginiScanate = getImageFilesInDir($editiaCurenta);
                         if ($imaginiScanate) {
 
-                            $editieInfo = array();
 
-                            $editieInfo[DBC::REV_NUME]      = $revista->numeRevista;
-                            $editieInfo[DBC::ED_AN]         = basename($anulCurent);
 
                             // info exclusiv cand construim de pe disc
-                            $editieInfo['isBuiltFromDisk']  = "true";
-                            $editieInfo['$editieDirNo']     = cleanPrefixFromName(basename($editiaCurenta), self::$issuePrefixes);
+                            $numeRevista    = $revista->numeRevista;
+                            $anEditie       = basename($anulCurent);
+                            $dirNo          = cleanPrefixFromName(basename($editiaCurenta), self::$issuePrefixes);
                             // $editieInfo['copertaPath']      = $imaginiScanate[0];   // TODO replace w/ "new Pagina"
 
                             // informatiile astea nu le putem avea decat din baza de date
-                            // $editieInfo[DBC::REV_ID]     = "NOID";
-                            // $editieInfo[DBC::ED_ID]      = "NOID";
-                            // $editieInfo[DBC::ED_PG_CNT]  = "NOCNT";
-                            // $editieInfo[DBC::ED_LUNA]    = "NOLUNA";
-                            // $editieInfo[DBC::ED_NUMAR]   = "NONR";
-                            // $editieInfo[DBC::ED_ART_CNT] = "";
-
-                            $arrayEditiiSurogat[] = new Editie($editieInfo);
+                            /*
+                               $editieInfo[DBC::REV_ID]     = "NOID";
+                               $editieInfo[DBC::ED_ID]      = "NOID";
+                               $editieInfo[DBC::ED_PG_CNT]  = "NOCNT";
+                               $editieInfo[DBC::ED_LUNA]    = "NOLUNA";
+                               $editieInfo[DBC::ED_NUMAR]   = "NONR";
+                               $editieInfo[DBC::ED_ART_CNT] = "";
+                            */
+//                            $arrayEditiiSurogat[] = new Editie($editieInfo);
+                            $arrayEditiiSurogat[] = self::getEditieFromDisk($numeRevista, $anEditie, $dirNo);
                         }
                     }
                 }
@@ -460,5 +478,17 @@ class Editie
         }
 
         return $arrayEditiiSurogat;
+    }
+
+    static function getEditieFromDisk($numeRevista, $anEditie, $dirNo)
+    {
+        $editieInfo = array();
+
+        $editieInfo[DBC::REV_NUME]      = $numeRevista;
+        $editieInfo[DBC::ED_AN]         = $anEditie;
+        $editieInfo['$editie']          = $dirNo;
+        $editieInfo['isBuiltFromDisk']  = true;
+
+        return new Editie($editieInfo);
     }
 }
