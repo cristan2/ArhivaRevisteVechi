@@ -21,7 +21,7 @@ $editiiDbResult = $db->queryToateEditiile($revistaId);
 
 $editiiArray = array();
 while ($dbRow = $db->getNextRow($editiiDbResult)) {
-    $editie = new Editie($dbRow /*, $revista*/);
+    $editie = new Editie($dbRow, Editie::EDITIE_PREVIEW /*, $revista*/);
     $editiiArray[] = $editie;
 }
 

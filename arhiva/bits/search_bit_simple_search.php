@@ -61,7 +61,6 @@ function specialQuerySimpleSearch($db, $searchFilter)
         "rezultatArticole" => $rezultatDbArticole);
 }
 
-
 function processSimpleSearchDbResult($db, $dbResultTuple)
 {
     $articoleDbResult = $dbResultTuple['rezultatArticole'];
@@ -82,7 +81,7 @@ function processSimpleSearchDbResult($db, $dbResultTuple)
         if (isset($listaEditiileArticolelor[$idEditiaCurenta])) {
             $editiaCurenta = $listaEditiileArticolelor[$idEditiaCurenta];
         } else {
-            $editiaCurenta = new Editie($dbRow);
+            $editiaCurenta = new Editie($dbRow, Editie::EDITIE_PREVIEW);
             $listaEditiileArticolelor[$idEditiaCurenta] = $editiaCurenta;
         }
 

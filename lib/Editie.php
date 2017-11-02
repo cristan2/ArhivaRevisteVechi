@@ -36,6 +36,8 @@ class Editie
 {
     // --- static attrs ---
     static $issuePrefixes = ['Nr. ', '#'];
+    const EDITIE_FULL     = 0;
+    const EDITIE_PREVIEW  = 1;
 
     // --- base attrs ---
     public  $numeRevista, $revistaId;
@@ -86,7 +88,7 @@ class Editie
     // TODO in functie de numarul de editii si numarul de aparitii total
     public  $isFirst, $isLast;
 
-    public function __construct($dbRow)
+    public function __construct($dbRow, $editieTypeToBuild)
     {
 
         /* ******** base attrs ******** */
@@ -187,7 +189,6 @@ class Editie
         /* ******** content attrs ******** */
         // fiecare articol se adauga singur in acest array
         $listaArticole = array();
-        $listaPagini = array();
 
         $this->arePaginiScanate = $this->countPaginiScanate() > 0;
 
@@ -198,17 +199,22 @@ class Editie
 //        }
 
         /* ******** pagini ******** */
-        if ($this->isBuiltFromDisk) {
+        if ($editieTypeToBuild == self::EDITIE_FULL) {
+            $listaPagini = array();
+            if ($this->isBuiltFromDisk) {
 
-        } else {
+                // TODO implement
 
-            // TODO si daca nu avem maxNumPages?
-            for ($i = 1; $i <= $this->maxNumPages; $i++) {
-                $this->listaPagini[$i] = new Pagina($this, $i);
+            } else {
+
+                // TODO si daca nu avem maxNumPages?
+                for ($i = 1; $i <= $this->maxNumPages; $i++) {
+                    $this->listaPagini[$i] = new Pagina($this, $i);
+                }
+
+                if (IS_DEBUG) echo("Printing lista pagini" . "<br>");
+                if (IS_DEBUG) var_dump($this->listaPagini);
             }
-
-            if (IS_DEBUG) echo ("Printing lista pagini" . "<br>");
-            if (IS_DEBUG) var_dump($this->listaPagini);
         }
 
         /* ******** extras ******** */
@@ -430,47 +436,28 @@ class Editie
      */
     static function getEditiiArrayFromNumeRevista($revista)
     {
-
-        // $isEditiaNumerotataCuLuna = function ($basename) { return startsWith($basename, "Nr. ");};
-
         $arrayEditiiSurogat = array();
 
-        // citeste ani revista
+        // citeste directoare ani
         $directoareAni = getDirsInPath($revista->revistaDirPath);
         if ($directoareAni) {
             foreach($directoareAni as $anulCurent) {
 
-                // citeste editii (organizate pe luni sau numere)
+                // citeste directoare editii (reprezentand fie lunile aparitiei, fie numerele propriu-zise)
                 $directoareEditii = getDirsInPath($anulCurent);
                 if ($directoareEditii) {
                     foreach($directoareEditii as $editiaCurenta) {
-
-                        // $editiaIsLuna = $isEditiaNumerotataCuLuna($editiaCurenta);
 
                         // citeste fisiere
                         // daca exista imagini scanate, construim editia
                         $imaginiScanate = getImageFilesInDir($editiaCurenta);
                         if ($imaginiScanate) {
 
-
-
                             // info exclusiv cand construim de pe disc
                             $numeRevista    = $revista->numeRevista;
                             $anEditie       = basename($anulCurent);
                             $dirNo          = cleanPrefixFromName(basename($editiaCurenta), self::$issuePrefixes);
-                            // $editieInfo['copertaPath']      = $imaginiScanate[0];   // TODO replace w/ "new Pagina"
-
-                            // informatiile astea nu le putem avea decat din baza de date
-                            /*
-                               $editieInfo[DBC::REV_ID]     = "NOID";
-                               $editieInfo[DBC::ED_ID]      = "NOID";
-                               $editieInfo[DBC::ED_PG_CNT]  = "NOCNT";
-                               $editieInfo[DBC::ED_LUNA]    = "NOLUNA";
-                               $editieInfo[DBC::ED_NUMAR]   = "NONR";
-                               $editieInfo[DBC::ED_ART_CNT] = "";
-                            */
-//                            $arrayEditiiSurogat[] = new Editie($editieInfo);
-                            $arrayEditiiSurogat[] = self::getEditieFromDisk($numeRevista, $anEditie, $dirNo);
+                            $arrayEditiiSurogat[] = self::getEditieFromDisk($numeRevista, $anEditie, $dirNo, self::EDITIE_PREVIEW);
                         }
                     }
                 }
@@ -480,7 +467,7 @@ class Editie
         return $arrayEditiiSurogat;
     }
 
-    static function getEditieFromDisk($numeRevista, $anEditie, $dirNo)
+    static function getEditieFromDisk($numeRevista, $anEditie, $dirNo, $editieTypeToBuild)
     {
         $editieInfo = array();
 
@@ -489,6 +476,6 @@ class Editie
         $editieInfo['$editie']          = $dirNo;
         $editieInfo['isBuiltFromDisk']  = true;
 
-        return new Editie($editieInfo);
+        return new Editie($editieInfo, $editieTypeToBuild);
     }
 }

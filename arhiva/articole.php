@@ -22,7 +22,7 @@ if (isset($_GET["editie-id"])) {
 
     /* ------- info editia curenta ------- */
     $editiaCurenta = $db->getNextRow($db->queryEditie($editieId));
-    $editiaCurenta = new Editie($editiaCurenta);
+    $editiaCurenta = new Editie($editiaCurenta, Editie::EDITIE_FULL);
     include_once ARHIVABITS . "/articole_bit_editia_curenta.php";
 
     /* ------- cuprins articole ------- */
@@ -39,7 +39,7 @@ if (isset($_GET["editie-id"])) {
     $numeRevista = $_GET[DBC::REV_NUME];
     $anEditie    = $_GET[DBC::ED_AN];
     $dirNo       = $_GET['editie'];
-    $editiaCurenta = Editie::getEditieFromDisk($numeRevista, $anEditie, $dirNo);
+    $editiaCurenta = Editie::getEditieFromDisk($numeRevista, $anEditie, $dirNo, Editie::EDITIE_FULL);
 }
 
 
