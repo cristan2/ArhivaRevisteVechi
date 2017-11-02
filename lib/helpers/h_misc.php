@@ -55,3 +55,18 @@ function getDirsInPath($dirPath)
 {
     return glob($dirPath . "/" . "*", GLOB_ONLYDIR);
 }
+
+define ("LUNA_PAD",   2);
+define ("ISSUE_PAD",  3);
+define ("PAGINA_PAD", 3);
+
+/**
+ * Adauga padding la numarul lunii sau paginii
+ * (ex luna: 2 -> 02)
+ * (ex pagina: 3 -> 003, 24 -> 024)
+ */
+function padLeft($targetNo, $padLength)
+{
+    $res = str_pad($targetNo, $padLength, '0', STR_PAD_LEFT);
+    return $res;
+}

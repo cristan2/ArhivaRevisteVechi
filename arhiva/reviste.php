@@ -4,7 +4,6 @@
 require_once(RESOURCES . "/config.php");*/
 
 require_once HELPERS . "/h_html.php";
-require_once HELPERS . "/h_images.php";
 
 require_once LIB     . "/Revista.php";
 require_once HELPERS . "/HtmlPrinter.php";

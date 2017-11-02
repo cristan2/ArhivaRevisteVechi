@@ -2,7 +2,7 @@
 namespace ArhivaRevisteVechi\lib;
 
 require_once("../resources/config.php");
-require_once HELPERS . "/h_images.php";
+require_once HELPERS . "/h_misc.php";
 use ArhivaRevisteVechi\resources\db\DBC;
 
 class Articol
@@ -73,7 +73,6 @@ class Articol
         return $row;
     }
 
-    // TODO needs refactoring ('Imagine'/'Pagina' class?)
     /**
      * Construieste thumbnails pagini cu linkuri catre imaginea mare
      * Returneaza un string cu html pentru afisare in tabel
@@ -81,25 +80,14 @@ class Articol
     public function buildHtmlPagesThumbnails($useDirectLinkToImage = false)
     {
         $thumbsRow = "<div class = 'articol-card-cell articol-card-lista-microthumb'>" . PHP_EOL;
-        if ($useDirectLinkToImage) {
-            $baseDestinationLink = $this->editiaParinte->editieDirPath;
-        } else {
-            $baseDestinationLink = getBaseUrl()
-                                    . "?editie={$this->editiaParinte->editieId}"
-                                    . "&articol={$this->articolId}";
-        }
-        // genereaza fiecare microthumb cu link catre imaginea mare
         foreach($this->listaPagini as $pageNo => $imageBaseName)
         {
+            $pagina = $this->editiaParinte->listaPagini[$pageNo];
             if ($useDirectLinkToImage) {
-                $destinationLink = getImagePath($baseDestinationLink, $imageBaseName);
+                $thumbsRow .= $pagina->getMicroThumbWithLinkToFull();
             } else {
-                $destinationLink = $baseDestinationLink . "&pagina=$pageNo";
+                $thumbsRow .= $pagina->getMicroThumbWithLinkToPaginaDinArticol($this->articolId);
             }
-
-            $imageDir = $this->editiaParinte->editieDirPath;
-            $imageThumb = getImageThumbPath($imageDir, $imageBaseName);
-            $thumbsRow .= getImageWithLink($imageThumb, $destinationLink, "microthumb")."  ";
         }
         $thumbsRow .= "</div>" . PHP_EOL;
         return $thumbsRow;

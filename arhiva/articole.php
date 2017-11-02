@@ -2,7 +2,6 @@
 
 DEFINE("ROOT", "..");
 require_once("../resources/config.php");
-require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_html.php";
 require_once HELPERS . "/h_misc.php";
 

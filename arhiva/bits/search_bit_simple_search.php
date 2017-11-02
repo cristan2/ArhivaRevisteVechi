@@ -69,7 +69,7 @@ function processSimpleSearchDbResult($db, $dbResultTuple)
     // rezultat editii
     $listaEditii = array();
     while ($dbRow = $db->getNextRow($editiiDbResult)) {
-        $listaEditii[] = new Editie($dbRow);
+        $listaEditii[] = new Editie($dbRow, Editie::EDITIE_PREVIEW);
     }
 
     // rezultat articole
@@ -81,7 +81,7 @@ function processSimpleSearchDbResult($db, $dbResultTuple)
         if (isset($listaEditiileArticolelor[$idEditiaCurenta])) {
             $editiaCurenta = $listaEditiileArticolelor[$idEditiaCurenta];
         } else {
-            $editiaCurenta = new Editie($dbRow, Editie::EDITIE_PREVIEW);
+            $editiaCurenta = new Editie($dbRow, Editie::EDITIE_FULL);
             $listaEditiileArticolelor[$idEditiaCurenta] = $editiaCurenta;
         }
 

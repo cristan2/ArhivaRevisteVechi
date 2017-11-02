@@ -73,7 +73,17 @@ class Revista {
         $targetLink = $this->getRevistaUrl();
         $copertaImagePath =  COPERTI_DIR . DIRECTORY_SEPARATOR . $this->revistaBaseName . ".jpg";
         if (!file_exists($copertaImagePath)) $copertaImagePath = COPERTA_DEFAULT;
-        return getImageWithLink($copertaImagePath, $targetLink, "card-img");
+        return $this->getImageWithLink($copertaImagePath, $targetLink, "card-img");
+    }
+
+    private function getImageWithLink($displayedImagePath, $targetLink, ...$htmlClasses) {
+        if (! file_exists($displayedImagePath))
+//        return "n/a";
+            $displayedImagePath = COPERTA_DEFAULT;
+//    else {
+        $htmlClassList = getCssClassList($htmlClasses);
+        return "<a href='$targetLink'><img src='$displayedImagePath' $htmlClassList alt='Image' /></a>";
+//    }
     }
 
     /**

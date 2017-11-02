@@ -1,10 +1,14 @@
 <?php
 
 namespace ArhivaRevisteVechi\lib;
-require_once HELPERS . "/h_images.php";
+require_once HELPERS . "/h_misc.php";
 
 class Pagina
 {
+
+    const NORMAL_THUMB = "minithumb";
+    const MICRO_THUMB  = "microthumb";
+
 
     public $editiaParinte;
     public $numar;
@@ -35,6 +39,11 @@ class Pagina
         . padLeft($this->numar, PAGINA_PAD);
     }
 
+    /**
+     * Construieste calea catre o imagini sau thumbnail
+     * ex. $isForThumb == false: img/level/1999/12/Level199912002.jpg
+     * ex. $isForThumb == true: img/level/1999/12/th/Level199912002_th.jpg
+     */
     public function makePath($isForThumb = false)
     {
         $imagePath = $this->editiaParinte->editieDirPath
@@ -50,9 +59,33 @@ class Pagina
         return $imagePath;
     }
 
-    public function getThumbWithLink()
+    public function getMicroThumbWithLinkToPaginaDinArticol($articolId)
     {
-        return getImageWithLink($this->thumbPath, $this->path, "minithumb");
+        $destinationLink = $this->editiaParinte->getEditieUrl() . "&articol=$articolId" . "&pagina=$this->numar";
+        return $this->getImageWithLink($this->thumbPath, $destinationLink, "microthumb");
+    }
+
+    public function getMicroThumbWithLinkToFull()
+    {
+        return $this->getImageWithLink($this->thumbPath, $this->path, "microthumb");
+    }
+
+    public function getThumbWithLinkToFullImage()
+    {
+        return $this->getImageWithLink($this->thumbPath, $this->path, "minithumb");
+    }
+
+    public function getThumbWithLinkToEditie($cssClass)
+    {
+        $destinationLink = $this->editiaParinte->getEditieUrl();
+        return $this->getImageWithLink($this->thumbPath, $destinationLink, $cssClass);
+    }
+
+    function getImageWithLink($displayedImagePath, $targetLink, ...$cssClasses) {
+        if (! file_exists($displayedImagePath))
+            $displayedImagePath = COPERTA_DEFAULT;
+        $htmlClassList = getCssClassList($cssClasses);
+        return "<a href='$targetLink'><img src='$displayedImagePath' $htmlClassList alt='Image' /></a>";
     }
 
 //    static function fromPath($editie, $path)

@@ -6,7 +6,6 @@ use ArhivaRevisteVechi\lib\Pagina;
 use ArhivaRevisteVechi\resources\db\DBC;
 
 require_once("../resources/config.php");
-require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_misc.php";
 require_once HELPERS . "/HtmlPrinter.php";
 require_once LIB     . "/Pagina.php";
@@ -78,6 +77,7 @@ class Editie
        imaginile scanate, fara info din DB */
     private $isBuiltFromDisk = false;
 
+    // TODO unde naiba am vrut sa-l folosesc pe asta?
     /* denota daca numele directorului este dat de luna
        aparitiei (02 = luna februarie) sau numarul editiei
        (ex: 02 = al doilea numar aparut) */
@@ -226,9 +226,9 @@ class Editie
         }
     }
 
+    // TODO de inlocuit cu $revistaMama->revistaDirPath
     /**
      * Construieste calea catre directorul anului din care face parte editia
-     * // TODO de inlocuit cu $revistaMama->revistaDirPath
      */
     private function buildHomeDirPath()
     {
@@ -238,16 +238,9 @@ class Editie
     }
 
     /**
-     * Construieste numele directorului editiei
-     * (dat de luna sau numarul editiei)
-     * adica "Nr. 12" din "img/level/1999/Nr. 12"
+     * Verifica daca numele directorului reprezinta *luna aparitiei*
+     * si returneaza calea catre director daca exista
      */
-    private function buildEditieDirName($editieDirNo = "0")
-    {
-
-    }
-
-
     private function getDirNameFromLuna($editieDirNo)
     {
         $editieDirNo = padLeft($editieDirNo, LUNA_PAD);
@@ -257,6 +250,10 @@ class Editie
         else return false;
     }
 
+    /**
+     * Verifica daca numele directorului reprezinta *numarul editiei*
+     * si returneaza calea catre director daca exista
+     */
     private function getDirNameFromIssueNo($editieDirNo)
     {
         // check exact match
@@ -283,8 +280,8 @@ class Editie
      * (ex img/level/1999/12)
      */
     private function buildEditieDirPath() {
-        return  $this->editieHomeDirPath . DIRECTORY_SEPARATOR
-//            . $this->an . DIRECTORY_SEPARATOR
+        return
+            $this->editieHomeDirPath . DIRECTORY_SEPARATOR
             . $this->editieDirName;
     }
 
@@ -356,7 +353,7 @@ class Editie
 
     /**
      * Construieste titlu pentru carduri
-     * ex: "9 / 1999"
+     * ex: "9 / 1999" (luna) sau "#9 / 1999" (numar)
      */
     private function outputTitluPeScurt()
     {
@@ -371,24 +368,7 @@ class Editie
      */
     private function outputCopertaWithLink()
     {
-        $targetLink = $this->getEditieUrl();
-
-//        if ($this->isBuiltFromDisk) {
-//            $imgThumbSrc = $this->copertaPath;
-//        } else {
-//            // nume baza pentru imaginea copertii
-//            $copertaBaseImg = $this->editieBaseNameForPages . padLeft(1, PAGINA_PAD);
-//
-//            // calea catre thumbnail
-//            $imgThumbSrc = getImageThumbPath($this->editieDirPath, $copertaBaseImg);
-//        }
-
-        $copertaThumbPath = $this->coperta->thumbPath;
-
-        if (IS_DEBUG) var_dump($this->coperta);
-
-        // imaginea copertii: thumb cu link catre imaginea full
-        return getImageWithLink($copertaThumbPath, $targetLink, "card-img");
+        return $this->coperta->getThumbWithLinkToEditie("card-img");
     }
 
     /**

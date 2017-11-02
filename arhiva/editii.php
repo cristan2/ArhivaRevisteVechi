@@ -1,7 +1,6 @@
 <?php
 DEFINE("ROOT", "..");
 require("../resources/config.php");
-require_once HELPERS . "/h_images.php";
 require_once HELPERS . "/h_misc.php";
 
 // TODO delete and decouple classes (editii.php - Editie.php - h_html.php - HtmlPrinter.php)
