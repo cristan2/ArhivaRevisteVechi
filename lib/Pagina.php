@@ -2,6 +2,9 @@
 
 namespace ArhivaRevisteVechi\lib;
 require_once HELPERS . "/h_misc.php";
+require_once HELPERS . "/HtmlPrinter.php";
+
+use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
 class Pagina
 {
@@ -40,7 +43,8 @@ class Pagina
     }
 
     /**
-     * Construieste calea catre o imagini sau thumbnail
+     * Construieste calea catre o imagine sau thumbnail,
+     * dar fara sa verifice daca exista:
      * ex. $isForThumb == false: img/level/1999/12/Level199912002.jpg
      * ex. $isForThumb == true: img/level/1999/12/th/Level199912002_th.jpg
      */
@@ -53,9 +57,11 @@ class Pagina
             . ($isForThumb ? "_th" : "")
             . ".jpg";
 
-        if (!file_exists($imagePath)) {
-            return ($isForThumb ? THUMB_DEFAULT : COPERTA_DEFAULT);
-        }
+
+//        if (!file_exists($imagePath)) {
+//            return ($isForThumb ? THUMB_DEFAULT : COPERTA_DEFAULT);
+//        }
+
         return $imagePath;
     }
 
@@ -75,17 +81,35 @@ class Pagina
         return $this->getImageWithLink($this->thumbPath, $this->path, "minithumb");
     }
 
+    public function getHugeThumbWithLinkToFullImage()
+    {
+        return $this->getImageWithLink($this->path, $this->path, "fullthumb");
+    }
+
     public function getThumbWithLinkToEditie($cssClass)
     {
         $destinationLink = $this->editiaParinte->getEditieUrl();
-        return $this->getImageWithLink($this->thumbPath, $destinationLink, $cssClass);
+        return $this->getImageWithLink($this->thumbPath, $destinationLink, /*true, */$cssClass);
     }
 
-    function getImageWithLink($displayedImagePath, $targetLink, ...$cssClasses) {
-        if (! file_exists($displayedImagePath))
-            $displayedImagePath = COPERTA_DEFAULT;
+    // TODO implement alt description
+    /**
+     * Primeste calea catre o imagine si un link de destinatie si afiseaza
+     * respectiva imagines cu link catre destinatia specificata, atasand
+     * si clasele css specificate optional
+     *
+     * Daca fisierul nu exista, va fi afisata imaginea default fara link,
+     * cu exceptia cazului in care e specificat explicit (forceLink), util
+     * in cazul editiilor care nu au imagini scanate, dar au cuprins
+     */
+    function getImageWithLink($displayedImagePath, $targetLink, /*$forceLink = false,*/ ...$cssClasses) {
         $htmlClassList = getCssClassList($cssClasses);
-        return "<a href='$targetLink'><img src='$displayedImagePath' $htmlClassList alt='Image' /></a>";
+
+        if (! file_exists($displayedImagePath))
+            return HtmlPrinter::wrapImg(COPERTA_DEFAULT, $htmlClassList, 'Image');
+
+        $displayedElement = HtmlPrinter::wrapImg($displayedImagePath, $htmlClassList, 'Image');
+        return HtmlPrinter::wrapLink($displayedElement, $targetLink);
     }
 
 //    static function fromPath($editie, $path)

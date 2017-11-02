@@ -143,4 +143,13 @@ class HtmlPrinter {
         return $rezultatFinal;
     }
 
+    static function wrapLink($displayedElement, $targetLink)
+    {
+        return "<a href='$targetLink'>$displayedElement</a>";
+    }
+
+    static function wrapImg($imagePath, $cssClass, $altDescription = 'Image')
+    {
+        return "<img src='$imagePath' $cssClass alt='$altDescription' />";
+    }
 }

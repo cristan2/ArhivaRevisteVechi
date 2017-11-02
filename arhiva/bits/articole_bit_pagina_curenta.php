@@ -23,7 +23,7 @@ if (!empty($_GET['articol'])) {
     /* ------- afisare epagina curenta ------- */
     $paginaCurentaNr = "1";
     if (!empty($_GET['pagina']))  $paginaCurentaNr = $_GET['pagina'];
-    $paginaCurentaImagePath = $editiaCurenta->listaPagini[$paginaCurentaNr]->makePath();
+    $paginaCurentaHugeThumb = $editiaCurenta->listaPagini[$paginaCurentaNr]->getHugeThumbWithLinkToFullImage();
 
 } else {
     /* ------- afisare thumbs toate paginile------- */
