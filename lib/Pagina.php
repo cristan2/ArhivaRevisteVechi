@@ -90,7 +90,7 @@ class Pagina
     public function getThumbWithLinkToEditie($cssClass)
     {
         $destinationLink = $this->editiaParinte->getEditieUrl();
-        return $this->getImageWithLink($this->thumbPath, $destinationLink, /*true, */$cssClass);
+        return $this->getImageWithLink($this->thumbPath, $destinationLink, $cssClass, true);
     }
 
     // TODO implement alt description
@@ -104,13 +104,13 @@ class Pagina
      * care e specificat explicit (forceLink), util in cazul editiilor
      * care nu au imagini scanate, dar au cuprins
      */
-    function getImageWithLink($displayedImagePath, $targetLink, /*$forceLink = false,*/ ...$cssClasses)
+    function getImageWithLink($displayedImagePath, $targetLink, $cssClasses, $forceLink = false)
     {
         $htmlClassList = getCssClassList($cssClasses);
 
         $displayedElement = HtmlPrinter::wrapImg($displayedImagePath, $htmlClassList, 'Image');
 
-        if ($displayedImagePath == THUMB_DEFAULT || $displayedImagePath == COPERTA_DEFAULT)
+        if (($displayedImagePath == THUMB_DEFAULT || $displayedImagePath == COPERTA_DEFAULT) && !$forceLink)
             return $displayedElement;
 
         return HtmlPrinter::wrapLink($displayedElement, $targetLink);

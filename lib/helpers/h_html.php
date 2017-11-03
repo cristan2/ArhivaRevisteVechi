@@ -8,6 +8,7 @@ function getBaseUrl() {
 
 function getCssClassList($classList) {
     if (empty($classList)) return "";
+    else if (!is_array($classList)) return " class = '$classList' ";
     else return " class = '".implode(" ", $classList)."' ";
 }
 
