@@ -222,7 +222,7 @@ class Editie
             // coloana asta nu e inclusa in toate query-urile,
             // e relevanta doar in pagina cu toate editiile (?)
             $this->numarArticole  = $dbRow[DBC::ED_ART_CNT];
-            $this->areArticoleIndexate = true;
+            if ($this->numarArticole > 0) $this->areArticoleIndexate = true;
         }
     }
 
@@ -322,13 +322,19 @@ class Editie
      */
     function getHtmlOutput($useSearchLayout = false)
     {
+        $previewContinut = $this->outputPreviewContinut();
+
         $htmlClass = $useSearchLayout ? "reviste-cards-search" : "reviste-cards";
         $attrsToPrint = array(
             "imagine card"  => $this->outputCopertaWithLink(),
-            "titlu card"    => "<h1>{$this->outputTitluPeScurt()}</h1>",
-            "subtitlu card" => "<h2>{$this->outputNumar()}</h2>",
-            // TODO temporar
-//            "info card"     => "<p>{$this->numarArticole} art, {$this->countPaginiScanate()} pg. scanate</p>"
+            "detalii card"  => HtmlPrinter::buildCardDiv(array(
+                "titlu card"    => "<h1>{$this->outputTitluPeScurt()}</h1>",
+                "subtitlu card" => "<h2>{$this->outputNumar()}</h2>",
+            ), "reviste-cards-detail"),
+            "preview continut" => "<div
+                                    title = '{$previewContinut['tooltip']}'
+                                    class = 'reviste-cards-preview-icon {$previewContinut['cssCuloare']}'>
+                                    </div>"
         );
         return HtmlPrinter::buildCardDiv($attrsToPrint, $htmlClass);
     }
@@ -378,6 +384,35 @@ class Editie
     private function outputNumar()
     {
         return "Nr. " . $this->numar;
+    }
+
+    private function outputPreviewContinut()
+    {
+        // are articole + pagini scanate = "editie completa: x articole", verde
+        if ($this->areArticoleIndexate && $this->arePaginiScanate) {
+            $tooltipArticole = "Ediţie completă: $this->numarArticole articole";
+            $cssClass = "reviste-cards-preview-icon-complet";
+
+        // are doar pagini scanate = "editie fara cuprins", orange
+        } elseif ($this->arePaginiScanate) {
+            $tooltipArticole = "Ediţie fără cuprins";
+            $cssClass = "reviste-cards-preview-icon-doar-scan";
+
+        // doar articole = "editie fara pagini scanate", albastru-gri
+        } elseif ($this->areArticoleIndexate) {
+            $tooltipArticole = "Ediţie fără pagini scanate";
+            $cssClass = "reviste-cards-preview-icon-doar-cuprins";
+
+        // fara nimic = "editie fara continut", gri
+        } else {
+            $tooltipArticole = "Ediţie fără conţinut";
+            $cssClass = "reviste-cards-preview-icon-no-content";
+        }
+
+        return array(
+            "tooltip"    => $tooltipArticole,
+            "cssCuloare" => $cssClass
+        );
     }
 
     // TODO trebuie conditie daca nu exista editie id

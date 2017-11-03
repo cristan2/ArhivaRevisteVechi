@@ -30,6 +30,17 @@ div.home-link-container {
     font-size: 1.5em;
 }
 
+/* --- reviste cards --- */
+
+
+div.card-container, div.search-container, div.page-content {
+    width: 70%;
+    margin: 0 auto;
+}
+
+img.card-img {
+    width: 100%;
+}
 
 div.reviste-cards, div.reviste-cards-search {
     display: inline-block;
@@ -61,15 +72,36 @@ div.reviste-cards-search h1,h2 {
     line-height: 0.8;
 }
 
-/* --- reviste cards --- */
+/* --- reviste cards - indicatoare continut --- */
 
-div.card-container, div.search-container, div.page-content {
-    width: 70%;
-    margin: 0 auto;
+/* titlu si subtitlu cards */
+div.reviste-cards-detail {
+     display: inline-block;
+     width: 70%;
+ }
+
+div.reviste-cards-preview-icon {
+    display: inline-block;
+    width: 1em;
+    background-color: darkgray;
+    border-radius: 50%;
+    height: 1em;
 }
 
-img.card-img {
-    width: 100%;
+div.reviste-cards-preview-icon-complet {
+    background-color: lawngreen;
+}
+
+div.reviste-cards-preview-icon-doar-scan {
+    background-color: gold;
+}
+
+div.reviste-cards-preview-icon-doar-cuprins {
+    background-color: lightblue;
+}
+
+div.reviste-cards-preview-icon-no-content {
+    background-color: darkgray;
 }
 
 /* --- tabele --- */
