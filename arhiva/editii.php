@@ -16,6 +16,11 @@ use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
 $revistaId = $_GET["revista"];
 
+/* ------- info revista curenta ------- */
+$revistaDbResult = $db->getNextRow($db->queryRevista($revistaId));
+$revista = new Revista($revistaDbResult);
+
+/* ------- info editii ------- */
 $editiiDbResult = $db->queryToateEditiile($revistaId);
 
 $editiiArray = array();
@@ -24,15 +29,13 @@ while ($dbRow = $db->getNextRow($editiiDbResult)) {
     $editiiArray[] = $editie;
 }
 
+// daca nu exista intrari in DB, folosim direct
+// imaginile salvate pe disc, daca exista
 if (count($editiiArray) == 0) {
-
-    // daca nu exista intrari in DB, folosim direct
-    // imaginile salvate pe disc, daca exista
-    $revistaDbResult = $db->getNextRow($db->queryRevista($revistaId));
-    $revista = new Revista($revistaDbResult);
     $editiiArray = Editie::getEditiiArrayFromNumeRevista($revista);
 }
 
+$pageTitle = $revista->numeRevista;
 $pageContent = HtmlPrinter::buildDivContainer($editiiArray, array("card-container"));
 
 include_once HTMLLIB . "/view_simple.php";

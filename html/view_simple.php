@@ -10,6 +10,7 @@
     <?php include HTMLBITS . "/html_bit_header_home_link.php"; ?><br>
     <?php include HTMLBITS . "/html_bit_search.php"; ?><br>
     <div class = "page-content">
+        <?php echo isset($pageTitle)   ? "<h1>$pageTitle</h1>" : "" ?>
         <?php echo isset($pageContent) ? $pageContent : "" ?>
     </div>
 </body>
