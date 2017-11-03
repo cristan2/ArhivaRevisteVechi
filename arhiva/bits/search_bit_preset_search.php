@@ -1,6 +1,8 @@
 <?php
+require_once HELPERS . "/HtmlPrinter.php";
+use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
-function performQuickSearch($params)
+function performPresetSearch($params)
 {
     global $db;
 
@@ -12,10 +14,11 @@ function performQuickSearch($params)
             $dbResult = specialQueryScanStatus($db);
             $dbFiltered = processScanStatusDbResult($dbResult);
 
-            if ($hasOption && $option === 'doku') return buildDokuWikiTableFromArray($dbFiltered);
-            else return buildHtmlTableFromArray($dbFiltered);
+            if ($hasOption && $option === 'doku')
+                return HtmlPrinter::buildDokuWikiTableFromArray($dbFiltered);
+            else
+                return HtmlPrinter::buildHtmlTableFromArray($dbFiltered);
     }
-
 }
 
 // TODO de refactorizat
@@ -44,6 +47,7 @@ function processScanStatusDbResult($dbResult) {
         $revista = $dbRow['revista_nume'];
         $an = $dbRow['an'];
         $luna = $dbRow['luna'];
+        $tip = $dbRow['tip'];
 
         // pagini lipsa
         $listaPgLipsa = "";
@@ -73,7 +77,8 @@ function processScanStatusDbResult($dbResult) {
         // add to filtered result
         if (!empty($listaPgLipsa) || !$areCuprins || !empty($calitateScan)) {
             $infoRevistaCurenta['An'] = $an;
-            $infoRevistaCurenta['Luna'] = convertLuna($luna);
+            $infoRevistaCurenta['Luna'] = convertLuna($luna) . convertTipPublicatie($tip);
+            // $infoRevistaCurenta['Tip'] = convertLuna($tip);
 
             $infoRevistaCurenta['Pagini Lipsa'] = empty($listaPgLipsa) ? "&bull;" : $listaPgLipsa;
             $infoRevistaCurenta['Cuprins'] = $areCuprins ? "&bull;" : "NU";
@@ -91,7 +96,7 @@ function specialQueryScanStatus($db)
 {
     return $db->directQuery("
             SELECT r.revista_nume, r.aparitii,
-                e.editie_id, e.numar, e.an, e.luna,
+                e.editie_id, e.tip, e.numar, e.an, e.luna,
                 e.luna_sfarsit, e.nr_pagini, e.scan_info_nr_pg,
                 e.scan_info_pg_lipsa, e.scan_info_observatii,
                 COUNT(a.articol_id) AS nr_articole
@@ -100,6 +105,6 @@ function specialQueryScanStatus($db)
             LEFT JOIN articole a USING ('editie_id')
             WHERE e.numar <> ''
             GROUP BY editie_id
-            ORDER BY r.revista_nume, e.an
+            ORDER BY r.revista_nume, e.an, e.tip, e.numar
         ");
 }

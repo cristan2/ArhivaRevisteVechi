@@ -1,17 +1,17 @@
 <?php
-use ArhivaRevisteVechi\resources\db\DBC;
 use ArhivaRevisteVechi\lib\Editie;
 
-$editiaCurenta = $db->getNextRow($db->queryEditie($editieId));
-$editiaCurenta = new Editie($editiaCurenta);
+// previous Editie
+// TODO provision for editii fara id, dar care au numar
+$prevEditieDbResult = $db->getNextRow(
+    $db->queryEditieFromNumar($editiaCurenta->revistaId, ($editiaCurenta->numar) - 1));
+$prevEditie = new Editie($prevEditieDbResult, Editie::EDITIE_PREVIEW);
+$prevEditieLink = $prevEditie->getEditieUrl();
 
-// next & prev links
+// next Editie
 // TODO: trebuie sa existe si un max(editie_id) pentru disable la navLinkNext
-$prevEditieId = $db->getNextRow($db->queryEditieIdFromNumar($editiaCurenta->revistaId, ($editiaCurenta->numar) - 1));
-$navLinkPrev = getEditieUrl($prevEditieId[DBC::ED_ID]);
-
-$nextEditieId = $db->getNextRow($db->queryEditieIdFromNumar($editiaCurenta->revistaId, ($editiaCurenta->numar) + 1));
-$navLinkNext = getEditieUrl($nextEditieId[DBC::ED_ID]);
-
-$titluEditieCurenta = "{$editiaCurenta->numeRevista} nr. {$editiaCurenta->numar}";
-$lunaEditieCurenta = "(". convertLuna($editiaCurenta->luna) ." {$editiaCurenta->an})";
+// TODO provision for editii fara id, dar care au numar
+$nextEditieDbResult = $db->getNextRow(
+    $db->queryEditieFromNumar($editiaCurenta->revistaId, ($editiaCurenta->numar) + 1));
+$nextEditie = new Editie($nextEditieDbResult, Editie::EDITIE_PREVIEW);
+$nextEditieLink = $nextEditie->getEditieUrl();

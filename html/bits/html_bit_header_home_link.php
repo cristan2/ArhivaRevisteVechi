@@ -9,7 +9,7 @@
             else echo "ARHIVA REVISTE VECHI";
         ?>
     </h2>
-    <h2 class = "quick-search" style = "position:absolute; top: 0px; right: 0px" >
-        <a href = "<?php echo ARHIVA . "/search.php" ?> ">Quick Links</a>
+    <h2 class = "preset-search" style = "position:absolute; top: 0; right: 0" >
+        <a href = "<?php echo ARHIVA . "/search.php" ?> ">SEARCH</a>
     </h2>
 </div>

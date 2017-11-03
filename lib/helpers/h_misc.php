@@ -18,7 +18,55 @@ function convertLuna($lunaNumar) {
     return $lunaNumar;
 }
 
+function convertTipPublicatie($tip)
+{
+    switch($tip) {
+        case "revista"   : return "";
+        case "supliment" : return " (suplim.)";
+    }
+}
+
 function startsWith($haystack, $needle) {
     $length = strlen($needle);
     return (substr($haystack, 0, $length) === $needle);
+}
+
+function cleanPrefixFromName($dirName, $prefixArray)
+{
+    foreach ($prefixArray as $prefix) {
+        if (startsWith($dirName, $prefix)) {
+            return substr($dirName, strlen($prefix));
+        }
+    }
+    return $dirName;
+}
+
+function getImageFilesInDir($dirPath)
+{
+    /**
+     * // https://stackoverflow.com/questions/12801370/count-how-many-files-in-directory-php
+     */
+    // glob($directory . "*.{jpg,png,gif}",GLOB_BRACE)
+    // the GLOB_BRACE flag expands {a,b,c} to match 'a', 'b', or 'c'
+    return glob($dirPath . "/" . "*.{jpg,jpeg,png}", GLOB_BRACE);
+}
+
+function getDirsInPath($dirPath)
+{
+    return glob($dirPath . "/" . "*", GLOB_ONLYDIR);
+}
+
+define ("LUNA_PAD",   2);
+define ("ISSUE_PAD",  3);
+define ("PAGINA_PAD", 3);
+
+/**
+ * Adauga padding la numarul lunii sau paginii
+ * (ex luna: 2 -> 02)
+ * (ex pagina: 3 -> 003, 24 -> 024)
+ */
+function padLeft($targetNo, $padLength)
+{
+    $res = str_pad($targetNo, $padLength, '0', STR_PAD_LEFT);
+    return $res;
 }

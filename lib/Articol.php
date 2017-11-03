@@ -2,11 +2,10 @@
 namespace ArhivaRevisteVechi\lib;
 
 require_once("../resources/config.php");
-require_once LIB . "/HtmlPrintable.php";
-require_once HELPERS . "/h_images.php";
+require_once HELPERS . "/h_misc.php";
 use ArhivaRevisteVechi\resources\db\DBC;
 
-class Articol implements HtmlPrintable
+class Articol
 {
     public $titlu, $rubrica, $autor;
     public $articolId, $pageToc, $pageCount;
@@ -74,7 +73,6 @@ class Articol implements HtmlPrintable
         return $row;
     }
 
-    // TODO needs refactoring ('Imagine'/'Pagina' class?)
     /**
      * Construieste thumbnails pagini cu linkuri catre imaginea mare
      * Returneaza un string cu html pentru afisare in tabel
@@ -82,25 +80,14 @@ class Articol implements HtmlPrintable
     public function buildHtmlPagesThumbnails($useDirectLinkToImage = false)
     {
         $thumbsRow = "<div class = 'articol-card-cell articol-card-lista-microthumb'>" . PHP_EOL;
-        if ($useDirectLinkToImage) {
-            $baseDestinationLink = $this->editiaParinte->editieDirPath;
-        } else {
-            $baseDestinationLink = getBaseUrl()
-                                    . "?editie={$this->editiaParinte->editieId}"
-                                    . "&articol={$this->articolId}";
-        }
-        // genereaza fiecare microthumb cu link catre imaginea mare
         foreach($this->listaPagini as $pageNo => $imageBaseName)
         {
+            $pagina = $this->editiaParinte->listaPagini[$pageNo];
             if ($useDirectLinkToImage) {
-                $destinationLink = getImagePath($baseDestinationLink, $imageBaseName);
+                $thumbsRow .= $pagina->getMicroThumbWithLinkToFull();
             } else {
-                $destinationLink = $baseDestinationLink . "&pagina=$pageNo";
+                $thumbsRow .= $pagina->getMicroThumbWithLinkToPaginaDinArticol($this->articolId);
             }
-
-            $imageDir = $this->editiaParinte->editieDirPath;
-            $imageThumb = getImageThumbPath($imageDir, $imageBaseName);
-            $thumbsRow .= getImageWithLink($imageThumb, $destinationLink, "microthumb")."  ";
         }
         $thumbsRow .= "</div>" . PHP_EOL;
         return $thumbsRow;
@@ -131,13 +118,14 @@ class Articol implements HtmlPrintable
         );
     }
 
+    // TODO delete, e o functie si in Pagina.php
     /**
      * Construieste numele imaginii fara extensie
      * (ex: 'Level 1999 12 002' fara spatii)
      */
     private function buildPaginaBaseName($pageNo)
     {
-        return $this->editiaParinte->editieBaseName
+        return $this->editiaParinte->editieBaseNameForPages
                . padLeft($pageNo, PAGINA_PAD);
     }
 
