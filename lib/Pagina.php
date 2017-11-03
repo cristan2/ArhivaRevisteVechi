@@ -43,10 +43,11 @@ class Pagina
     }
 
     /**
-     * Construieste calea catre o imagine sau thumbnail,
-     * dar fara sa verifice daca exista:
+     * Construieste calea catre o imagine sau thumbnail:
      * ex. $isForThumb == false: img/level/1999/12/Level199912002.jpg
      * ex. $isForThumb == true: img/level/1999/12/th/Level199912002_th.jpg
+     *
+     * Daca nu exista, returneaza imaginea default.
      */
     public function makePath($isForThumb = false)
     {
@@ -57,10 +58,10 @@ class Pagina
             . ($isForThumb ? "_th" : "")
             . ".jpg";
 
-
-//        if (!file_exists($imagePath)) {
-//            return ($isForThumb ? THUMB_DEFAULT : COPERTA_DEFAULT);
-//        }
+        // daca imaginea nu exista
+        if (!file_exists($imagePath)) {
+            return ($isForThumb ? THUMB_DEFAULT : COPERTA_DEFAULT);
+        }
 
         return $imagePath;
     }
@@ -98,17 +99,20 @@ class Pagina
      * respectiva imagines cu link catre destinatia specificata, atasand
      * si clasele css specificate optional
      *
-     * Daca fisierul nu exista, va fi afisata imaginea default fara link,
-     * cu exceptia cazului in care e specificat explicit (forceLink), util
-     * in cazul editiilor care nu au imagini scanate, dar au cuprins
+     * Daca fisierul nu exista (imaginea primita este cea default),
+     * va fi afisata imaginea default fara link, cu exceptia cazului in
+     * care e specificat explicit (forceLink), util in cazul editiilor
+     * care nu au imagini scanate, dar au cuprins
      */
-    function getImageWithLink($displayedImagePath, $targetLink, /*$forceLink = false,*/ ...$cssClasses) {
+    function getImageWithLink($displayedImagePath, $targetLink, /*$forceLink = false,*/ ...$cssClasses)
+    {
         $htmlClassList = getCssClassList($cssClasses);
 
-        if (! file_exists($displayedImagePath))
-            return HtmlPrinter::wrapImg(COPERTA_DEFAULT, $htmlClassList, 'Image');
-
         $displayedElement = HtmlPrinter::wrapImg($displayedImagePath, $htmlClassList, 'Image');
+
+        if ($displayedImagePath == THUMB_DEFAULT || $displayedImagePath == COPERTA_DEFAULT)
+            return $displayedElement;
+
         return HtmlPrinter::wrapLink($displayedElement, $targetLink);
     }
 

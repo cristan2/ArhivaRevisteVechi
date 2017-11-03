@@ -142,7 +142,7 @@ class Editie
                     // $this->luna;                     // nu avem de unde sa stim luna
                     $this->baseDirAreNumarulLunii = false;
                 } else {
-                    // TODO exceptie
+                    // TODO default sau exceptie
                     // directorul nu a fost gasit - nu mai exista sau are alt prefix
                 }
             }
@@ -175,6 +175,7 @@ class Editie
                     $this->baseDirAreNumarulLunii = false;
 
                 } else {
+                    // TODO default sau exceptie
                     // directorul nu a fost gasit - nu mai exista sau are alt prefix
                 }
             }
