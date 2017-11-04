@@ -22,7 +22,7 @@ if (empty($paramsRaw)) {
 
 } else {
     parse_str($paramsRaw, $params);
-    $pageContent = processSearchRequest($params);
+    $pageContent = processSearchRequest($params, $db);
 }
 
 
@@ -38,18 +38,18 @@ function buildHtmlPresetSearch()
         . ' (format <a href = "?type=preset-search&target=scan-status&option=doku">DokuWiki</a>?)';
 }
 
-function processSearchRequest($params)
+function processSearchRequest($params, $db)
 {
     $searchType = !empty($params['type']) ? $params['type'] : "";
     switch($searchType)
     {
         case "preset-search":
             include ARHIVABITS . "/search_bit_preset_search.php";
-            return performPresetSearch($params);
+            return performPresetSearch($params, $db);
 
         default:
             include ARHIVABITS . "/search_bit_simple_search.php";
-            return performSimpleSearch($params);
+            return performSimpleSearch($params, $db);
     }
 }
 

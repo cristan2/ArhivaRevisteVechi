@@ -18,6 +18,24 @@ function convertLuna($lunaNumar) {
     return $lunaNumar;
 }
 
+function convertLunaToNumăr($lunaLitere) {
+    switch (strtolower(trim($lunaLitere))) {
+        case "ianuarie"  :  return 1;
+        case "februarie" :  return 2;
+        case "martie"    :  return 3;
+        case "aprilie"   :  return 4;
+        case "mai"       :  return 5;
+        case "iunie"     :  return 6;
+        case "iulie"     :  return 7;
+        case "august"    :  return 8;
+        case "septembrie":  return 9;
+        case "octombrie" :  return 10;
+        case "noiembrie" :  return 11;
+        case "decembrie" :  return 12;
+    }
+    return $lunaLitere;
+}
+
 function convertTipPublicatie($tip)
 {
     switch($tip) {

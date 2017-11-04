@@ -10,20 +10,29 @@ use ArhivaRevisteVechi\resources\db\DBC;
 use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
 // TODO clean search filter
-function performSimpleSearch($params)
+function performSimpleSearch($params, $db)
 {
-    global $db;
-
-    if (empty($params['filter'])) return "Empty filter";
+    if (empty($params['filter'])) return "Oare dacă cauţi nimic e ca şi cum ai împărţi la zero?";
     else {
         $dbResult = specialQuerySimpleSearch($db, $params['filter']);
         $processedResult = processSimpleSearchDbResult($db, $dbResult);
         $output = "";
+
         foreach($processedResult as $categ => $results ) {
             $numarRezultate = count($results['divArray']);
+
+            $output .= "<h1>$categ</h1>";
+            $output .= "<h2>($numarRezultate rezultate)</h2>";
+
             if ($numarRezultate > 0) {
-                $output .= "<h1>$categ</h1>";
-                $output .= "<h2>($numarRezultate rezultate)</h2>";
+
+                // hint cautare
+                if ($categ == "Ediții") {
+                    $output .= "<p>(întoarce rezultate pentru 'an', 'lună', 'joc complet')";
+                } else if ($categ == "Articole") {
+                    $output .= "<p>(rubrică, titlu articol, platformă joc, autor)</p>";
+                }
+
                 $output .= HtmlPrinter::buildDivContainer($results['divArray'], $results['divClasses'], true);
             }
         }
@@ -44,17 +53,19 @@ function specialQuerySimpleSearch($db, $searchFilter)
         OR lower(a.autor)  LIKE '%$searchFilter%'
     ";
 
+    $lunaConvertita = searchLunaNumeric($searchFilter);
+
     $queryEditii = "
         SELECT e.*, r.*
         FROM editii e
         LEFT JOIN reviste r USING ('revista_id')
-        WHERE lower(e.an)  LIKE '%$searchFilter%'
-        OR lower(e.luna)  LIKE '%$searchFilter%'
+        WHERE lower(e.an)  LIKE '$searchFilter'
+        OR lower(e.luna)  LIKE '$lunaConvertita'
         OR lower(e.joc_complet)  LIKE '%$searchFilter%'
     ";
 
-    $rezultatDbEditii = $db->directQuery($queryEditii);
     $rezultatDbArticole = $db->directQuery($queryArticole);
+    $rezultatDbEditii   = $db->directQuery($queryEditii);
 
     return array(
         "rezultatEditii"   => $rezultatDbEditii,
@@ -94,4 +105,13 @@ function processSimpleSearchDbResult($db, $dbResultTuple)
         'Ediții'   => array("divArray" => $listaEditii, "divClasses" => array("search-card-container")),
         'Articole' => array("divArray" => $listaArticole, "divClasses" => array("search-articol-card-container"))
     );
+}
+
+/**
+ * Pentru cautarea lunii in DB trebuie doar valoarea numerica
+ */
+function searchLunaNumeric($lunaCareNuSeStieCeE)
+{
+    if (is_numeric($lunaCareNuSeStieCeE)) return $lunaCareNuSeStieCeE;
+    else return convertLunaToNumăr($lunaCareNuSeStieCeE);
 }

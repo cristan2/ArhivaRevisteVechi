@@ -2,10 +2,8 @@
 require_once HELPERS . "/HtmlPrinter.php";
 use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
-function performPresetSearch($params)
+function performPresetSearch($params, $db)
 {
-    global $db;
-
     if (empty($params['target'])) return "Empty search";
     $hasOption = !empty($params['option']);
     $option = $hasOption ? $params['option'] : "";
@@ -24,14 +22,14 @@ function performPresetSearch($params)
 // TODO de refactorizat
 // TODO use DB constants - acum foloseste
 // col names din $db->specialQueryScanStatus
-/*
+/**
  * Construieste un array de reviste cu probleme de arhivare de tipul
  * array (
  *      "Level"      => array(
  *                          'An'            => '1997',
  *                          'Luna'          => 'septembrie',
  *                          'Pagini Lipsa'  => '1 (pg. 3),
- *                          'Cuprins'       => '�',
+ *                          'Cuprins'       => '•',
  *                          'Calitate Scan' => 'LQ - rescan'
  *                      ),
  *      "Games4Kids" => array (...)

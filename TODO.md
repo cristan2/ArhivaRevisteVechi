@@ -31,7 +31,7 @@ Editii
 Layout
 ------------------
 * Layout coerent cap-coada
-
+* Footer
 
 
 IMBUNATATIRI COD
