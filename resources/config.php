@@ -3,6 +3,11 @@
 // debug
 DEFINE ("IS_DEBUG", false);
 
+// site
+DEFINE ("SITE_NAME"  , "ARHIVA REVISTE VECHI");
+DEFINE ("SITE_TAG"   , "I’m selling these fine leather jackets.");
+DEFINE ("SEARCH_HINT", "I’m looking for 30 dead guys and one woman.");
+
 // arhiva
 DEFINE ("ARHIVA"    , ROOT . "/arhiva");
 DEFINE ("ARHIVABITS", ARHIVA . "/bits");

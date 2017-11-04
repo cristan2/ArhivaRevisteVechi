@@ -6,6 +6,10 @@
     font-family: 'Roboto Condensed', sans-serif;
 }
 
+body {
+    margin: 0;
+}
+
 /* --- text --- */
 h1, h2 {
     text-align: center;
@@ -19,15 +23,73 @@ pre {
 /* --- home navigation --- */
 
 div.home-link-container {
-    background-color: brown;
-    font-weight: bold;
     margin-top: 0;
     margin-bottom: 0;
+    height: 3em;
+    padding: 0.5em;
+
+    /* --- background --- */
+    background-color: steelblue;
+    background: repeating-linear-gradient(
+            -55deg,
+            #333555,
+            #333555 5px,
+            #444 5px,
+            #444 10px
+    );
+
+    /* --- shadow --- */
+    box-shadow: 0 3px 6px darkslategrey;
+    position: relative;
+    z-index:999;
+
+    /* -- display -- */
+    display: flex;
+    /* aliniere orizontala items */
+    justify-content:center;
+    /* aliniere verticala items */
+    align-items: center;
 }
 
 .home-link {
+    margin-right: auto;
     text-align: left;
-    font-size: 1.5em;
+    width: 20%;
+    /*color: white;*/
+}
+
+.home-link-logo {
+    font-weight: bold;
+    font-size: 2em;
+    text-align: left;
+}
+
+.home-link-tag {
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+.home-link-container a {
+    text-decoration-line: none;
+    color: wheat;
+    text-align: left;
+}
+
+.home-nav-search {
+    width: 30%;
+}
+
+.home-nav-search-box{
+    border-radius: 7px;
+    width: 100%;
+    padding: 0.3em;
+}
+
+.home-nav-preset-search {
+    width: 20%;
+    margin-left: auto;
+    text-align: right;
+    color: wheat;
 }
 
 /* --- reviste cards --- */
@@ -36,6 +98,9 @@ div.home-link-container {
 div.card-container, div.search-container, div.page-content {
     width: 70%;
     margin: 0 auto;
+
+    /* centreaza cards din interior */
+    text-align: center;
 }
 
 img.card-img {
@@ -123,20 +188,27 @@ tr.empty-row {
 /* --- dual-divs - cols --- */
 
 div.header-nav-container {
-    background-color: lightgray;
+    background-color: steelblue;
+    color: aliceblue;
     display: flex;
     justify-content:center;
-    align-items: stretch;
+    align-items: center;
+    height: 3em;
+/*    border-bottom: 1px solid black;*/
+    padding: 0.5em;
+}
+
+div.header-nav-container a {
+    color: white;
+    font-size: 1.5em;
 }
 
 div.header-nav-elem {
-    height: 100%;
     margin: auto;
 }
 
 div.header-nav-current {
     width: 40%;
-    background-color: darkgrey;
 }
 
 div.header-nav-prev, div.header-nav-next {

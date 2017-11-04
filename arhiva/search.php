@@ -8,9 +8,9 @@ require_once HELPERS . "/h_misc.php";
 $urlWithParams = $_SERVER['REQUEST_URI'];
 $paramsRaw = parse_url($urlWithParams, PHP_URL_QUERY);
 
-
-// add simple search (always show)
-$simpleSearchContent = buildHtmlSimpleSearch();
+/* if true, va ascunde search box din main header, util in cazul
+   in care vrem sa afisam alt search box aici in pagina */
+$suppresMainHeaderSearch = false;
 
 if (empty($paramsRaw)) {
 
@@ -31,19 +31,6 @@ include_once HTMLLIB . "/view_simple.php";
 
 
 /* --- internals --- */
-
-function buildHtmlSimpleSearch()
-{
-    $searchPage = ARHIVA . "/search.php";
-    return <<<START_HTML
-	<form action = "$searchPage">
-		 <input type = "text" name = "filter" />
-         <input type = "submit" value = "Cauta" />
-      </form>
-
-START_HTML;
-
-}
 
 function buildHtmlPresetSearch()
 {
