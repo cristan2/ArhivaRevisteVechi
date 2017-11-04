@@ -5,6 +5,7 @@ FUNCTIONALITATI NOI
 * **Image Gallery** - plugin pentru vizualizare imagini (preferabil mobile-friendly)
 * **Download CSV** baza de date, eventual cu opţiuni de personalizare
 * Colectie de citate de folosit pentru Site Tagline si Search Placeholder
+* Checkboxes pentru a semnala date incorecte/incomplete pentru informatiile din baza de date 
 
 
 IMBUNATATIRI FUNCTIONALITATI EXISTENTE
@@ -22,16 +23,20 @@ Articole
   ** joc full
   ** link revistevechi wiki
 * navigare editii - coperta pentru editiile prev/next
+* buton/link pentru a incarca din nou toate paginile revistei (home)
 
 Editii
 ------------------
 * coperta pentru fiecare editie, chiar si cele nescanate
 * incarcare imagini via ajax (pana la instalarea unui Image Gallery)
 
-Layout
-------------------
+Layout si grafica
+-----------------
 * Layout coerent cap-coada
 * Footer
+* Logo
+* Favicon
+* Titlu pagini
 
 
 IMBUNATATIRI COD

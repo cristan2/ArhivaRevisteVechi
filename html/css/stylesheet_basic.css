@@ -254,6 +254,7 @@ div.articol-card-rubrica {
 div.articol-card-titlu {
     min-width: 30%;
     font-weight: bold;
+    text-align: left;
 }
 
 div.articol-card-autor {
@@ -263,6 +264,7 @@ div.articol-card-autor {
 div.articol-card-lista-microthumb {
     width: 30%;
     min-width: 50px;
+    text-align: left;
 }
 
 img.microthumb {

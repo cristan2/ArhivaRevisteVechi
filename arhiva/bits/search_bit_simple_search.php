@@ -28,9 +28,9 @@ function performSimpleSearch($params, $db)
 
                 // hint cautare
                 if ($categ == "Ediții") {
-                    $output .= "<p>(întoarce rezultate pentru 'an', 'lună', 'joc complet')";
+                    $output .= "<p>(întoarce rezultate pentru 'număr', 'an', 'lună', 'joc complet')";
                 } else if ($categ == "Articole") {
-                    $output .= "<p>(rubrică, titlu articol, platformă joc, autor)</p>";
+                    $output .= "<p>('rubrică', 'titlu articol', 'platformă joc', 'autor')</p>";
                 }
 
                 $output .= HtmlPrinter::buildDivContainer($results['divArray'], $results['divClasses'], true);
@@ -59,7 +59,8 @@ function specialQuerySimpleSearch($db, $searchFilter)
         SELECT e.*, r.*
         FROM editii e
         LEFT JOIN reviste r USING ('revista_id')
-        WHERE lower(e.an)  LIKE '$searchFilter'
+        WHERE lower(e.numar)  LIKE '$searchFilter'
+        OR lower(e.an)  LIKE '$searchFilter'
         OR lower(e.luna)  LIKE '$lunaConvertita'
         OR lower(e.joc_complet)  LIKE '%$searchFilter%'
     ";
