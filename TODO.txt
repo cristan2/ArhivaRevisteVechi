@@ -1,0 +1,71 @@
+
+Fix TODOs cod
+
+-------------------------------------------
+FUNCTIONALITATI NOI
+-------------------------------------------
+Search - de implementat complex search
+Image Gallery - plugin pentru vizualizare imagini (preferabil mobile-friendly)
+
+
+-------------------------------------------
+IMBUNATATIRI FUNCTIONALITATI EXISTENTE
+-------------------------------------------
+Search
+* la articole, pune link catre editia din care face parte articolul
+
+Articole
+* info pe scurt despre editie:
+  ** joc full
+  ** link revistevechi wiki
+
+* incarcare imagini via ajax (pana la instalarea unui Image Gallery)
+
+
+-------------------------------------------
+IMBUNATATIRI COD
+-------------------------------------------
+MISC
+* clasa Helper care sa centralizeze fisierele helper
+
+ARTICOLE - general
+* Header navigatie editii
+  ** construire linkuri din editii fara id
+  ** implementare first & last
+
+ARTICOLE - page viewer
+* de terminat navigatie articole
+* posibilitate afisare pagini duble (cu cover page separat)
+
+EDITII
+* adauga metode getNextEditieLink/getPrevEditieLink
+* pune link pe card, nu doar imagine
+* adauga Revista in constructor si foloseste Revista->revistaDirPath
+  in loc de buildHomeDirPath();
+* metoda getLuna() care sa trateze si lunile duble
+
+REVISTA
+* de completat clasa si folosit in clasa Editie
+
+DBC
+* modifica toate query-urile DB sa foloseasca constantele
+* prepare statements (escape)
+* sanitize inputs
+
+CSS
+* reorganizare clase, acum e varza
+* max-width mai mic la editii (pagina editii.php)
+
+-------------------------------------------
+BUGS
+-------------------------------------------
+* Editiile construite in simpleSearch sunt de tip PREVIEW si nu se genereaza corect atributul areCuprins
+
+-------------------------------------------
+DATABASE
+-------------------------------------------
+* de tratat articolele cu reclame intercalate (ex: News 3 pg, apoi reclama, apoi iar news 2 pg)
+
+Rescan
+2002-07 - upscale
+2002-09 - idem
