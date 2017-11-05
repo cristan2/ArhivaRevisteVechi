@@ -55,6 +55,7 @@ ARTICOLE - general
 * Header navigatie editii
   ** construire linkuri din editii fara id
   ** implementare first & last
+* Linkurile de download sa fie in ordinea Reviste, DVD, CD1, CD2, 
 
 ARTICOLE - page viewer
 ------------------

@@ -24,6 +24,19 @@ if (isset($_GET["editie-id"])) {
     $editiaCurenta = new Editie($editiaCurenta, Editie::EDITIE_FULL);
     include_once ARHIVABITS . "/articole_bit_editia_curenta.php";
 
+    // download links pentru editia curenta
+    // vor veni 3 coloane - categorie, item si lista linkuri
+    $dldLinksDbResult = $db->queryDownloadsDinEditie($editieId);
+    $downloadLinks = array();
+    while($currRow = $db->getNextRow($dldLinksDbResult)) {
+        $categorie = $currRow[DBC::DLD_CATEG];
+        $itemNo = $currRow[DBC::DLD_ITEM];
+        // daca sunt mai multe linkuri pentru aceeasi categorie (revista sau cd),
+        // vor veni intr-un singur string separate de virgula
+        $downloadLinks[$categorie][$itemNo] = explode(",", $currRow[DBC::DLD_LINKS]);
+    }
+    $editiaCurenta->setDownloadLinks($downloadLinks);
+
     /* ------- cuprins articole ------- */
     $articoleDbResult = $db->queryArticoleDinEditie($editiaCurenta->editieId);
 
@@ -42,15 +55,11 @@ if (isset($_GET["editie-id"])) {
 }
 
 
-
-
-
 if (!empty($articoleArray)) {
     $articoleCardRows = HtmlPrinter::buildDivContainer($articoleArray, array("articol-card-container"));
 } else {
     $articoleCardRows = "";
 }
-
 
 
 /* ------- info pagina curenta ------- */
@@ -59,8 +68,3 @@ include_once ARHIVABITS . "/articole_bit_pagina_curenta.php";
 
 /* ------- afisare in pagina ------- */
 include_once HTMLLIB . "/view_dual.php";
-
-
-function getEditieUrl($editieId) {
-    return ARHIVA."/articole.php?editie=$editieId";
-}

@@ -22,6 +22,10 @@ class DBC
     const REV_APARITII  = "aparitii";
     const REV_CNT_ED    = "ed_cnt";
 
+    const DLD_CATEG     = "categorie";
+    const DLD_LINKS     = "links";   // alias pentru group_concat('link')
+    const DLD_ITEM      = "item";
+
     public $db;
 
 
@@ -121,6 +125,18 @@ class DBC
             LEFT JOIN reviste r USING (revista_id)
             WHERE editie_id = $editieId
             ORDER BY a.pg_toc
+        ");
+    }
+
+    public function queryDownloadsDinEditie($editieId)
+    {
+        $linksAlias = self::DLD_LINKS;
+        return $this->directQuery("
+            SELECT categorie, item, group_concat(link,',') $linksAlias
+            FROM downloads
+            WHERE editie_id = $editieId
+            AND link <> ''
+            GROUP BY categorie, item
         ");
     }
 

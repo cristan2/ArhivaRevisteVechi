@@ -71,6 +71,10 @@ class Editie
     public  $listaPagini;
 
 
+    // --- external attrs ---
+    public $linkuriDownload;
+    public $linkWiki;
+
     // --- content flags ---
 
     /* denota daca editia e construita doar citind
@@ -119,19 +123,14 @@ class Editie
 
             // check $editieDirNo as luna
             $dirAsLuna = $this->getDirNameFromLuna($this->editieDirNameNumericVal);
+
             if ($dirAsLuna) {
-
-                if (IS_DEBUG) echo ("From Disk & dir is luna, dirAsLuna = $dirAsLuna <br>");
-
                 // deci numele directorului==numarul lunii
                 $this->editieDirName            = $dirAsLuna;
                 $this->luna                     = $this->editieDirNameNumericVal;
                 $this->baseDirAreNumarulLunii   = true;
 
             } else {
-
-                if (IS_DEBUG) echo ("From Disk & dir is NOT luna, dirAsLuna = $dirAsLuna <br>");
-
                 // check $editieDirNo as issue
                 $dirAsIssue = $this->getDirNameFromIssueNo($this->editieDirNameNumericVal);
                 if ($dirAsIssue) {
@@ -156,8 +155,6 @@ class Editie
             $dirAsLuna = $this->getDirNameFromLuna($this->luna);
             if ($dirAsLuna) {
 
-                if (IS_DEBUG) echo ("From DB & dir is luna, dirAsLuna = $dirAsLuna " . "<br>");
-
                 $this->editieDirName            = padLeft($this->luna, LUNA_PAD);
                 $this->editieDirNameNumericVal  = padLeft($this->luna, LUNA_PAD);
                 $this->baseDirAreNumarulLunii   = true;
@@ -168,11 +165,9 @@ class Editie
                 $dirAsIssue = $this->getDirNameFromIssueNo($this->numar);
                 if ($dirAsIssue) {
 
-                    if (IS_DEBUG) echo ("From DB & dir is NOT luna, dirAsIssue = $dirAsIssue <br>");
-
-                    $this->editieDirName        = $dirAsIssue;
-                    $this->editieDirNameNumericVal  = $this->numar;
-                    $this->baseDirAreNumarulLunii = false;
+                    $this->editieDirName           = $dirAsIssue;
+                    $this->editieDirNameNumericVal = $this->numar;
+                    $this->baseDirAreNumarulLunii  = false;
 
                 } else {
                     // TODO default sau exceptie
@@ -218,10 +213,25 @@ class Editie
             }
         }
 
+        if (isset($dbRow[DBC::DLD_LINKS])) {
+
+        }
+
+        /* ******** downloads ******** */
+        /** linkurile de download sunt setate separat
+         * de catre articole.php (doar aici sunt utilizate)
+         * deoarece e nevoie de un query separat
+         */
+        // $this->linkuriDownload = buildLinkuriDownload();
+        $this->linkWiki = $this->buildLinkWiki();
+
+//        var_dump($this);
+
         /* ******** extras ******** */
         if (isset($dbRow[DBC::ED_ART_CNT])) {
             // coloana asta nu e inclusa in toate query-urile,
-            // e relevanta doar in pagina cu toate editiile (?)
+            // e relevanta doar in atunci cand construim mai multe editii
+            // (ex: pagina cu editii sau rezultate cautare)
             $this->numarArticole  = $dbRow[DBC::ED_ART_CNT];
             if ($this->numarArticole > 0) $this->areArticoleIndexate = true;
         }
@@ -311,11 +321,26 @@ class Editie
         return $filecount;
     }
 
+    public function setDownloadLinks($dldLinksArray)
+    {
+        $this->linkuriDownload = $dldLinksArray;
+    }
+
+    private function buildLinkWiki()
+    {
+        $strippedNr = ltrim($this->editieDirNameNumericVal, "0");
+        $wikiLink = lcfirst($this->numeRevista)
+                    . ":" . $this->an
+                    . ":" . $strippedNr;
+
+        echo $wikiLink;
+        return RVWIKI_BASE_LINK . "/" . $wikiLink;
+    }
 
     /* ************************************************* */
     /* ****************   HTML OUTPUT   **************** */
 
-    // TODO REFACTOR
+    // TODO REFACTOR & rename to getHtmlCardOutput
     /**
      * Construieste carduri reviste
      * Cu 3 sectiuni: Imagine, Titlu si Subtitlu
@@ -433,6 +458,53 @@ class Editie
         return ARHIVA."/articole.php?$queryParams";
     }
 
+    /**
+     * Array-ul scos din rezultatul din DB e un array 3D
+     * de forma categorie => itemNo => download_links array
+     * ex: ['CD'] => (['2'] => ('mediafire.com/asdf', 'dropbox.com/asdf'))
+     */
+    public function outputLinkuriDownload()
+    {
+        // link catre RevisteVechi Wiki
+        $outputLinkWiki = HtmlPrinter::wrapLink("Pagina Wiki RevisteVechi", $this->linkWiki, "external-links");
+
+        // linkuri de download, daca exista, pentru Revista, CD-uri etc.
+        $outputLinkuriDownload = count($this->linkuriDownload) > 0 ? ", Download: " : "";
+        $linkuriDownload = array();
+        foreach ($this->linkuriDownload as $categ => $arrayItemAndLinks) {
+            foreach ($arrayItemAndLinks as $item => $arrayLinks) {
+                $linkuriDownload[] = $this->getPrettyLinkForDownloadCateg($categ, $item, $arrayLinks);
+            }
+        }
+        $outputLinkuriDownload .= implode(", ", $linkuriDownload);
+
+        return $outputLinkWiki . $outputLinkuriDownload;
+    }
+
+    /**
+     * Construieste un string cu linkuri de download pentru o categorie.
+     * Daca exista mai multe items, fiecare item no va fi
+     * appendat la categorie, ex: CD 1, CD 2.
+     * Daca exista mai multe linkuri, vor fi separate cu '|'
+     * ex: "Revista (Scribd | Archive.org)"
+     * @return: un string cu linkuri de forma: CD1 (Mediafire | Dropbox), CD2 (...)
+     */
+    private function getPrettyLinkForDownloadCateg($categ, $item, $linksArray)
+    {
+        $totalLinks = count($linksArray);
+        // nu ar trebui sa fie niciodata 0, query-ul filtreaza intrarile goale
+        // if ($totalLinks == 0) return "";
+
+        $outputCateg = ucfirst($categ) . ($categ == 'revista' ? "" : $item);
+        $outputLinks = array();
+
+        foreach($linksArray as $link) {
+            $destinationScreenName = extractKnownLinkName($link);
+            $outputLinks[] = HtmlPrinter::wrapLink($destinationScreenName, $link);
+        }
+
+        return "$outputCateg (" . implode("|", $outputLinks) . ")";
+    }
 
     /* ********************************************* */
     /* ****************   FACTORY   **************** */

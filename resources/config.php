@@ -38,3 +38,8 @@ $db = new DBC(DB_FILE);
 DEFINE ("COPERTI_DIR"    , IMG . "/coperti");
 DEFINE ("COPERTA_DEFAULT", IMG . "/coperti/default.jpg");
 DEFINE ("THUMB_DEFAULT"  , IMG . "/coperti/default_th.jpg");
+
+// external links
+DEFINE ("RVWIKI_BASE_LINK"         , "https://revistevechi.awiki.org");
+DEFINE ("FILE_HOST_NAME_ARCHIVEORG", "Archive.org");
+DEFINE ("FILE_HOST_NAME_SCRIBD"    , "Archive.org");

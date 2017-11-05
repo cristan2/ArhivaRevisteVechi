@@ -193,7 +193,7 @@ div.header-nav-container {
     display: flex;
     justify-content:center;
     align-items: center;
-    height: 3em;
+    min-height: 3em;
 /*    border-bottom: 1px solid black;*/
     padding: 0.5em;
 }
@@ -213,6 +213,18 @@ div.header-nav-current {
 
 div.header-nav-prev, div.header-nav-next {
     width: 25%;
+}
+
+p.external-links  {
+    font-size: 0.7em;
+    text-align: center;
+    margin: 0.2em;
+}
+
+p.external-links a {
+    font-size: 1em;
+    text-decoration-line: underline;
+    color: wheat;
 }
 
 div.col {

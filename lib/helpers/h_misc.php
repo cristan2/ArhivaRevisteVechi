@@ -49,6 +49,11 @@ function startsWith($haystack, $needle) {
     return (substr($haystack, 0, $length) === $needle);
 }
 
+function contains($haystack, $needle)
+{
+    return stripos($haystack, $needle) !== false;
+}
+
 function cleanPrefixFromName($dirName, $prefixArray)
 {
     foreach ($prefixArray as $prefix) {
@@ -87,4 +92,16 @@ function padLeft($targetNo, $padLength)
 {
     $res = str_pad($targetNo, $padLength, '0', STR_PAD_LEFT);
     return $res;
+}
+
+/**
+ * Verifica linkurile de download extrase din DB si
+ * returneaza un nume pentru a fi folosit in link
+ * ex: https://www.scribd.com/doc/16826391 => "Scribd"
+ */
+function extractKnownLinkName($link)
+{
+    if (contains($link, "archive")) return FILE_HOST_NAME_ARCHIVEORG;
+    else if (contains($link, "scribd")) return FILE_HOST_NAME_SCRIBD;
+    else return "Link";
 }
