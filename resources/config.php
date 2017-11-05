@@ -5,7 +5,7 @@ DEFINE ("IS_DEBUG", false);
 
 // site
 DEFINE ("SITE_NAME"  , "ARHIVA REVISTE VECHI");
-DEFINE ("SITE_TAG"   , "I’m selling these fine leather jackets.");
+DEFINE ("SITE_TAG"   , "Deocamdată doar LEVEL");
 DEFINE ("SEARCH_HINT", "I’m looking for 30 dead guys and one woman.");
 
 // arhiva
@@ -42,4 +42,4 @@ DEFINE ("THUMB_DEFAULT"  , IMG . "/coperti/default_th.jpg");
 // external links
 DEFINE ("RVWIKI_BASE_LINK"         , "https://revistevechi.awiki.org");
 DEFINE ("FILE_HOST_NAME_ARCHIVEORG", "Archive.org");
-DEFINE ("FILE_HOST_NAME_SCRIBD"    , "Archive.org");
+DEFINE ("FILE_HOST_NAME_SCRIBD"    , "Scribd");

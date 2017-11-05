@@ -22,7 +22,7 @@ Articole
 * info pe scurt despre editie:
   ** joc full
   ** link revistevechi wiki
-* navigare editii - coperta pentru editiile prev/next
+* navigare editii - coperta (microthumb) pentru editiile prev/next
 * buton/link pentru a incarca din nou toate paginile revistei (home)
 
 Editii
@@ -55,6 +55,7 @@ Diverse
 * namespaces + autoloader
 * error handling
 * Fix TODOs cod
+* Documentatie in cod la functiile fara phpdoc, unde e cazul
 
 ARTICOLE - general
 ------------------

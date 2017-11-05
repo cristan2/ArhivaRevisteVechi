@@ -498,7 +498,7 @@ class Editie
             $outputLinks[] = HtmlPrinter::wrapLink($destinationScreenName, $link);
         }
 
-        return "$outputCateg (" . implode("|", $outputLinks) . ")";
+        return "$outputCateg (" . implode(" | ", $outputLinks) . ")";
     }
 
     /* ********************************************* */
