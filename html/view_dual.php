@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta content="text/html; charset=utf-8">
+    <title><?php echo SITE_NAME ?> </title>
     <link rel="stylesheet" href="<?php echo CSSLIB.'/stylesheet_basic.css'; ?>" >
     <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Roboto+Condensed" rel="stylesheet">
 </head>

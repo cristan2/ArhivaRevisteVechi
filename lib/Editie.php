@@ -207,9 +207,6 @@ class Editie
                 for ($i = 1; $i <= $this->maxNumPages; $i++) {
                     $this->listaPagini[$i] = new Pagina($this, $i);
                 }
-
-                if (IS_DEBUG) echo("Printing lista pagini" . "<br>");
-                if (IS_DEBUG) var_dump($this->listaPagini);
             }
         }
 
@@ -332,8 +329,6 @@ class Editie
         $wikiLink = lcfirst($this->numeRevista)
                     . ":" . $this->an
                     . ":" . $strippedNr;
-
-        echo $wikiLink;
         return RVWIKI_BASE_LINK . "/" . $wikiLink;
     }
 

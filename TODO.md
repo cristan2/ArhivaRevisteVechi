@@ -5,7 +5,7 @@ FUNCTIONALITATI NOI
 * **Image Gallery** - plugin pentru vizualizare imagini (preferabil mobile-friendly)
 * **Download CSV** baza de date, eventual cu opţiuni de personalizare
 * Colectie de citate de folosit pentru Site Tagline si Search Placeholder
-* Checkboxes pentru a semnala date incorecte/incomplete pentru informatiile din baza de date 
+* Checkboxes pentru a semnala date incorecte/incomplete pentru informatiile din baza de date
 
 
 IMBUNATATIRI FUNCTIONALITATI EXISTENTE
@@ -29,20 +29,26 @@ Editii
 ------------------
 * coperta pentru fiecare editie, chiar si cele nescanate
 * incarcare imagini via ajax (pana la instalarea unui Image Gallery)
+* Linkuri download pentru fiecare revista
+* Linkuri revistevechi.awiki.ro
 
-Layout si grafica
------------------
+Layout, grafica and stuff
+-------------------------
 * Layout coerent cap-coada
 * Footer
 * Logo
 * Favicon
-* Titlu pagini
+* Titlu pagini - sa reprezinte pagina curenta
+
+Diverse
+------------------
+* Incarcare arhiva imagini pe un filesharing si link in README
 
 
 IMBUNATATIRI COD
 ================================================
 
-MISC
+Diverse
 ------------------
 * clasa Helper care sa centralizeze fisierele helper
 * Separare mai bună MCV
@@ -91,6 +97,7 @@ CSS
 BUGS
 ======================================
 * Editiile construite in simpleSearch sunt de tip PREVIEW si nu se genereaza corect atributul areCuprins
+* La unele rezultate de cautari nu apare nici pagina default (ex: "Level" -> rezultatul 2010-10)
 
 
 DATABASE
