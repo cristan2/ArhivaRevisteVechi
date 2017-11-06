@@ -36,7 +36,7 @@ Layout, grafica and stuff
 -------------------------
 * Layout coerent cap-coada
 * Footer
-* Logo
+* Logo (+responsive)
 * Favicon
 * Titlu pagini - sa reprezinte pagina curenta
 
@@ -50,10 +50,10 @@ IMBUNATATIRI COD
 
 Diverse
 ------------------
+* Error handling, logging
 * clasa Helper care sa centralizeze fisierele helper
 * Separare mai bună MCV
 * namespaces + autoloader
-* error handling
 * Fix TODOs cod
 * Documentatie in cod la functiile fara phpdoc, unde e cazul
 
@@ -93,12 +93,17 @@ CSS
 * reorganizare clase, acum e varza
 * max-width mai mic la editii (pagina editii.php)
 * egalizare imagini thumbnails
+* optimizare ecrane diferite
+* huge thumb sparge layoutul pe mobil
+* microthumbs la search results - trebuie margin-left
 
 
 BUGS
 ======================================
 * Editiile construite in simpleSearch sunt de tip PREVIEW si nu se genereaza corect atributul areCuprins
 * La unele rezultate de cautari nu apare nici pagina default (ex: "Level" -> rezultatul 2010-10)
+* Cautare dupa Sam & Max nu a avut ca rezultat si o editie, desi a fost joc full
+* Cautarea "joc full" nu a returnat rubricile joc full 
 
 
 DATABASE

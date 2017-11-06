@@ -8,7 +8,7 @@
 
 body {
     margin: 0;
-    height: 100%;
+    min-height: 100%;
 }
 
 /* --- text --- */
@@ -55,13 +55,13 @@ div.home-link-container {
 .home-link {
     margin-right: auto;
     text-align: left;
-    width: 20%;
+    width: 30%;
     /*color: white;*/
 }
 
 .home-link-logo {
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1.8em;
     text-align: left;
 }
 
@@ -87,7 +87,7 @@ div.home-link-container {
 }
 
 .home-nav-preset-search {
-    width: 20%;
+    width: 30%;
     margin-left: auto;
     text-align: right;
     color: wheat;
@@ -264,9 +264,9 @@ div.col {
 /* --- cuprins - lista articole --- */
 
 div.articol-card-row {
-    width: 99%;
+    width: 80%;
     min-height: 2.5em;
-    margin: 0.3em;
+    margin: 0.3em auto ;
     box-shadow: 0 2px 4px grey;
     background: rgb(240,240,240);
 }
