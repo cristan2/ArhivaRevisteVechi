@@ -1,7 +1,9 @@
 <?php
 // ROOT si config.php sunt definite de index.php
-/*DEFINE("ROOT", "..");
-require_once(RESOURCES . "/config.php");*/
+// TODO: de comentat ROOT si config.php cand dezactivezi
+// redirectul din index.php
+if (!defined('ROOT')) DEFINE("ROOT", "..");
+require_once("../resources/config.php");
 
 require_once HELPERS . "/h_html.php";
 
