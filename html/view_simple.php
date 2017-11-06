@@ -14,5 +14,9 @@
         <?php echo isset($pageTitle)   ? "<h1>$pageTitle</h1>" : "" ?>
         <?php echo isset($pageContent) ? $pageContent : "" ?>
     </div>
+
+    <footer>
+        <?php include HTMLBITS . "/html_bit_footer.php"; ?>
+    </footer>
 </body>
 </html>

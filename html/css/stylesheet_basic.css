@@ -8,6 +8,7 @@
 
 body {
     margin: 0;
+    height: 100%;
 }
 
 /* --- text --- */
@@ -340,4 +341,37 @@ img.fullthumb {
 img.minithumb {
     width: 20%;
     max-width: 170px;
+}
+
+
+/* --- footer --- */
+footer {
+    text-align: center;
+    color: wheat;
+
+    vertical-align: bottom;
+    margin-top: 2em;
+    margin-bottom: 0;
+    height: 2.5em;
+    padding: 0.5em;
+
+    /* --- background --- */
+    background-color: steelblue;
+    background: repeating-linear-gradient(
+            -55deg,
+            #333555,
+            #333555 5px,
+            #444 5px,
+            #444 10px
+    );
+
+    /* --- shadow --- */
+    box-shadow: 0 -3px 3px darkslategrey;
+    position: relative;
+    z-index:999;
+}
+
+.bottom-footer a {
+    text-decoration-line: none;
+    color: wheat;
 }

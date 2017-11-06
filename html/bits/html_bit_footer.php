@@ -1,0 +1,1 @@
+<div class = 'bottom-footer'><a href = ' <?php echo HTMLSTATIC . "/about.php" ?>'>Despre</a> | <a href = ''>Updates</a></></div>

@@ -18,5 +18,9 @@
             <?php include HTMLBITS . "/html_bit_page_viewer.php"; ?>
         </div>
     </div>
+
+    <footer>
+        <?php include HTMLBITS . "/html_bit_footer.php"; ?>
+    </footer>
 </body>
 </html>

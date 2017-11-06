@@ -20,6 +20,7 @@ DEFINE ("HELPERS"   , LIB ."/helpers");
 DEFINE ("HTMLLIB"   , ROOT ."/html");
 DEFINE ("CSSLIB"    , HTMLLIB ."/css");
 DEFINE ("HTMLBITS"  , HTMLLIB ."/bits");
+DEFINE ("HTMLSTATIC", HTMLLIB ."/static");
 
 // resources
 DEFINE ("RESOURCES" , ROOT . "/resources");
