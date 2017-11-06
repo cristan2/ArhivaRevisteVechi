@@ -222,7 +222,6 @@ class Editie
         // $this->linkuriDownload = buildLinkuriDownload();
         $this->linkWiki = $this->buildLinkWiki();
 
-//        var_dump($this);
 
         /* ******** extras ******** */
         if (isset($dbRow[DBC::ED_ART_CNT])) {

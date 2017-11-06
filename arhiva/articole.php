@@ -22,7 +22,10 @@ if (isset($_GET["editie-id"])) {
     /* ------- info editia curenta ------- */
     $editiaCurenta = $db->getNextRow($db->queryEditie($editieId));
     $editiaCurenta = new Editie($editiaCurenta, Editie::EDITIE_FULL);
-    include_once ARHIVABITS . "/articole_bit_editia_curenta.php";
+
+    // skip editiile fara numar (ex: Level 1998-05)
+    if (!empty($editiaCurenta->numar))
+        include_once ARHIVABITS . "/articole_bit_editia_curenta.php";
 
     // download links pentru editia curenta
     // vor veni 3 coloane - categorie, item si lista linkuri
@@ -56,7 +59,7 @@ if (isset($_GET["editie-id"])) {
 
 
 if (!empty($articoleArray)) {
-    $articoleCardRows = HtmlPrinter::buildDivContainer($articoleArray, array("articol-card-container"));
+    $articoleCardRows = HtmlPrinter::buildDivContainer($articoleArray, array("col", "articol-card-container"));
 } else {
     $articoleCardRows = "";
 }

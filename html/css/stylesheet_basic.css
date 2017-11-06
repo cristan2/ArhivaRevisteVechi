@@ -96,7 +96,7 @@ div.home-link-container {
 
 
 div.card-container, div.search-container, div.page-content {
-    width: 70%;
+    width: 85%;
     margin: 0 auto;
 
     /* centreaza cards din interior */
@@ -110,7 +110,7 @@ img.card-img {
 div.reviste-cards, div.reviste-cards-search {
     display: inline-block;
     width: 15%;
-    max-width: 200px;
+    max-width: 170px;
     margin: 0.5em;
     box-shadow: 0 4px 8px grey;
     text-align: center;
@@ -227,17 +227,40 @@ p.external-links a {
     color: wheat;
 }
 
-div.col {
-    display: inline-block;
-    vertical-align: top;
-    max-height: 800px;
-    margin: 1em;
+/* --- pagina articole - containere --- */
+
+div.column-container {
+/*    display: flex;
+    flex-wrap: wrap;*/
+    width: 95%;
+    margin: auto;
+
 }
 
 div.cuprins {
-    width: 50%;
-    overflow-y: scroll;
+    /*max-width: 40%;*/
+    /*overflow-y: scroll;*/
 }
+
+div.articol-card-container {
+    /*flex-grow: 1;*/
+    width: 40%;
+}
+
+div.main-img-container {
+    width: 55%;
+    /*height: 100%;*/
+    /*flex-grow: 2;*/
+}
+
+div.col {
+    display: inline-block;
+    vertical-align: top;
+    /*max-height: 800px;*/
+    margin: 1em;
+}
+
+/* --- cuprins - lista articole --- */
 
 div.articol-card-row {
     width: 99%;
@@ -292,14 +315,14 @@ img.microthumb {
 
 /* --- image viewer --- */
 
-div.main-img-container {
-    width: 40%;
-    height: 100%;
-}
+
 
 div.main-img-nav {
-    background: grey;
+    /*background: grey;*/
     width: 100%;
+    margin-bottom: 0.3em;
+    padding-bottom: 0.3em;
+    border-bottom: solid 2px steelblue;
 }
 
 div.main-img {
@@ -312,4 +335,9 @@ img.fullthumb {
     /*    object-fit: contain;*/
     height: 100%;
     vertical-align: middle;
+}
+
+img.minithumb {
+    width: 20%;
+    max-width: 170px;
 }
