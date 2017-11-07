@@ -16,6 +16,7 @@ Search
 * la articole, pune link catre editia din care face parte articolul
 * numele autorilor sunt linkuri către un search pentru toate articolele acelui autor
 * fiecare rand/card e link către articol (deschide prima pagină)
+* completare termen de cautare in caseta de cautare, in pagina cu rezultate
 
 Articole
 ------------------
@@ -57,20 +58,22 @@ Diverse
 * Fix TODOs cod
 * Documentatie in cod la functiile fara phpdoc, unde e cazul
 
-ARTICOLE - general
+Performanta
+-----------
+* Caching
+* Optimizare constructie obiecte
+
+Articole - general
 ------------------
 * Header navigatie editii
   ** construire linkuri din editii fara id
   ** implementare first & last
-* Linkurile de download sa fie in ordinea Reviste, DVD, CD1, CD2, 
-
-ARTICOLE - page viewer
-------------------
+* Header - linkurile de download sa fie in ordinea Reviste, DVD, CD1, CD2, 
 * de terminat navigatie articole
 * posibilitate afisare pagini duble (cu cover page separat)
 
-EDITII
-------------------
+Editii
+------------
 * adauga metode getNextEditieLink/getPrevEditieLink
 * pune link pe card, nu doar imagine
 * adauga Revista in constructor si foloseste Revista->revistaDirPath
@@ -78,8 +81,8 @@ EDITII
 * metoda getLuna() care sa trateze si lunile duble
 * tratament special Level nr. mai 1998
 
-REVISTA
-------------------
+Revista
+-------
 * de completat clasa si folosit in clasa Editie
 
 DBC

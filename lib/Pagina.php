@@ -8,10 +8,11 @@ use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
 class Pagina
 {
-
     const NORMAL_THUMB = "minithumb";
     const MICRO_THUMB  = "microthumb";
 
+    const THUMB = 0;
+    const IMAGE = 1;
 
     public $editiaParinte;
     public $numar;
@@ -57,40 +58,34 @@ class Pagina
             . $this->paginaBaseName
             . ($isForThumb ? "_th" : "")
             . ".jpg";
-
-        // daca imaginea nu exista
-        if (!file_exists($imagePath)) {
-            return ($isForThumb ? THUMB_DEFAULT : COPERTA_DEFAULT);
-        }
-
         return $imagePath;
     }
 
     public function getMicroThumbWithLinkToPaginaDinArticol($articolId)
     {
         $destinationLink = $this->editiaParinte->getEditieUrl() . "&articol=$articolId" . "&pagina=$this->numar";
-        return $this->getImageWithLink($this->thumbPath, $destinationLink, "microthumb");
+        return $this->getImageWithLink(self::THUMB, $this->thumbPath, $destinationLink, "microthumb");
     }
 
     public function getMicroThumbWithLinkToFull()
     {
-        return $this->getImageWithLink($this->thumbPath, $this->path, "microthumb");
+        return $this->getImageWithLink(self::THUMB, $this->thumbPath, $this->path, "microthumb");
     }
 
     public function getThumbWithLinkToFullImage()
     {
-        return $this->getImageWithLink($this->thumbPath, $this->path, "minithumb");
-    }
-
-    public function getHugeThumbWithLinkToFullImage()
-    {
-        return $this->getImageWithLink($this->path, $this->path, "fullthumb");
+        return $this->getImageWithLink(self::THUMB, $this->thumbPath, $this->path, "minithumb");
     }
 
     public function getThumbWithLinkToEditie($cssClass)
     {
         $destinationLink = $this->editiaParinte->getEditieUrl();
-        return $this->getImageWithLink($this->thumbPath, $destinationLink, $cssClass, true);
+        return $this->getImageWithLink(self::THUMB, $this->thumbPath, $destinationLink, $cssClass, true);
+    }
+
+    public function getHugeThumbWithLinkToFullImage()
+    {
+        return $this->getImageWithLink(self::IMAGE, $this->path, $this->path, "fullthumb");
     }
 
     // TODO implement alt description
@@ -104,13 +99,20 @@ class Pagina
      * care e specificat explicit (forceLink), util in cazul editiilor
      * care nu au imagini scanate, dar au cuprins
      */
-    function getImageWithLink($displayedImagePath, $targetLink, $cssClasses, $forceLink = false)
+    function getImageWithLink($imgType, $displayedImagePath, $targetLink, $cssClasses, $forceLink = false)
     {
         $htmlClassList = getCssClassList($cssClasses);
 
+        $imageExists = file_exists($displayedImagePath);
+
+        // daca imaginea nu exista, afiseaza imaginea default
+        if (!$imageExists) {
+            $displayedImagePath = ($imgType == self::THUMB ? THUMB_DEFAULT : COPERTA_DEFAULT);
+        }
+
         $displayedElement = HtmlPrinter::wrapImg($displayedImagePath, $htmlClassList, 'Image');
 
-        if (($displayedImagePath == THUMB_DEFAULT || $displayedImagePath == COPERTA_DEFAULT) && !$forceLink)
+        if (!$imageExists && !$forceLink)
             return $displayedElement;
 
         return HtmlPrinter::wrapLink($displayedElement, $targetLink);

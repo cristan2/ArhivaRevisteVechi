@@ -210,10 +210,6 @@ class Editie
             }
         }
 
-        if (isset($dbRow[DBC::DLD_LINKS])) {
-
-        }
-
         /* ******** downloads ******** */
         /** linkurile de download sunt setate separat
          * de catre articole.php (doar aici sunt utilizate)

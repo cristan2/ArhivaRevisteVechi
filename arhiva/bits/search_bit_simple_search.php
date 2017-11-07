@@ -14,6 +14,7 @@ function performSimpleSearch($params, $db)
 {
     if (empty($params['filter'])) return "Oare dacă cauţi nimic e ca şi cum ai împărţi la zero?";
     else {
+        $startTime = microtime(true);
         $dbResult = specialQuerySimpleSearch($db, $params['filter']);
         $processedResult = processSimpleSearchDbResult($db, $dbResult);
         $output = "";
@@ -28,15 +29,15 @@ function performSimpleSearch($params, $db)
 
                 // hint cautare
                 if ($categ == "Ediții") {
-                    $output .= "<p>(întoarce rezultate pentru 'număr', 'an', 'lună', 'joc complet')";
+                    $output .= "<p>(rezultate pentru 'număr', 'an', 'lună', 'joc complet')";
                 } else if ($categ == "Articole") {
-                    $output .= "<p>('rubrică', 'titlu articol', 'platformă joc', 'autor')</p>";
+                    $output .= "<p>(rezultate pentru 'rubrică', 'titlu articol', 'platformă joc', 'autor')</p>";
                 }
 
                 $output .= HtmlPrinter::buildDivContainer($results['divArray'], $results['divClasses'], true);
             }
         }
-        return $output;
+        return $output . "<p>(" . (microtime(true) - $startTime) . " sec.)</p>";
     }
 }
 
