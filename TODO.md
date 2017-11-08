@@ -30,13 +30,13 @@ Editii
 ------------------
 * coperta pentru fiecare editie, chiar si cele nescanate
 * incarcare imagini via ajax (pana la instalarea unui Image Gallery)
-* Linkuri download pentru fiecare revista
-* Linkuri revistevechi.awiki.ro
+* ~~Linkuri download pentru fiecare revista~~
+* ~~Linkuri revistevechi.awiki.ro~~
 
 Layout, grafica and stuff
 -------------------------
 * Layout coerent cap-coada
-* Footer
+* Imbunatatire footer
 * Logo (+responsive)
 * Favicon
 * Titlu pagini - sa reprezinte pagina curenta
@@ -71,15 +71,17 @@ Articole - general
 * Header - linkurile de download sa fie in ordinea Reviste, DVD, CD1, CD2, 
 * de terminat navigatie articole
 * posibilitate afisare pagini duble (cu cover page separat)
+* ~~pune link pe card, nu doar imagine~~
 
 Editii
 ------------
 * adauga metode getNextEditieLink/getPrevEditieLink
-* pune link pe card, nu doar imagine
+* pune link pe card, nu pe imagine
+* adauga imaginea copertii ca background la card, nu imagine in <div>
 * adauga Revista in constructor si foloseste Revista->revistaDirPath
   in loc de buildHomeDirPath();
 * metoda getLuna() care sa trateze si lunile duble
-* tratament special Level nr. mai 1998
+* tratament special Level nr. mai 1998 - sa afiseze comentariul din DB
 
 Revista
 -------
@@ -112,6 +114,8 @@ BUGS
 DATABASE
 ======================================
 * de tratat articolele cu reclame intercalate (ex: News 3 pg, apoi reclama, apoi iar news 2 pg)
+* DB versioning
+* fix articole fara pg_count (vezi comentariu in Articol.php -> getHtmlOutput)
 
 Rescan
 ------------------

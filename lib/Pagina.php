@@ -61,9 +61,14 @@ class Pagina
         return $imagePath;
     }
 
+    public function getLinkToPaginaDirArticol($articolId)
+    {
+        return $this->editiaParinte->getEditieUrl() . "&articol=$articolId" . "&pagina=$this->numar";
+    }
+
     public function getMicroThumbWithLinkToPaginaDinArticol($articolId)
     {
-        $destinationLink = $this->editiaParinte->getEditieUrl() . "&articol=$articolId" . "&pagina=$this->numar";
+        $destinationLink = $this->getLinkToPaginaDirArticol($articolId);
         return $this->getImageWithLink(self::THUMB, $this->thumbPath, $destinationLink, "microthumb");
     }
 

@@ -3,7 +3,9 @@ namespace ArhivaRevisteVechi\lib;
 
 require_once("../resources/config.php");
 require_once HELPERS . "/h_misc.php";
+require_once HELPERS . "/HtmlPrinter.php";
 use ArhivaRevisteVechi\resources\db\DBC;
+use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
 class Articol
 {
@@ -37,7 +39,7 @@ class Articol
     private function buildPagini ()
     {
         $listaPagini = array();
-        for ($pgIndex = 0; $pgIndex < $this->pageCount; $pgIndex++) {
+        for ($pgIndex = 0; $pgIndex < ($this->pageCount); $pgIndex++) {
             $currentPageNo = $this->pageToc + $pgIndex;
             $currentPageBaseName = $this->buildPaginaBaseName($currentPageNo);
             $listaPagini["$currentPageNo"] = $currentPageBaseName;
@@ -69,6 +71,18 @@ class Articol
         // afisare lista imagini
         $row .= $this->buildHtmlPagesThumbnails($showSearchProperties);
 
+        // span-link pentru clickable div
+        // vezi https://stackoverflow.com/questions/796087/make-a-div-into-a-link
+
+        // TODO page count poate lipsi la unele articole, deci listaPagini va fi 0
+        // si prefer sa pun verificarea asta aici decat o valoare default pentru pageCount
+        // in constructor ca sa se vada mai usor cand lipsesc pagini
+        if (count($this->listaPagini) > 0) {
+            $nrPrimaPgDinArticol = array_keys($this->listaPagini)[0];
+            $linkToFirstPage = $this->editiaParinte->listaPagini[$nrPrimaPgDinArticol]->getLinkToPaginaDirArticol($this->articolId);
+            $clickableSpan = "<span class = 'clickable-div-span' ></span>";
+            $row .= HtmlPrinter::wrapLink($clickableSpan, $linkToFirstPage, "clickable-div-link");
+        }
         $row .= "</div>" . PHP_EOL;
         return $row;
     }
