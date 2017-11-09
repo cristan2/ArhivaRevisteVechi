@@ -1,5 +1,7 @@
 
+
 /* --- override defaults --- */
+
 * {
     margin-top: 0;
     margin-bottom: 0;
@@ -11,7 +13,9 @@ body {
     min-height: 100%;
 }
 
+
 /* --- text --- */
+
 h1, h2 {
     text-align: center;
 }
@@ -20,6 +24,7 @@ pre {
     background-color: lightgray;
     font-family: monospace;
 }
+
 
 /* --- home navigation --- */
 
@@ -93,8 +98,8 @@ div.home-link-container {
     color: wheat;
 }
 
-/* --- reviste cards --- */
 
+/* --- reviste cards --- */
 
 div.card-container, div.search-container, div.page-content {
     width: 85%;
@@ -102,6 +107,10 @@ div.card-container, div.search-container, div.page-content {
 
     /* centreaza cards din interior */
     text-align: center;
+}
+
+div.page-content {
+    /*width: 60%;*/
 }
 
 img.card-img {
@@ -137,6 +146,7 @@ div.reviste-cards-search h1,h2 {
     font-size: 0.8em;
     line-height: 0.8;
 }
+
 
 /* --- reviste cards - indicatoare continut --- */
 
@@ -228,54 +238,52 @@ p.external-links a {
     color: wheat;
 }
 
+
 /* --- pagina articole - containere --- */
 
-div.column-container {
-/*    display: flex;
-    flex-wrap: wrap;*/
+.column-container {
+    display: flex;
+    flex-flow: row wrap;
+
     width: 95%;
     margin: auto;
-
 }
 
-div.cuprins {
-    /*max-width: 40%;*/
-    /*overflow-y: scroll;*/
-}
-
-div.articol-card-container {
-    /*flex-grow: 1;*/
-    width: 40%;
-}
-
-div.main-img-container {
-    width: 55%;
-    /*height: 100%;*/
-    /*flex-grow: 2;*/
-}
-
-div.col {
-    display: inline-block;
-    vertical-align: top;
-    /*max-height: 800px;*/
+.col {
+    flex: 1 100%;
     margin: 1em;
+}
+
+.articol-card-container {min-width: 30%; }
+
+.main-img-container {text-align: justify; }
+
+/* large screen */
+@media all and (min-width: 1000px) {
+    .articol-card-container {flex: 2 0;}
+    .main-img-container {flex: 3 0;}
 }
 
 /* --- cuprins - lista articole --- */
 
 div.articol-card-row {
-    width: 80%;
     min-height: 2.5em;
     margin: 0.3em auto ;
     box-shadow: 0 2px 4px grey;
     background: rgb(240,240,240);
+
+    display: flex;
+    /*flex-flow: row wrap;*/
+
+    /* required for clickable-div-span */
     position:relative;
 }
 
-/* span care umple div-ul cu clickable link
-catre prima pagina din articol; celelalte
-elemente cu link trebuie sa aiba
-position: relative si z-index > 0 */
+/* --- articole - inner divs --- */
+
+/* span care umple div-ul cu clickable link catre prima
+pagina din articol; celelalte elemente cu link trebuie
+sa aiba position: relative si z-index > 0 */
 .clickable-div-span {
     position:absolute;
     width:100%;
@@ -289,9 +297,10 @@ position: relative si z-index > 0 */
 div.articol-card-cell {
     display: inline-block;
     vertical-align: middle;
-    width: 5%;
-    /*height: 100%;*/
+    height: 100%;
 }
+
+/* --- bucati doar in pagina articole --- */
 
 div.articol-card-pagina {
     width: 5%;
@@ -302,27 +311,32 @@ div.articol-card-rubrica {
     width: 10%;
 }
 
+/* --- bucati comune si in pagina articole
+si in pagina de search results --- */
+
 div.articol-card-titlu {
-    min-width: 30%;
+    width: 40%;
     font-weight: bold;
     text-align: left;
 }
 
 div.articol-card-autor {
-    width: 15%;
+    width: 20%;
 }
 
 div.articol-card-lista-microthumb {
-    width: 30%;
-    min-width: 50px;
+    width: 25%;
     text-align: left;
 }
 
 img.microthumb {
-    border: 1px solid black;
-    /*    max-width: 50px;
-        min-width: 20px;*/
-    /*  height: 100%;*/
+    /*border: 1px solid black;*/
+    box-shadow: 0 1px 2px grey;
+    margin: 0.1em;
+    /* max-width: 50px;
+    min-width: 20px;
+    height: 100%;*/
+
     max-height: 40px;
     min-height: 15px;
     vertical-align: middle;
@@ -330,33 +344,54 @@ img.microthumb {
     z-index: 2;
 }
 
+/* --- bucati doar in pagina search results --- */
+
+.search-articol-card-container .articol-card-row {
+    text-align: left;
+    padding: 0.2em;
+}
+
+.articol-card-nume {
+    min-width: 5%;
+}
+
+.articol-card-an {
+    min-width: 5%;
+}
+
+.articol-card-luna {
+    min-width: 5%;
+}
+
+
 /* --- image viewer --- */
 
-
-
 div.main-img-nav {
-    /*background: grey;*/
     width: 100%;
     margin-bottom: 0.3em;
     padding-bottom: 0.3em;
     border-bottom: solid 2px steelblue;
 }
 
-div.main-img {
-    height: 750px;
+/* lista de microthumbs din image viewer */
+.main-img-nav .articol-card-lista-microthumb {
+    width: 100%;
 }
 
+div.main-img { }
+
 img.fullthumb {
-    /*width: 100%;*/
-    /*    max-height: 100%;*/
-    /*    object-fit: contain;*/
-    height: 100%;
+    /* width: 100%;*/
+    max-height: 1000px;
+    /* object-fit: contain;*/
+    /*height: 100%;*/
     vertical-align: middle;
 }
 
 img.minithumb {
     width: 20%;
     max-width: 170px;
+    box-shadow: 0 2px 4px grey;
 }
 
 

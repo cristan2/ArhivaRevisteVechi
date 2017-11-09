@@ -14,6 +14,7 @@
         <!--div-- class="col cuprins"-->
             <?php echo $articoleCardRows ?>
         <!--/div-->
+        <!--div class = 'col articol-card-container'>...</div-->
         <div class="col main-img-container">
             <?php include HTMLBITS . "/html_bit_page_viewer.php"; ?>
         </div>
