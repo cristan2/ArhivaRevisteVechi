@@ -258,10 +258,22 @@ p.external-links a {
 
 .main-img-container {text-align: justify; }
 
+/* medium screen */
+@media all and (min-width: 950px) {
+    .articol-card-container {flex: 1 0;}
+    .main-img-container {flex: 1 0;}
+}
+
 /* large screen */
-@media all and (min-width: 1000px) {
+@media all and (min-width: 1400px) {
     .articol-card-container {flex: 2 0;}
     .main-img-container {flex: 3 0;}
+}
+
+/* largest screen */
+@media all and (min-width: 1921px) {
+    .articol-card-container {flex: 1 0;}
+    .main-img-container {flex: 2 0;}
 }
 
 /* --- cuprins - lista articole --- */
@@ -308,7 +320,7 @@ div.articol-card-pagina {
 }
 
 div.articol-card-rubrica {
-    width: 10%;
+    width: 15%;
 }
 
 /* --- bucati comune si in pagina articole
@@ -321,7 +333,7 @@ div.articol-card-titlu {
 }
 
 div.articol-card-autor {
-    width: 20%;
+    width: 15%;
 }
 
 div.articol-card-lista-microthumb {
@@ -352,15 +364,15 @@ img.microthumb {
 }
 
 .articol-card-nume {
-    min-width: 5%;
+    min-width: 8%;
 }
 
 .articol-card-an {
-    min-width: 5%;
+    min-width: 6%;
 }
 
 .articol-card-luna {
-    min-width: 5%;
+    min-width: 6%;
 }
 
 
@@ -378,13 +390,12 @@ div.main-img-nav {
     width: 100%;
 }
 
-div.main-img { }
+div.main-img img {
+    box-shadow: 0 4px 8px grey;
+}
 
 img.fullthumb {
-    /* width: 100%;*/
     max-height: 1000px;
-    /* object-fit: contain;*/
-    /*height: 100%;*/
     vertical-align: middle;
 }
 
@@ -394,6 +405,9 @@ img.minithumb {
     box-shadow: 0 2px 4px grey;
 }
 
+.first-page {
+    margin-left: 20%;
+}
 
 /* --- footer --- */
 footer {

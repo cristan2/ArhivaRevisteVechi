@@ -41,8 +41,7 @@ class Articol
         $listaPagini = array();
         for ($pgIndex = 0; $pgIndex < ($this->pageCount); $pgIndex++) {
             $currentPageNo = $this->pageToc + $pgIndex;
-            $currentPageBaseName = $this->buildPaginaBaseName($currentPageNo);
-            $listaPagini["$currentPageNo"] = $currentPageBaseName;
+            $listaPagini[] = $currentPageNo;
         }
         return $listaPagini;
     }
@@ -63,25 +62,24 @@ class Articol
             : $this->getDefaultPrintableProperties();
         $row = "<div class = 'articol-card-row'>" . PHP_EOL;
 
-        // afisare atribute articol
+        /* afisare atribute articol */
         foreach ($propertiesToDisplay as $propName => $propValue) {
            $row .= wrapDiv($propValue, "articol-card-cell", "articol-card-$propName");
         }
 
-        // afisare lista imagini
-        $row .= $this->buildHtmlPagesThumbnails($showSearchProperties);
+        /* afisare lista imagini */
+        $row .= $this->buildHtmlPagesMicroThumbs($showSearchProperties);
 
-        // span-link pentru clickable div
-        // vezi https://stackoverflow.com/questions/796087/make-a-div-into-a-link
+        /* span-link pentru clickable div */
+        // solutia de aici https://stackoverflow.com/questions/796087/make-a-div-into-a-link
 
         // TODO page count poate lipsi la unele articole, deci listaPagini va fi 0
         // si prefer sa pun verificarea asta aici decat o valoare default pentru pageCount
         // in constructor ca sa se vada mai usor cand lipsesc pagini
         if (count($this->listaPagini) > 0) {
-            $nrPrimaPgDinArticol = array_keys($this->listaPagini)[0];
-            $linkToFirstPage = $this->editiaParinte->listaPagini[$nrPrimaPgDinArticol]->getLinkToPaginaDirArticol($this->articolId);
+            $linkToArticol = $this->getArticolUrl();
             $clickableSpan = "<span class = 'clickable-div-span' ></span>";
-            $row .= HtmlPrinter::wrapLink($clickableSpan, $linkToFirstPage, "clickable-div-link");
+            $row .= HtmlPrinter::wrapLink($clickableSpan, $linkToArticol , "clickable-div-link");
         }
         $row .= "</div>" . PHP_EOL;
         return $row;
@@ -91,10 +89,10 @@ class Articol
      * Construieste thumbnails pagini cu linkuri catre imaginea mare
      * Returneaza un string cu html pentru afisare in tabel
      */
-    public function buildHtmlPagesThumbnails($useDirectLinkToImage = false)
+    public function buildHtmlPagesMicroThumbs($useDirectLinkToImage = false)
     {
         $thumbsRow = "<div class = 'articol-card-cell articol-card-lista-microthumb'>" . PHP_EOL;
-        foreach($this->listaPagini as $pageNo => $imageBaseName)
+        foreach($this->listaPagini as $pageNo /*=> $imageBaseName*/)
         {
             $pagina = $this->editiaParinte->listaPagini[$pageNo];
             if ($useDirectLinkToImage) {
@@ -105,6 +103,11 @@ class Articol
         }
         $thumbsRow .= "</div>" . PHP_EOL;
         return $thumbsRow;
+    }
+
+    public function getArticolUrl()
+    {
+        return $this->editiaParinte->getEditieUrl() . "&articol=$this->articolId";
     }
 
     /**
@@ -137,10 +140,10 @@ class Articol
      * Construieste numele imaginii fara extensie
      * (ex: 'Level 1999 12 002' fara spatii)
      */
-    private function buildPaginaBaseName($pageNo)
-    {
-        return $this->editiaParinte->editieBaseNameForPages
-               . padLeft($pageNo, PAGINA_PAD);
-    }
+//    private function buildPaginaBaseName($pageNo)
+//    {
+//        return $this->editiaParinte->editieBaseNameForPages
+//               . padLeft($pageNo, PAGINA_PAD);
+//    }
 
 }

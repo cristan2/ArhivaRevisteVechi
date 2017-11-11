@@ -79,7 +79,8 @@ class Pagina
 
     public function getThumbWithLinkToFullImage()
     {
-        return $this->getImageWithLink(self::THUMB, $this->thumbPath, $this->path, "minithumb");
+        $firstPageMarginClass = ($this->numar == 1) ? "first-page" : "";
+        return $this->getImageWithLink(self::THUMB, $this->thumbPath, $this->path, "minithumb $firstPageMarginClass");
     }
 
     public function getThumbWithLinkToEditie($cssClass)

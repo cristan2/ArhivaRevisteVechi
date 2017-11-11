@@ -1,4 +1,6 @@
-<div class = "main-img-nav"><?php echo $thumbsArticolCurent ?></div>
+<div class = "main-img-nav">
+    <?php echo $outputMicroThumbsNav ?>
+</div>
 <div class = "main-img">
     <?php
         if (isset($paginaCurentaHugeThumb)) {

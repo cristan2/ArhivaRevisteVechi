@@ -7,6 +7,7 @@ use ArhivaRevisteVechi\resources\db\DBC;
 
 require_once("../resources/config.php");
 require_once HELPERS . "/h_misc.php";
+require_once HELPERS . "/h_html.php";
 require_once HELPERS . "/HtmlPrinter.php";
 require_once LIB     . "/Pagina.php";
 
@@ -371,6 +372,20 @@ class Editie
     public function outputInfoEditie()
     {
         return "(". convertLuna($this->luna) ." {$this->an})";
+    }
+
+    public function printAllPagesThumbsToHtml()
+    {
+        $output = "";
+        for ($pg = 1; $pg <= $this->maxNumPages; $pg++) {
+            $output .= $this->listaPagini[$pg]->getThumbWithLinkToFullImage()."  ";
+        }
+        return $output;
+    }
+
+    public function printPageToHtml($pageNo)
+    {
+
     }
 
     /**
