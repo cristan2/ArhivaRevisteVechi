@@ -214,12 +214,20 @@ div.header-nav-container a {
     font-size: 1.5em;
 }
 
+.header-nav-home-link {
+    text-decoration-line: none;
+}
+
 div.header-nav-elem {
     margin: auto;
 }
 
 div.header-nav-current {
     width: 40%;
+}
+
+.header-nav-current h1 {
+    font-size: 1.5em;
 }
 
 div.header-nav-prev, div.header-nav-next {

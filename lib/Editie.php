@@ -360,9 +360,13 @@ class Editie
      * Construieste titlu pentru pagina articole
      * ex: "Level nr. 24"
      */
-    public function outputTitluDetaliat()
+    public function outputTitluDetaliat($useTitleAsHomeLink = false)
     {
-        return "{$this->numeRevista} nr. {$this->numar}";
+        $title = "{$this->numeRevista} nr. {$this->numar}";
+        if ($useTitleAsHomeLink) {
+            return HtmlPrinter::wrapLink($title, $this->getEditieUrl(), "header-nav-home-link");
+        }
+        return $title;
     }
 
     /**

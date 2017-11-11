@@ -7,7 +7,7 @@
         </h2>
     </div>
     <div class = "header-nav-current">
-        <h1><?php echo $editiaCurenta->outputTitluDetaliat()?></h1>
+        <h1><?php echo $editiaCurenta->outputTitluDetaliat(true)?></h1>
         <h2><?php echo $editiaCurenta->outputInfoEditie()?></h2>
         <p class = "external-links"><?php echo $editiaCurenta->outputLinkuriDownload();?></p>
     </div>
