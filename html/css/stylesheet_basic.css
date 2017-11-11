@@ -109,8 +109,14 @@ div.card-container, div.search-container, div.page-content {
     text-align: center;
 }
 
-div.page-content {
-    /*width: 60%;*/
+/* selectat doar h1 si h2 care sunt direct in page-content
+ca sa nu selecteze si titlurile din card divs */
+div.page-content > h1 {
+    margin-top: 0.5em;
+}
+
+div.page-content > h2 {
+   margin-bottom: 1em;
 }
 
 img.card-img {
@@ -372,17 +378,20 @@ img.microthumb {
 }
 
 .articol-card-nume {
-    min-width: 8%;
+    min-width: 7%;
 }
 
 .articol-card-an {
-    min-width: 6%;
+    min-width: 5%;
 }
 
 .articol-card-luna {
-    min-width: 6%;
+    min-width: 4%;
 }
 
+.articol-card-nota {
+    min-width: 4%;
+}
 
 /* --- image viewer --- */
 

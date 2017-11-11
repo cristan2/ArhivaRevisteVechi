@@ -10,7 +10,7 @@ use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 class Articol
 {
     public $titlu, $rubrica, $autor;
-    public $articolId, $pageToc, $pageCount;
+    public $articolId, $pageToc, $pageCount, $nota;
     public $listaPagini;
 
     private $editiaParinte;
@@ -28,6 +28,7 @@ class Articol
         $this->titlu         = $dbRow[DBC::ART_TITLU];
         $this->autor         = $dbRow[DBC::ART_AUTOR];
         $this->pageCount     = $dbRow[DBC::ART_PG_CNT];
+        $this->nota          = $dbRow[DBC::ART_NOTA];
 
         // info pagini
         $this->listaPagini   = $this->buildPagini();
@@ -132,6 +133,7 @@ class Articol
             "rubrica" => $this->rubrica,
             "titlu"   => $this->titlu,
             "autor"   => $this->autor,
+            "nota"    => $this->nota,
         );
     }
 

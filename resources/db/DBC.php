@@ -9,6 +9,7 @@ class DBC
     const ART_RUBRICA   = "rubrica";
     const ART_TITLU     = "titlu";
     const ART_AUTOR     = "autor";
+    const ART_NOTA      = "nota";
 
     const ED_AN         = "an";
     const ED_LUNA       = "luna";

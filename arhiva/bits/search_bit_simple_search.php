@@ -22,18 +22,18 @@ function performSimpleSearch($params, $db)
         foreach($processedResult as $categ => $results ) {
             $numarRezultate = count($results['divArray']);
 
+            // hint cautare
+            $stringRezultate = ($numarRezultate == 1) ? "rezultat" : "rezultate";
+            if ($categ == "Ediții") {
+                $hint = "pentru 'număr', 'an', 'lună', 'joc complet'";
+            } else if ($categ == "Articole") {
+                $hint = "pentru 'rubrică', 'titlu articol', 'platformă joc', 'autor'";
+            }
+
             $output .= "<h1>$categ</h1>";
-            $output .= "<h2>($numarRezultate rezultate)</h2>";
+            $output .= "<h2>($numarRezultate $stringRezultate $hint)</h2>";
 
             if ($numarRezultate > 0) {
-
-                // hint cautare
-                if ($categ == "Ediții") {
-                    $output .= "<p>(rezultate pentru 'număr', 'an', 'lună', 'joc complet')";
-                } else if ($categ == "Articole") {
-                    $output .= "<p>(rezultate pentru 'rubrică', 'titlu articol', 'platformă joc', 'autor')</p>";
-                }
-
                 $output .= HtmlPrinter::buildDivContainer($results['divArray'], $results['divClasses'], true);
             }
         }
