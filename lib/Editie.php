@@ -81,6 +81,7 @@ class Editie
     /* denota daca editia e construita doar citind
        imaginile scanate, fara info din DB */
     private $isBuiltFromDisk = false;
+    public $typeIsPreview = false;
 
     // TODO unde naiba am vrut sa-l folosesc pe asta?
     /* denota daca numele directorului este dat de luna
@@ -185,19 +186,17 @@ class Editie
 
         /* ******** content attrs ******** */
         // fiecare articol se adauga singur in acest array
-        $listaArticole = array();
+        // $this->listaArticole = array();
+//
+        if ($editieTypeToBuild == self::EDITIE_PREVIEW) {
+            $this->typeIsPreview = true;
+        }
 
         $this->arePaginiScanate = $this->countPaginiScanate() > 0;
 
-
-        /* ******** coperta ******** */
-//        if (isset($dbRow['isBuiltFromDisk'])) {
-//            $this->copertaPath          = $dbRow['copertaPath'];
-//        }
-
         /* ******** pagini ******** */
         if ($editieTypeToBuild == self::EDITIE_FULL) {
-            $listaPagini = array();
+            // $listaPagini = array();
             if ($this->isBuiltFromDisk) {
 
                 // TODO implement
@@ -205,9 +204,9 @@ class Editie
             } else {
 
                 // TODO si daca nu avem maxNumPages?
-                for ($i = 1; $i <= $this->maxNumPages; $i++) {
-                    $this->listaPagini[$i] = new Pagina($this, $i);
-                }
+                // dar pot exista intrari in DB pentru editie, dar sa nu avem maxNumPages?
+                // anyway, putem lua pg_toc de la ultimul articol sau paginile de pe disc
+                $this->buildPages(1, $this->maxNumPages);
             }
         }
 
@@ -317,6 +316,14 @@ class Editie
     public function setDownloadLinks($dldLinksArray)
     {
         $this->linkuriDownload = $dldLinksArray;
+    }
+
+    public function buildPages($startPage, $maxPages)
+    {
+        for ($idx = 0; $idx < $maxPages; $idx++) {
+            $currPageNo = $startPage + $idx;
+            $this->listaPagini[$currPageNo] = new Pagina($this, $currPageNo);
+        }
     }
 
     private function buildLinkWiki()

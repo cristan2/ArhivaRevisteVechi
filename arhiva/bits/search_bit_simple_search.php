@@ -94,7 +94,7 @@ function processSimpleSearchDbResult($db, $dbResultTuple)
         if (isset($listaEditiileArticolelor[$idEditiaCurenta])) {
             $editiaCurenta = $listaEditiileArticolelor[$idEditiaCurenta];
         } else {
-            $editiaCurenta = new Editie($dbRow, Editie::EDITIE_FULL);
+            $editiaCurenta = new Editie($dbRow, Editie::EDITIE_PREVIEW);
             $listaEditiileArticolelor[$idEditiaCurenta] = $editiaCurenta;
         }
 

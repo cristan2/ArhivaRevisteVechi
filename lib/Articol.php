@@ -13,7 +13,7 @@ class Articol
     public $articolId, $pageToc, $pageCount, $nota;
     public $listaPagini;
 
-    private $editiaParinte;
+    public $editiaParinte;
 
 
     public function __construct($dbRow, Editie $editiaParinte)
@@ -35,8 +35,14 @@ class Articol
 
         // adauga articol in lista din editia-parinte
         $this->editiaParinte->listaArticole[$this->articolId] = $this;
+        if ($editiaParinte->typeIsPreview) $editiaParinte->buildPages($this->pageToc, $this->pageCount);
     }
 
+    /**
+     * Construieste array doar cu numerele paginilor pe care
+     * le cuprinde articolul; aceste imagini vor fi folosite ca
+     * referinta pentru array-ul de imagini din Editie
+     */
     private function buildPagini ()
     {
         $listaPagini = array();
