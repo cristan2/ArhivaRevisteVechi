@@ -116,6 +116,7 @@ DATABASE
 * de tratat articolele cu reclame intercalate (ex: News 3 pg, apoi reclama, apoi iar news 2 pg)
 * DB versioning
 * fix articole fara pg_count (vezi comentariu in Articol.php -> getHtmlOutput)
+* fix count (2 in loc de 1) pentru Cuprins Level 2002 - 2005 (probabil si ulterior) 
 
 Rescan
 ------------------
