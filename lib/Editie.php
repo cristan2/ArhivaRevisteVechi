@@ -300,9 +300,13 @@ class Editie
      */
     private function buildEditieBaseName()
     {
-        return  ucfirst(strtolower($this->numeRevista
+        // clean nume revista
+        // no spaces, lowercase, capitalize first letter
+        $numeRevistaClean = ucfirst(strtolower(str_replace(' ', '', $this->numeRevista)));
+
+        return $numeRevistaClean
         . $this->an
-        . $this->editieDirNameNumericVal));
+        . padLeft($this->editieDirNameNumericVal, LUNA_PAD);
     }
 
     public function countPaginiScanate()
