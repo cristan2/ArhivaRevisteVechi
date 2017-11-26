@@ -35,7 +35,7 @@ require_once LIB     . "/Pagina.php";
 class Editie
 {
     // --- static attrs ---
-    static $issuePrefixes = ['Nr. ', '#'];
+    static $issuePrefixes = ['Nr.', '#'];
     const EDITIE_FULL     = 0;
     const EDITIE_PREVIEW  = 1;
 
@@ -235,8 +235,10 @@ class Editie
      */
     private function buildHomeDirPath()
     {
+        $revistaSimpleName = preg_replace('/[^a-z0-9]+/', "", strtolower($this->numeRevista));
+
         return IMG . DIRECTORY_SEPARATOR
-            . strtolower($this->numeRevista) . DIRECTORY_SEPARATOR
+            . $revistaSimpleName . DIRECTORY_SEPARATOR
             . $this->an;
     }
 
