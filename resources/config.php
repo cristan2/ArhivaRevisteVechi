@@ -1,7 +1,8 @@
 <?php
 
-// debug
+// debug & production
 DEFINE ("IS_DEBUG", false);
+DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids"));
 
 // site
 DEFINE ("SITE_NAME"  , "ARHIVA REVISTE VECHI");

@@ -37,10 +37,11 @@ class DBC
 
     public function directQuery($query)
     {
+        // var_dump($query);
         return $this->db->query($query);
     }
 
-    public function queryToateRevistele()
+    public function queryToateRevistele($filtruReviste)
     {
         $editiiCount = self::REV_CNT_ED;
         return $this->directQuery("
@@ -49,10 +50,13 @@ class DBC
             LEFT JOIN (
                 SELECT revista_id, COUNT(editie_id) $editiiCount
                 FROM editii
-                WHERE tip = 'revista'
+                WHERE 1
+                AND tip = 'revista'
+                AND numar <> ''
                 GROUP BY revista_id) ed
-            USING (revista_id)
-            GROUP BY rev.revista_id
+            USING (revista_id)"
+            . (!empty($filtruReviste) ? "WHERE rev.revista_nume IN ('" .implode("','", $filtruReviste) . "')" : "")
+            . "GROUP BY rev.revista_id
         ");
     }
 
