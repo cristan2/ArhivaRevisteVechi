@@ -175,11 +175,11 @@ div.reviste-cards-preview-icon-complet {
 }
 
 div.reviste-cards-preview-icon-doar-scan {
-    background-color: gold;
+    background-color: lightblue;
 }
 
 div.reviste-cards-preview-icon-doar-cuprins {
-    background-color: lightblue;
+    background-color: gold;
 }
 
 div.reviste-cards-preview-icon-no-content {
@@ -495,4 +495,18 @@ footer {
 .bottom-footer a {
     text-decoration-line: none;
     color: wheat;
+}
+
+/* --- dropdowns --- */
+/* TODO - make pretty */
+/* https://www.w3schools.com/css/css_dropdowns.asp */
+
+.dropdown button {
+    /* TODO re-afisare cand il formatezi frumos, cf. w3schools */
+    display: none;
+}
+
+div.dropdown-content a {
+    color: wheat;
+    font-size: 1em;
 }

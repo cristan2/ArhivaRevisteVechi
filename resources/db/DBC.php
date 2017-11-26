@@ -65,7 +65,19 @@ class DBC
         ");
     }
 
-    public function queryToateEditiile($revistaId)
+    public function queryAniEditii($revistaId)
+    {
+        return $this->directQuery("
+            SELECT DISTINCT " . self::ED_AN . "
+            FROM editii
+            WHERE 1
+            AND revista_id = '$revistaId'
+            AND tip = 'revista'
+            ORDER BY an
+        ");
+    }
+
+    public function queryToateEditiile($revistaId, $filtruAn = '')
     {
         $articleCountAlias = self::ED_ART_CNT;
         return $this->directQuery("
@@ -75,8 +87,9 @@ class DBC
             LEFT JOIN articole a USING ('editie_id')
             WHERE 1
             AND e.revista_id = '$revistaId'
-            AND e.tip = 'revista'
-            GROUP BY editie_id
+            AND e.tip = 'revista'"
+            . (!empty($filtruAn) ? "AND e.an =  '$filtruAn'" : "")
+            ."GROUP BY editie_id
         ");
     }
 
@@ -144,5 +157,14 @@ class DBC
     public function getNextRow($dbResult)
     {
         return $dbResult->fetchArray(SQLITE3_ASSOC);
+    }
+
+    public function getSingleArrayFromDbResult($dbResult, $desiredDbCol)
+    {
+        $arrayToReturn = array();
+        while ($dbRow = $this->getNextRow($dbResult)) {
+            $arrayToReturn[] = $dbRow[$desiredDbCol];
+        }
+        return $arrayToReturn;
     }
 }

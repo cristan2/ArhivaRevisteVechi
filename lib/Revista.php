@@ -102,4 +102,10 @@ class Revista {
 
         return HtmlPrinter::buildCardDiv($attrsToPrint, $htmlClass);
     }
+
+    // TODO
+    function getListaAniAparitie()
+    {
+//        return DBC::queryAniEditii ....
+    }
 }

@@ -153,4 +153,20 @@ class HtmlPrinter {
     {
         return "<img src='$imagePath' $cssClass alt='$altDescription' />";
     }
+
+    static function buildDropdownFromArray($arrayFilters, $baseUrl, $numeDropdown = "Filtru")
+    {
+        $ddContainer = "<div class = 'dropdown'>" . PHP_EOL;
+        $ddContainer .= "<button class = 'dropdown-button'>$numeDropdown</button>". PHP_EOL;
+        $ddContainer .= "<div class = 'dropdown-content'>". PHP_EOL;
+        $ddContainer .= "<a href = ' $baseUrl'>Arată tot</a>". PHP_EOL;
+
+        foreach($arrayFilters as $destinationLink) {
+            $ddContainer .= "<a href = ' $baseUrl&an=$destinationLink '>$destinationLink</a>". PHP_EOL;
+        }
+
+        $ddContainer .= "</div>" . PHP_EOL ."</div>";
+
+        return $ddContainer;
+    }
 }
