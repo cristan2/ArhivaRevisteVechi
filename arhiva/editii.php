@@ -50,6 +50,7 @@ if (!empty($revistaId)) {
         $editiiArray = Editie::getEditiiArrayFromNumeRevista($revista);
     }
 
+    $currentPageTitle = $revista->numeRevista;
     $pageContent = HtmlPrinter::buildDivContainer($editiiArray, array("card-container"));
 
     include_once ARHIVABITS . "/editii_bit_filtre.php";

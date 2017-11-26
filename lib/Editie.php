@@ -369,7 +369,7 @@ class Editie
      */
     public function outputTitluDetaliat($useTitleAsHomeLink = false)
     {
-        $title = "{$this->numeRevista} nr. {$this->numar}";
+        $title = $this->outputTitluCuNumeRevista();
         if ($useTitleAsHomeLink) {
             return HtmlPrinter::wrapLink($title, $this->getEditieUrl(), "header-nav-home-link");
         }
@@ -397,6 +397,11 @@ class Editie
     public function printPageToHtml($pageNo)
     {
 
+    }
+
+    public function outputTitluCuNumeRevista()
+    {
+        return "{$this->numeRevista} nr. {$this->numar}";
     }
 
     /**
