@@ -9,7 +9,7 @@ $pageContent = <<<START_HTML
 <p>Vizualizare și căutare prin reviste vechi. Deocamdată doar Level. Aproape toate revistele au un cuprins căutabil, cele mai multe reviste sunt scanate şi accesibile. Vor urma diverse îmbunătățiri, atât pe partea de conținut, cât și pe partea de prezentare și căutare.</p>
 
 <h2>Codul sursă</h2>
-Disponibil pe <a href='https://github.com/cristan2/ArhivaRevisteVechi'>github</a>. Contribuțiile sunt binevenite, pentru cine e doritor. Există un TODO.
+Disponibil pe <a href='https://github.com/cristan2/ArhivaRevisteVechi'>github</a>. Contribuțiile sunt binevenite, pentru cine e doritor. Există un fișier TODO cu ce ar mai fi de făcut.
 
 <h2>Baza de date</h2>
 <p>E fundaţia site-ului şi are un proiect dedicat pe <a href='https://github.com/adakaleh/revistevechi-db'>github</a>. Tot acest site nu e în esență decât o interfață către informația din baza de date.</p>
