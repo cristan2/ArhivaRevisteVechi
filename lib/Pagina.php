@@ -121,7 +121,7 @@ class Pagina
         if (!$imageExists && !$forceLink)
             return $displayedElement;
 
-        return HtmlPrinter::wrapLink($displayedElement, $targetLink);
+        return HtmlPrinter::wrapLink($displayedElement, $targetLink) . PHP_EOL;
     }
 
 //    static function fromPath($editie, $path)

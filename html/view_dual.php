@@ -8,8 +8,10 @@
 </head>
 
 <body>
-    <?php include HTMLBITS . "/html_bit_header_home_link.php"; ?>
-    <?php include HTMLBITS . "/html_bit_header_main_nav.php"; ?>
+    <header>
+        <?php include HTMLBITS . "/html_bit_header_home_link.php"; ?>
+        <?php include HTMLBITS . "/html_bit_header_main_nav.php"; ?>
+    </header>
     <div class = "column-container">
         <!--div-- class="col cuprins"-->
             <?php echo $articoleCardRows ?>
@@ -20,8 +22,8 @@
         </div>
     </div>
 
-    <footer>
-        <?php include HTMLBITS . "/html_bit_footer.php"; ?>
-    </footer>
+    <!--footer>
+        <?php /*include HTMLBITS . "/html_bit_footer.php";*/ ?>
+    </footer-->
 </body>
 </html>

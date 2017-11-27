@@ -210,7 +210,7 @@ div.header-nav-container {
     display: flex;
     justify-content:center;
     align-items: center;
-    min-height: 3em;
+    min-height: 2em;
 /*    border-bottom: 1px solid black;*/
     padding: 0.5em;
 }
@@ -508,5 +508,28 @@ footer {
 
 div.dropdown-content a {
     color: wheat;
+    font-size: 1em;
+}
+
+/* --- static pages */
+.static {
+    text-align: left;
+    width: 50%;
+}
+
+.static h1 {
+    text-align: left;
+    margin-top: 1em;
+}
+
+.static h2 {
+    text-align: left;
+    margin-top: 1em;
+    font-size: 1.5em;
+}
+
+.static  h3 {
+    text-align: left;
+    margin-top: 1em;
     font-size: 1em;
 }

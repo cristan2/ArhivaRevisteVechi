@@ -1,5 +1,5 @@
 * nav articole cu titlu si next/prev
-* pagina Despre si Updates
+* ~~pagina Despre si Updates~~
 * cache pagina Editii
 
 
@@ -10,6 +10,7 @@ FUNCTIONALITATI NOI
 * **Download CSV** baza de date, eventual cu opţiuni de personalizare
 * Colectie de citate de folosit pentru Site Tagline si Search Placeholder
 * Checkboxes pentru a semnala date incorecte/incomplete pentru informatiile din baza de date
+* RSS (?)
 
 
 IMBUNATATIRI FUNCTIONALITATI EXISTENTE
@@ -51,6 +52,7 @@ Layout, grafica and stuff
 * Favicon
 * Titlu pagini - sa reprezinte pagina curenta
 * top banner (logo+search) always on top
+* Reenable footer & fix poziție
 
 Diverse
 ------------------
@@ -68,6 +70,7 @@ Diverse
 * namespaces + autoloader
 * Fix TODOs cod
 * Documentatie in cod la functiile fara phpdoc, unde e cazul
+* Remove Google fonts
 
 Performanta
 -----------

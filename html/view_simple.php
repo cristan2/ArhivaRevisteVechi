@@ -8,16 +8,18 @@
 </head>
 
 <body>
-    <?php include HTMLBITS . "/html_bit_header_home_link.php"; ?>
-    <?php include HTMLBITS . "/html_bit_search.php"; ?>
-    <?php include HTMLBITS . "/html_bit_editii_header_filter_list.php"; ?>
+    <header>
+        <?php include HTMLBITS . "/html_bit_header_home_link.php"; ?>
+        <?php include HTMLBITS . "/html_bit_search.php"; ?>
+        <?php include HTMLBITS . "/html_bit_editii_header_filter_list.php"; ?>
+    </header>
     <div class = "page-content">
         <?php echo isset($pageTitle)   ? "<h1>$pageTitle</h1>" : "" ?>
         <?php echo isset($pageContent) ? $pageContent : "" ?>
     </div>
 
-    <footer>
-        <?php include HTMLBITS . "/html_bit_footer.php"; ?>
-    </footer>
+    <!--footer>
+        <?php /*include HTMLBITS . "/html_bit_footer.php";*/ ?>
+    </footer-->
 </body>
 </html>

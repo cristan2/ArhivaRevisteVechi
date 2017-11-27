@@ -24,7 +24,8 @@
 
     <h2 class = "home-nav-search"><?php if (empty($suppresMainHeaderSearch)) echo buildHtmlSimpleSearch(); ?></h2>
     <h2 class = "home-nav-preset-search" >
-        <a href = "<?php echo ARHIVA . "/search.php" ?> ">Preset Search (future Quick Nav)</a>
+        <!--a href = "<?php echo ARHIVA . "/search.php" ?> ">Preset Search (future Quick Nav)</a-->
+        <a href = ' <?php echo HTMLSTATIC . "/about.php" ?>'>Despre</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href = '<?php echo HTMLSTATIC . "/changelog.php" ?>'>Updates</a>
     </h2>
 </div>
 

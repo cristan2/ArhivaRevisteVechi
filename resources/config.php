@@ -5,7 +5,7 @@ DEFINE ("IS_DEBUG", false);
 DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids"));
 
 // site
-DEFINE ("SITE_NAME"  , "ARHIVA REVISTE VECHI");
+DEFINE ("SITE_NAME"  , "Arhiva Reviste Vechi");
 DEFINE ("SITE_TAG"   , "Deocamdată doar LEVEL");
 DEFINE ("SEARCH_HINT", "I’m looking for 30 dead guys and one woman.");
 
