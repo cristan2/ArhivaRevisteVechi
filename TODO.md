@@ -1,6 +1,7 @@
 * nav articole cu titlu si next/prev
 * ~~pagina Despre si Updates~~
 * cache pagina Editii
+* credits
 
 
 FUNCTIONALITATI NOI
@@ -18,7 +19,7 @@ IMBUNATATIRI FUNCTIONALITATI EXISTENTE
 
 Search
 ------------------
-* numele autorilor sunt linkuri către un search pentru toate articolele acelui autor
+* numele autorilor sunt linkuri către un search special pentru toate articolele acelui autor, plus diferite statistici (primul articol, ultimul articol, numar total articole, articolul cu cea mai mare nota/cea mai mica nota, Game Universe daca are, link wiki etc) 
 * ~~fiecare rand/card e link către editie si articol (deschide prima pagină)~~
 * completare termen de cautare in caseta de cautare, in pagina cu rezultate
 * ~~adauga note la fiecare review~~
@@ -70,7 +71,7 @@ Diverse
 * namespaces + autoloader
 * Fix TODOs cod
 * Documentatie in cod la functiile fara phpdoc, unde e cazul
-* Remove Google fonts
+* ~~Remove Google fonts~~
 
 Performanta
 -----------
