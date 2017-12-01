@@ -2,7 +2,7 @@
 
 // debug & production
 DEFINE ("IS_DEBUG", false);
-DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids"));
+DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids", "Hobbyte''s"));
 
 // site
 DEFINE ("SITE_NAME"  , "Arhiva Reviste Vechi");
@@ -30,7 +30,7 @@ DEFINE ("IMG"       , RESOURCES ."/img");
 
 // db
 DEFINE ("DB_DIR"    , RESOURCES . "/db");
-DEFINE ("DB_FILE"   , DB_DIR . "/arhiva_reviste_v5.5.db");
+DEFINE ("DB_FILE"   , DB_DIR . "/arhiva_reviste_v5.6.db");
 
 require_once DB_DIR . "/DBC.php";
 use ArhivaRevisteVechi\resources\db\DBC;
