@@ -14,6 +14,8 @@ $suppresMainHeaderSearch = false;
 
 if (empty($paramsRaw)) {
 
+    $currentPageTitle = "Căutare";
+
     // add preset search
     $presetSearchContent = buildHtmlPresetSearch();
 
@@ -21,6 +23,9 @@ if (empty($paramsRaw)) {
     // TODO implement
 
 } else {
+
+    $currentPageTitle = "Rezultat căutare";
+
     parse_str($paramsRaw, $params);
     $pageContent = processSearchRequest($params, $db);
 }

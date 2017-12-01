@@ -37,10 +37,11 @@ class DBC
 
     public function directQuery($query)
     {
+        // var_dump($query);
         return $this->db->query($query);
     }
 
-    public function queryToateRevistele()
+    public function queryToateRevistele($filtruReviste)
     {
         $editiiCount = self::REV_CNT_ED;
         return $this->directQuery("
@@ -49,10 +50,13 @@ class DBC
             LEFT JOIN (
                 SELECT revista_id, COUNT(editie_id) $editiiCount
                 FROM editii
-                WHERE tip = 'revista'
+                WHERE 1
+                AND tip = 'revista'
+                AND numar <> ''
                 GROUP BY revista_id) ed
-            USING (revista_id)
-            GROUP BY rev.revista_id
+            USING (revista_id)"
+            . (!empty($filtruReviste) ? "WHERE rev.revista_nume IN ('" .implode("','", $filtruReviste) . "')" : "")
+            . "GROUP BY rev.revista_id
         ");
     }
 
@@ -65,7 +69,19 @@ class DBC
         ");
     }
 
-    public function queryToateEditiile($revistaId)
+    public function queryAniEditii($revistaId)
+    {
+        return $this->directQuery("
+            SELECT DISTINCT " . self::ED_AN . "
+            FROM editii
+            WHERE 1
+            AND revista_id = '$revistaId'
+            AND tip = 'revista'
+            ORDER BY an
+        ");
+    }
+
+    public function queryToateEditiile($revistaId, $filtruAn = '')
     {
         $articleCountAlias = self::ED_ART_CNT;
         return $this->directQuery("
@@ -75,8 +91,9 @@ class DBC
             LEFT JOIN articole a USING ('editie_id')
             WHERE 1
             AND e.revista_id = '$revistaId'
-            AND e.tip = 'revista'
-            GROUP BY editie_id
+            AND e.tip = 'revista'"
+            . (!empty($filtruAn) ? "AND e.an =  '$filtruAn'" : "")
+            ."GROUP BY editie_id
         ");
     }
 
@@ -144,5 +161,14 @@ class DBC
     public function getNextRow($dbResult)
     {
         return $dbResult->fetchArray(SQLITE3_ASSOC);
+    }
+
+    public function getSingleArrayFromDbResult($dbResult, $desiredDbCol)
+    {
+        $arrayToReturn = array();
+        while ($dbRow = $this->getNextRow($dbResult)) {
+            $arrayToReturn[] = $dbRow[$desiredDbCol];
+        }
+        return $arrayToReturn;
     }
 }

@@ -35,7 +35,7 @@ require_once LIB     . "/Pagina.php";
 class Editie
 {
     // --- static attrs ---
-    static $issuePrefixes = ['Nr. ', '#'];
+    static $issuePrefixes = ['Nr.', '#'];
     const EDITIE_FULL     = 0;
     const EDITIE_PREVIEW  = 1;
 
@@ -235,8 +235,10 @@ class Editie
      */
     private function buildHomeDirPath()
     {
+        $revistaSimpleName = preg_replace('/[^a-z0-9]+/', "", strtolower($this->numeRevista));
+
         return IMG . DIRECTORY_SEPARATOR
-            . strtolower($this->numeRevista) . DIRECTORY_SEPARATOR
+            . $revistaSimpleName . DIRECTORY_SEPARATOR
             . $this->an;
     }
 
@@ -300,9 +302,13 @@ class Editie
      */
     private function buildEditieBaseName()
     {
-        return  ucfirst(strtolower($this->numeRevista
+        // clean nume revista
+        // no spaces, lowercase, capitalize first letter
+        $numeRevistaClean = ucfirst(strtolower(str_replace(' ', '', $this->numeRevista)));
+
+        return $numeRevistaClean
         . $this->an
-        . $this->editieDirNameNumericVal));
+        . padLeft($this->editieDirNameNumericVal, LUNA_PAD);
     }
 
     public function countPaginiScanate()
@@ -369,7 +375,7 @@ class Editie
      */
     public function outputTitluDetaliat($useTitleAsHomeLink = false)
     {
-        $title = "{$this->numeRevista} nr. {$this->numar}";
+        $title = $this->outputTitluCuNumeRevista();
         if ($useTitleAsHomeLink) {
             return HtmlPrinter::wrapLink($title, $this->getEditieUrl(), "header-nav-home-link");
         }
@@ -397,6 +403,11 @@ class Editie
     public function printPageToHtml($pageNo)
     {
 
+    }
+
+    public function outputTitluCuNumeRevista()
+    {
+        return "{$this->numeRevista} nr. {$this->numar}";
     }
 
     /**

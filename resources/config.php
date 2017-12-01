@@ -1,10 +1,11 @@
 <?php
 
-// debug
+// debug & production
 DEFINE ("IS_DEBUG", false);
+DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids"));
 
 // site
-DEFINE ("SITE_NAME"  , "ARHIVA REVISTE VECHI");
+DEFINE ("SITE_NAME"  , "Arhiva Reviste Vechi");
 DEFINE ("SITE_TAG"   , "Deocamdată doar LEVEL");
 DEFINE ("SEARCH_HINT", "I’m looking for 30 dead guys and one woman.");
 
@@ -29,7 +30,7 @@ DEFINE ("IMG"       , RESOURCES ."/img");
 
 // db
 DEFINE ("DB_DIR"    , RESOURCES . "/db");
-DEFINE ("DB_FILE"   , DB_DIR . "/arhiva_reviste_v5.db");
+DEFINE ("DB_FILE"   , DB_DIR . "/arhiva_reviste_v5.5.db");
 
 require_once DB_DIR . "/DBC.php";
 use ArhivaRevisteVechi\resources\db\DBC;

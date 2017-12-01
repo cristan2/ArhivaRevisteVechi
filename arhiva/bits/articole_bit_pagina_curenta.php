@@ -27,6 +27,7 @@ if ($hasArticol) {
     $articolCurent = $_GET['articol'];
     $articolCurent = $editiaCurenta->listaArticole[$articolCurent];
     $outputMicroThumbsNav = $articolCurent->buildHtmlPagesMicroThumbs();
+    $outputMicroThumbsNav .= $articolCurent->getHtmlOutputTitle();
 
     // TODO
     // $navLinkPagePrev;

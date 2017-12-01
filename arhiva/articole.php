@@ -64,6 +64,7 @@ if (!empty($articoleArray)) {
     $articoleCardRows = "";
 }
 
+$currentPageTitle = $editiaCurenta->outputTitluCuNumeRevista();
 
 /* ------- info pagina curenta ------- */
 include_once ARHIVABITS . "/articole_bit_pagina_curenta.php";

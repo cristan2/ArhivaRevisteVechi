@@ -117,6 +117,15 @@ class Articol
         return $this->editiaParinte->getEditieUrl() . "&articol=$this->articolId";
     }
 
+    public function getHtmlOutputTitle()
+    {
+        return "<div class = 'articol-nav-title-container'>
+          <h3 class = 'articol-nav-rubrica'>$this->rubrica</h3><hr>
+          <h2>$this->titlu</h2>"
+        . (!empty($this->autor) ? "<h3>($this->autor)</h3>" : "")
+         . "</div>";
+    }
+
     /**
      * Proprietatile articolului care vor fi afisate in html
      */

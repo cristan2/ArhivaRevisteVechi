@@ -43,7 +43,7 @@ class Revista {
 
     static function getSimpleName($numeRevista)
     {
-        return preg_replace('/[^a-z0-9 ]+/', "", strtolower($numeRevista));
+        return preg_replace('/[^a-z0-9]+/', "", strtolower($numeRevista));
     }
 
     private function buildRevistaBaseDir()
@@ -101,5 +101,11 @@ class Revista {
         );
 
         return HtmlPrinter::buildCardDiv($attrsToPrint, $htmlClass);
+    }
+
+    // TODO
+    function getListaAniAparitie()
+    {
+//        return DBC::queryAniEditii ....
     }
 }

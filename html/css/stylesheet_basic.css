@@ -6,6 +6,7 @@
     margin-top: 0;
     margin-bottom: 0;
     font-family: 'Roboto Condensed', sans-serif;
+    font-size: 15px;
 }
 
 body {
@@ -18,6 +19,7 @@ body {
 
 h1, h2 {
     text-align: center;
+    font-size: 2em;
 }
 
 pre {
@@ -31,7 +33,7 @@ pre {
 div.home-link-container {
     margin-top: 0;
     margin-bottom: 0;
-    height: 3em;
+    height: 3.6em;
     padding: 0.5em;
 
     /* --- background --- */
@@ -66,12 +68,12 @@ div.home-link-container {
 
 .home-link-logo {
     font-weight: bold;
-    font-size: 1.8em;
+    font-size: 2em;
     text-align: left;
 }
 
 .home-link-tag {
-    font-size: 0.8em;
+    font-size: 0.9em;
     font-style: italic;
 }
 
@@ -175,11 +177,11 @@ div.reviste-cards-preview-icon-complet {
 }
 
 div.reviste-cards-preview-icon-doar-scan {
-    background-color: gold;
+    background-color: lightblue;
 }
 
 div.reviste-cards-preview-icon-doar-cuprins {
-    background-color: lightblue;
+    background-color: gold;
 }
 
 div.reviste-cards-preview-icon-no-content {
@@ -210,7 +212,7 @@ div.header-nav-container {
     display: flex;
     justify-content:center;
     align-items: center;
-    min-height: 3em;
+    min-height: 2em;
 /*    border-bottom: 1px solid black;*/
     padding: 0.5em;
 }
@@ -402,20 +404,52 @@ div.main-img-nav {
     border-bottom: solid 2px steelblue;
 }
 
-/* lista de microthumbs din image viewer */
-.main-img-nav .articol-card-lista-microthumb {
-    width: 100%;
-}
-
 div.main-img img {
     box-shadow: 0 4px 8px grey;
 }
 
-img.fullthumb {
-    max-height: 1000px;
+/* lista de microthumbs */
+.main-img-nav .articol-card-lista-microthumb {
+    width: 50%;
+    display: inline-block;
+}
+
+.main-img-nav .microthumb {
+    max-height: 80px;
+    min-height: 30px;
+    margin: 0.2em;
+}
+
+.articol-nav-title-container {
+    width: 45%;
+    display: inline-block;
     vertical-align: middle;
 }
 
+.articol-nav-title-container hr {
+    width: 50%;
+}
+
+.articol-nav-title-container h2, h3{
+    text-align: center;
+    padding: 0.1em;
+}
+
+.articol-nav-title-container h2 {
+    font-size: 1.5em;
+    color: steelblue;
+    margin: 0.4em auto 0.2em;
+}
+
+.articol-nav-title-container h3 {
+    font-size: 0.9em;
+}
+
+.articol-nav-rubrica {
+    text-transform: uppercase;
+}
+
+/* thumbnails */
 img.minithumb {
     width: 20%;
     max-width: 170px;
@@ -424,6 +458,13 @@ img.minithumb {
 
 .first-page {
     margin-left: 20%;
+}
+
+/* full image */
+
+img.fullthumb {
+    max-height: 1000px;
+    vertical-align: middle;
 }
 
 /* --- footer --- */
@@ -456,4 +497,41 @@ footer {
 .bottom-footer a {
     text-decoration-line: none;
     color: wheat;
+}
+
+/* --- dropdowns --- */
+/* TODO - make pretty */
+/* https://www.w3schools.com/css/css_dropdowns.asp */
+
+.dropdown button {
+    /* TODO re-afisare cand il formatezi frumos, cf. w3schools */
+    display: none;
+}
+
+div.dropdown-content a {
+    color: wheat;
+    font-size: 1em;
+}
+
+/* --- static pages */
+.static {
+    text-align: left;
+    width: 50%;
+}
+
+.static h1 {
+    text-align: left;
+    margin-top: 1em;
+}
+
+.static h2 {
+    text-align: left;
+    margin-top: 1em;
+    font-size: 1.5em;
+}
+
+.static  h3 {
+    text-align: left;
+    margin-top: 1em;
+    font-size: 1em;
 }
