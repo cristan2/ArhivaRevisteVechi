@@ -82,7 +82,7 @@ Articole
 ------------------
 * Header navigatie editii
   ** construire linkuri din editii fara id
-  ** implementare first & last
+  ** implementare isFirst & isLast
 * Header - linkurile de download sa fie in ordinea Reviste, DVD, CD1, CD2, 
 * ~~pune link pe card, nu doar imagine~~
 * ~~margine la primul thumb, pentru a fi afisate spreads corect la coloane pare~~
