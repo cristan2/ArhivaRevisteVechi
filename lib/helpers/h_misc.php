@@ -105,3 +105,11 @@ function extractKnownLinkName($link)
     else if (contains($link, "scribd")) return FILE_HOST_NAME_SCRIBD;
     else return "Link";
 }
+
+/**
+ * Curata stringul primit de caracterele nedorite
+ */
+function cleanName($rawString)
+{
+    return preg_replace('/[^a-zA-Z0-9]+/', "", $rawString);
+}

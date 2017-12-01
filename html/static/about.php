@@ -28,7 +28,7 @@ Disponibil pe <a href='https://github.com/cristan2/ArhivaRevisteVechi'>github</a
 </ul>
 
 <h2>Contact</h2>
-<p>Pentru orice sugestii, semnalări de bugs, critici sau orice altceva puteți folosi <a href='https://forum.candaparerevista.ro/viewtopic.php?f=2&t=1682'>forumul candaparerevista.ro</a>.</p>
+<p>Pentru orice sugestii, semnalări de bugs, critici sau orice altceva puteți folosi <a href='https://forum.candaparerevista.ro/viewtopic.php?f=16&t=1684'>forumul candaparerevista.ro</a>.</p>
 </div>
 START_HTML;
 

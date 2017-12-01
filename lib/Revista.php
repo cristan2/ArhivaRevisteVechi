@@ -8,6 +8,7 @@ use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 //require_once("../resources/config.php");
 
 require_once HELPERS . "/HtmlPrinter.php";
+require_once HELPERS . "/h_misc.php";
 
 class Revista {
 
@@ -43,7 +44,7 @@ class Revista {
 
     static function getSimpleName($numeRevista)
     {
-        return preg_replace('/[^a-z0-9]+/', "", strtolower($numeRevista));
+        return strtolower(cleanName($numeRevista));
     }
 
     private function buildRevistaBaseDir()
