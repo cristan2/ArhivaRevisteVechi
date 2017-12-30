@@ -4,6 +4,21 @@ require_once("../../resources/config.php");
 
 $pageContent = <<<START_HTML
 <div class='static changelog'>
+<h3>v0.2 (30-12-2017)</h3>
+Content update:
+<ul>
+<li>Adăugat revista Game Over</li>
+<li>Adăugat revista Hobbyte's</li>
+</ul>
+Modificări majore:
+<ul>
+<li>Îmbunătăţit performanţa pagina ediţii</li>
+</ul>
+Modificări minore:
+<ul>
+<li>Îmbunătăţit/adăugat efecte shadows la toate elementele la mouse hover</li>
+<li>Îmbunătăţiri minore căutare (ordonare, nume reviste colorate diferit)</li>
+</ul>
 <h3>v0.1 (29-11-2017)</h3>
 Primul release:
 <ul>

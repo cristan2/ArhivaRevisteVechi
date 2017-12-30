@@ -130,7 +130,7 @@ div.reviste-cards, div.reviste-cards-search {
     width: 15%;
     max-width: 170px;
     margin: 0.5em;
-    box-shadow: 0 4px 8px grey;
+    box-shadow: 0 2px 4px -1px grey;
     text-align: center;
     vertical-align: top;
 }
@@ -144,10 +144,6 @@ div.reviste-cards-search {
     display: inline-block;
     width: 10%;
     max-width: 100px;
-    margin: 0.5em;
-    box-shadow: 0 4px 8px grey;
-    text-align: center;
-    vertical-align: top;
 }
 
 div.reviste-cards-search h1,h2 {
@@ -155,6 +151,12 @@ div.reviste-cards-search h1,h2 {
     line-height: 0.8;
 }
 
+/* shadow on hover */
+div.reviste-cards:hover, div.reviste-cards-search:hover {
+    /*max-width: 171px;*/
+    box-shadow: 0 10px 7px -2px #5D575D, 0 -2px 4px -1px #5D575D;
+    z-index: 999;
+}
 
 /* --- reviste cards - indicatoare continut --- */
 
@@ -297,7 +299,7 @@ p.external-links a {
 div.articol-card-row {
     min-height: 2.5em;
     margin: 0.3em auto ;
-    box-shadow: 0 2px 4px grey;
+    box-shadow: 0 2px 2px -1px grey;
     background: rgb(240,240,240);
 
     display: flex;
@@ -305,6 +307,11 @@ div.articol-card-row {
 
     /* required for clickable-div-span */
     position:relative;
+}
+
+div.articol-card-row:hover {
+    box-shadow: 0 4px 5px -2px #5D575D, 0 -2px 3px -2px #5D575D;
+    z-index: 999;
 }
 
 /* --- articole - inner divs --- */
@@ -372,6 +379,11 @@ img.microthumb {
     z-index: 2;
 }
 
+img.microthumb:hover {
+    box-shadow: 0 3px 3px #5D575D, 0 -1px 2px -1px #5D575D;
+    z-index: 999;
+}
+
 /* --- bucati doar in pagina search results --- */
 
 .search-articol-card-container .articol-card-row {
@@ -381,6 +393,7 @@ img.microthumb {
 
 .articol-card-nume {
     min-width: 7%;
+    font-weight: bold;
 }
 
 .articol-card-an {
@@ -402,10 +415,6 @@ div.main-img-nav {
     margin-bottom: 0.3em;
     padding-bottom: 0.3em;
     border-bottom: solid 2px steelblue;
-}
-
-div.main-img img {
-    box-shadow: 0 4px 8px grey;
 }
 
 /* lista de microthumbs */
@@ -453,7 +462,13 @@ div.main-img img {
 img.minithumb {
     width: 20%;
     max-width: 170px;
-    box-shadow: 0 2px 4px grey;
+    margin-top: 0.5em;
+    box-shadow: 0 4px 4px -2px grey;
+}
+
+img.minithumb:hover {
+    box-shadow: 0 10px 7px -4px #5D575D, 0 -2px 4px -1px #5D575D;
+    z-index: 999;
 }
 
 .first-page {
@@ -465,6 +480,7 @@ img.minithumb {
 img.fullthumb {
     max-height: 1000px;
     vertical-align: middle;
+    box-shadow: 0 4px 8px grey;
 }
 
 /* --- footer --- */
@@ -535,3 +551,13 @@ div.dropdown-content a {
     margin-top: 1em;
     font-size: 1em;
 }
+
+/* --- search results magazine colors --- */
+
+.articol-card-cell-gameover {color: #cc443a;}
+
+.articol-card-cell-level {color: #5197a1;}
+
+.articol-card-cell-games4kids {color: #777ec0;}
+
+.articol-card-cell-hobbytes {color: #884e79;}

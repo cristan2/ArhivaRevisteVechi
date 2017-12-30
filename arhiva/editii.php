@@ -17,23 +17,37 @@ use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
 
 if (isset($_GET["revista"])) {
-    $revistaId = $_GET["revista"];
+    $revistaId = intval($_GET["revista"]);
 } else {
     $pageContent = "Nu trebuia să faci asta. Vor fi consecințe...";
 };
 
+$filtruAn = '';
+if (isset($_GET["an"])) {
+    $an = $_GET["an"];
+    if (is_numeric($an)) $filtruAn = $an;
+}
 
 if (!empty($revistaId)) {
 
-    /* ------- info revista curenta ------- */
+    /* ------- simple cache pentru lista de editii ------- */
+    // (http://wesbos.com/simple-php-page-caching-technique/)
+    $cachefile = ROOT . "/cache/editii_$revistaId"
+                . (!empty($revistaId) ? "-$filtruAn" : "")
+                    ."_".date('M-d-Y').'.php';
+    $cachetime = 86400; // 24 ore
+
+    // get cache if exists / is not old
+    if (file_exists($cachefile) && time() - $cachetime < filemtime($cachefile)) {
+        include($cachefile);
+        exit;
+    }
+    // else genereaza pagina normal
+    ob_start();
+
+   /* ------- info revista curenta ------- */
     $revistaDbResult = $db->getNextRow($db->queryRevista($revistaId));
     $revista = new Revista($revistaDbResult);
-
-    $filtruAn = '';
-    if (isset($_GET["an"])) {
-        $an = $_GET["an"];
-        if (is_numeric($an)) $filtruAn = $an;
-    }
 
     /* ------- info editii ------- */
     $editiiDbResult = $db->queryToateEditiile($revistaId, $filtruAn);
@@ -57,3 +71,19 @@ if (!empty($revistaId)) {
 }
 
 include_once HTMLLIB . "/view_simple.php";
+
+/* ------- save cache ------- */
+
+if (!empty($revistaId)) {
+
+    $cachefile = ROOT . "/cache/editii_$revistaId"
+                . (!empty($revistaId) ? "-$filtruAn" : "")
+                ."_".date('M-d-Y').'.php';
+
+    $fp = fopen($cachefile, 'w');
+    fwrite($fp, ob_get_contents());
+    fclose($fp);
+
+    // get browser output
+    ob_end_flush();
+}

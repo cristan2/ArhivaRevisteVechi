@@ -22,6 +22,7 @@ class DBC
     const REV_NUME      = "revista_nume";
     const REV_APARITII  = "aparitii";
     const REV_CNT_ED    = "ed_cnt";
+    const REV_MAX_ED    = "ed_max";
 
     const DLD_CATEG     = "categorie";
     const DLD_LINKS     = "links";   // alias pentru group_concat('link')
@@ -43,12 +44,12 @@ class DBC
 
     public function queryToateRevistele($filtruReviste)
     {
-        $editiiCount = self::REV_CNT_ED;
+        $editiiCountAlias = self::REV_CNT_ED;
         return $this->directQuery("
-            SELECT rev.*, ed.$editiiCount
+            SELECT rev.*, ed.$editiiCountAlias
             FROM reviste rev
             LEFT JOIN (
-                SELECT revista_id, COUNT(editie_id) $editiiCount
+                SELECT revista_id, COUNT(editie_id) $editiiCountAlias
                 FROM editii
                 WHERE 1
                 AND tip = 'revista'
@@ -79,6 +80,17 @@ class DBC
             AND tip = 'revista'
             ORDER BY an
         ");
+    }
+
+    public function queryMaxEditiiDinRevista($revistaId)
+    {
+        $maxEdAlias = self::REV_MAX_ED;
+        // fara abs() poate returna un string gol de la editiile fara numar
+        return $this->directQuery("
+            SELECT MAX(abs(numar)) $maxEdAlias
+            FROM editii
+            WHERE (revista_id) = '$revistaId'
+         ");
     }
 
     public function queryToateEditiile($revistaId, $filtruAn = '')

@@ -96,12 +96,26 @@ function padLeft($targetNo, $padLength)
 
 /**
  * Verifica linkurile de download extrase din DB si
- * returneaza un nume pentru a fi folosit in link
+ * returneaza un nume pentru a fi folosit ca nume pentru link
  * ex: https://www.scribd.com/doc/16826391 => "Scribd"
  */
 function extractKnownLinkName($link)
 {
-    if (contains($link, "archive")) return FILE_HOST_NAME_ARCHIVEORG;
-    else if (contains($link, "scribd")) return FILE_HOST_NAME_SCRIBD;
-    else return "Link";
+    $nameToReturn = "Link";
+
+    foreach(KNOWN_FILE_HOSTS as $domainKey => $domainNiceName) {
+        if (contains($link, $domainKey)) {
+            $nameToReturn = $domainNiceName;
+            break;
+        }
+    }
+    return $nameToReturn;
+}
+
+/**
+ * Curata stringul primit de caracterele nedorite
+ */
+function cleanName($rawString)
+{
+    return preg_replace('/[^a-zA-Z0-9]+/', "", $rawString);
 }

@@ -25,5 +25,8 @@
     <!--footer>
         <?php /*include HTMLBITS . "/html_bit_footer.php";*/ ?>
     </footer-->
+
+    <!-- statistics for mythweb.ro (de sters/modificat pentru alte domenii -->
+    <script type='text/javascript' src='http://mythweb.ro/fstats/js/fs2.js.php?site_id=1'></script>
 </body>
 </html>

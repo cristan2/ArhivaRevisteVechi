@@ -40,7 +40,7 @@ class Editie
     const EDITIE_PREVIEW  = 1;
 
     // --- base attrs ---
-    public  $numeRevista, $revistaId;
+    public  $numeRevista, $numeRevistaSimplu, $revistaId;
     public  $an, $luna, $numar, $editieId;
     public  $maxNumPages;
     private $numarArticole;
@@ -99,6 +99,7 @@ class Editie
 
         /* ******** base attrs ******** */
         $this->numeRevista              = $dbRow[DBC::REV_NUME];
+        $this->numeRevistaSimplu        = cleanName($this->numeRevista);
         $this->an                       = $dbRow[DBC::ED_AN];
 
         if (isset($dbRow['isBuiltFromDisk'])) {
@@ -235,7 +236,7 @@ class Editie
      */
     private function buildHomeDirPath()
     {
-        $revistaSimpleName = preg_replace('/[^a-z0-9]+/', "", strtolower($this->numeRevista));
+        $revistaSimpleName = strtolower($this->numeRevistaSimplu);
 
         return IMG . DIRECTORY_SEPARATOR
             . $revistaSimpleName . DIRECTORY_SEPARATOR
@@ -302,9 +303,8 @@ class Editie
      */
     private function buildEditieBaseName()
     {
-        // clean nume revista
-        // no spaces, lowercase, capitalize first letter
-        $numeRevistaClean = ucfirst(strtolower(str_replace(' ', '', $this->numeRevista)));
+        // nume simplu, capitalize first letter
+        $numeRevistaClean = ucfirst(strtolower($this->numeRevistaSimplu));
 
         return $numeRevistaClean
         . $this->an
@@ -335,7 +335,7 @@ class Editie
     private function buildLinkWiki()
     {
         $strippedNr = ltrim($this->editieDirNameNumericVal, "0");
-        $wikiLink = lcfirst($this->numeRevista)
+        $wikiLink = lcfirst($this->numeRevistaSimplu)
                     . ":" . $this->an
                     . ":" . $strippedNr;
         return RVWIKI_BASE_LINK . "/" . $wikiLink;
@@ -405,6 +405,14 @@ class Editie
 
     }
 
+    /**
+     * Construieste... n-ai sa ghicesti ce
+     */
+    private function outputCopertaWithLink()
+    {
+        return $this->coperta->getThumbWithLinkToEditie("card-img");
+    }
+
     public function outputTitluCuNumeRevista()
     {
         return "{$this->numeRevista} nr. {$this->numar}";
@@ -416,18 +424,10 @@ class Editie
      */
     private function outputTitluPeScurt()
     {
-        if ($this->isBuiltFromDisk) {
-            return "&#35;$this->numar / $this->an";
+        if ($this->isBuiltFromDisk || empty($this->luna)) {
+            return "Nr. $this->numar / $this->an";
         }
         return "$this->luna / $this->an";
-    }
-
-    /**
-     * Construieste... n-ai sa ghicesti ce
-     */
-    private function outputCopertaWithLink()
-    {
-        return $this->coperta->getThumbWithLinkToEditie("card-img");
     }
 
     /**
@@ -436,7 +436,9 @@ class Editie
      */
     private function outputNumar()
     {
-        return "Nr. " . $this->numar;
+        // daca luna nu exista, numarul editiei a fost folosit in titlu
+        if (empty($this->numar) || empty($this->luna)) return "&nbsp;";
+        return /*"&#35;"*/ "Nr. ". $this->numar;
     }
 
     private function outputPreviewContinut()

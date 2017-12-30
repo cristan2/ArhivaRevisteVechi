@@ -71,7 +71,12 @@ class Articol
 
         /* afisare atribute articol */
         foreach ($propertiesToDisplay as $propName => $propValue) {
-           $row .= wrapDiv($propValue, "articol-card-cell", "articol-card-$propName");
+            if ($propName == "nume") {
+                $numeRevista = strtolower($this->editiaParinte->numeRevistaSimplu);
+                $row .= wrapDiv($propValue, "articol-card-cell", "articol-card-$propName", "articol-card-cell-$numeRevista");
+            } else {
+                $row .= wrapDiv($propValue, "articol-card-cell", "articol-card-$propName");
+            }
         }
 
         /* afisare lista imagini */
@@ -120,10 +125,11 @@ class Articol
     public function getHtmlOutputTitle()
     {
         return "<div class = 'articol-nav-title-container'>
-          <h3 class = 'articol-nav-rubrica'>$this->rubrica</h3><hr>
-          <h2>$this->titlu</h2>"
-        . (!empty($this->autor) ? "<h3>($this->autor)</h3>" : "")
-         . "</div>";
+          <h3 class = 'articol-nav-rubrica'>$this->rubrica</h3>"
+          . (!empty($this->rubrica) && !empty($this->titlu) ? "<hr>" : "")
+          . "<h2>$this->titlu</h2>"
+          . (!empty($this->autor) ? "<h3>($this->autor)</h3>" : "")
+          . "</div>";
     }
 
     /**
