@@ -52,6 +52,7 @@ function specialQuerySimpleSearch($db, $searchFilter)
         OR lower(a.titlu)  LIKE '%$searchFilter%'
         OR lower(a.joc_platforma)  LIKE '%$searchFilter%'
         OR lower(a.autor)  LIKE '%$searchFilter%'
+        ORDER BY e.an, e.luna
     ";
 
     $lunaConvertita = searchLunaNumeric($searchFilter);

@@ -71,7 +71,12 @@ class Articol
 
         /* afisare atribute articol */
         foreach ($propertiesToDisplay as $propName => $propValue) {
-           $row .= wrapDiv($propValue, "articol-card-cell", "articol-card-$propName");
+            if ($propName == "nume") {
+                $numeRevista = strtolower($this->editiaParinte->numeRevistaSimplu);
+                $row .= wrapDiv($propValue, "articol-card-cell", "articol-card-$propName", "articol-card-cell-$numeRevista");
+            } else {
+                $row .= wrapDiv($propValue, "articol-card-cell", "articol-card-$propName");
+            }
         }
 
         /* afisare lista imagini */

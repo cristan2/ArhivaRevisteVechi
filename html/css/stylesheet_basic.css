@@ -393,6 +393,7 @@ img.microthumb:hover {
 
 .articol-card-nume {
     min-width: 7%;
+    font-weight: bold;
 }
 
 .articol-card-an {
@@ -550,3 +551,13 @@ div.dropdown-content a {
     margin-top: 1em;
     font-size: 1em;
 }
+
+/* --- search results magazine colors --- */
+
+.articol-card-cell-gameover {color: #cc443a;}
+
+.articol-card-cell-level {color: #5197a1;}
+
+.articol-card-cell-games4kids {color: #777ec0;}
+
+.articol-card-cell-hobbytes {color: #884e79;}
