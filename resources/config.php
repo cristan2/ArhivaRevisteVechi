@@ -2,11 +2,11 @@
 
 // debug & production
 DEFINE ("IS_DEBUG", false);
-DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids", "Hobbyte''s"));
+DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids", "Hobbyte''s", "Game Over"));
 
 // site
 DEFINE ("SITE_NAME"  , "Arhiva Reviste Vechi");
-DEFINE ("SITE_TAG"   , "Deocamdată doar LEVEL");
+DEFINE ("SITE_TAG"   , "No gods or kings. Only man.");
 DEFINE ("SEARCH_HINT", "I’m looking for 30 dead guys and one woman.");
 
 // arhiva
@@ -28,9 +28,12 @@ DEFINE ("RESOURCES" , ROOT . "/resources");
 DEFINE ("TEMPL"     , RESOURCES ."/templates");
 DEFINE ("IMG"       , RESOURCES ."/img");
 
+// cache
+DEFINE ("CACHE_DIR" , ROOT . "/cache");
+
 // db
 DEFINE ("DB_DIR"    , RESOURCES . "/db");
-DEFINE ("DB_FILE"   , DB_DIR . "/arhiva_reviste_v5.6.db");
+DEFINE ("DB_FILE"   , DB_DIR . "/arhiva_reviste_v6.db");
 
 require_once DB_DIR . "/DBC.php";
 use ArhivaRevisteVechi\resources\db\DBC;
@@ -43,5 +46,8 @@ DEFINE ("THUMB_DEFAULT"  , IMG . "/coperti/default_th.jpg");
 
 // external links
 DEFINE ("RVWIKI_BASE_LINK"         , "https://revistevechi.awiki.org");
-DEFINE ("FILE_HOST_NAME_ARCHIVEORG", "Archive.org");
-DEFINE ("FILE_HOST_NAME_SCRIBD"    , "Scribd");
+DEFINE ("KNOWN_FILE_HOSTS", array(
+    "archive" => "Archive.org",
+    "scribd" => "Scribd",
+    "mediafire" => "Mediafire",
+    "imgur" => "Imgur"));
