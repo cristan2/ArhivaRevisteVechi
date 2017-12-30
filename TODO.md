@@ -1,6 +1,6 @@
 * nav articole cu titlu si next/prev
 * ~~pagina Despre si Updates~~
-* cache pagina Editii
+* ~~cache pagina Editii~~
 * credits
 
 
@@ -44,6 +44,10 @@ Editii
 * ~~filtru ani~~ - luna (nu e cazul deocamdata)
 * ~~Linkuri download pentru fiecare revista~~
 * ~~Linkuri revistevechi.awiki.ro~~
+
+Reviste
+-------
+* link direct catre editie, daca e singura
 
 Layout, grafica and stuff
 -------------------------
@@ -131,14 +135,17 @@ BUGS
 * footer - fix pentru afisare jos
 
 
-DATABASE
-======================================
+DATABASE & PAGINI SCANATE
+=========================
 * de tratat articolele cu reclame intercalate (ex: News 3 pg, apoi reclama, apoi iar news 2 pg)
 * DB versioning
 * fix articole fara pg_count (vezi comentariu in Articol.php -> getHtmlOutput)
-* fix count (2 in loc de 1) pentru Cuprins Level 2002 - 2005 (probabil si ulterior) 
+* fix count (2 in loc de 1) pentru Cuprins Level 2002 - 2005 (probabil si ulterior)
+* separa postere + nume in cuprins + redenumire fisiere sa fie in ordine (vezi Game Over, Level)
+* color correction paginile Game Over
 
 Rescan
 ------------------
 2002-07 - regenerate to higher-res
-2002-09 - idem
+2002-09+ - idem
+2007-05 - primele 11 pagini
