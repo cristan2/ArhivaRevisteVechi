@@ -501,7 +501,13 @@ class Editie
         $outputLinkuriDownload = count($this->linkuriDownload) > 0 ? ", Download: " : "";
         $linkuriDownload = array();
         foreach ($this->linkuriDownload as $categ => $arrayItemAndLinks) {
+
+            $maxNoOfItems = max(array_keys($arrayItemAndLinks));
             foreach ($arrayItemAndLinks as $item => $arrayLinks) {
+
+                // numarul itemului se ataseaza la nume (ex: "CD 1", "CD 2", "Poster 1", "Poster 2" etc.)
+                // daca exista un singur item (ex: "Revista", sau un singur CD) nu-l mai includem deloc
+                if ($maxNoOfItems == 1) $item = "";
                 $linkuriDownload[] = $this->getPrettyLinkForDownloadCateg($categ, $item, $arrayLinks);
             }
         }
@@ -524,7 +530,7 @@ class Editie
         // nu ar trebui sa fie niciodata 0, query-ul filtreaza intrarile goale
         // if ($totalLinks == 0) return "";
 
-        $outputCateg = ucfirst($categ) . ($categ == 'revista' ? "" : $item);
+        $outputCateg = ucfirst($categ) . " " . $item;
         $outputLinks = array();
 
         foreach($linksArray as $link) {
