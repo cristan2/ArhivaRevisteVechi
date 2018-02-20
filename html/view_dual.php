@@ -5,6 +5,8 @@
     <title><?php echo (!empty($currentPageTitle) ? $currentPageTitle . " &bull; " : "") . SITE_NAME ?></title>
     <link rel="stylesheet" href="<?php echo CSSLIB.'/fonts.css'; ?>" >
     <link rel="stylesheet" href="<?php echo CSSLIB.'/stylesheet_basic.css'; ?>" >
+
+    <?php include HTMLBITS . "/html_bit_analytics.php" ?>
 </head>
 
 <body>
@@ -25,8 +27,5 @@
     <!--footer>
         <?php /*include HTMLBITS . "/html_bit_footer.php";*/ ?>
     </footer-->
-
-    <!-- statistics for mythweb.ro (de sters/modificat pentru alte domenii -->
-    <script type='text/javascript' src='http://mythweb.ro/fstats/js/fs2.js.php?site_id=1'></script>
 </body>
 </html>
