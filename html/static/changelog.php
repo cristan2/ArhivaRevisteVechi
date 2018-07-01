@@ -4,6 +4,16 @@ require_once("../../resources/config.php");
 
 $pageContent = <<<START_HTML
 <div class='static changelog'>
+<h3>v0.2.2 (01-07-2018)</h3>
+Content update:
+<ul>
+<li>Adăugat revistele Level din 2006 (11 numere, fără august)</li>
+</ul>
+<h3>v0.2.1 (14-01-2018)</h3>
+Content update:
+<ul>
+<li>Adăugat revistele Level din 2005 (11 numere, fără ianuarie) </li>
+</ul>
 <h3>v0.2 (30-12-2017)</h3>
 Content update:
 <ul>
