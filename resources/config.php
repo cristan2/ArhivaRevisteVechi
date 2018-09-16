@@ -6,7 +6,7 @@ DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids", "Hobbyte''s", "
 
 // site
 DEFINE ("SITE_NAME"  , "Arhiva Reviste Vechi");
-DEFINE ("SITE_TAG"   , "No gods or kings. Only man.");
+DEFINE ("SITE_TAG"   , "Sniper rifles... close-range weapons for when you accidentaly select the wrong gun.");
 DEFINE ("SEARCH_HINT", "I’m looking for 30 dead guys and one woman.");
 
 // arhiva
@@ -33,7 +33,7 @@ DEFINE ("CACHE_DIR" , ROOT . "/cache");
 
 // db
 DEFINE ("DB_DIR"    , RESOURCES . "/db");
-DEFINE ("DB_FILE"   , DB_DIR . "/arhiva_reviste_v6.3.db");
+DEFINE ("DB_FILE"   , DB_DIR . "/arhiva_reviste_v7.0.db");
 
 require_once DB_DIR . "/DBC.php";
 use ArhivaRevisteVechi\resources\db\DBC;

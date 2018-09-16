@@ -4,6 +4,15 @@ require_once("../../resources/config.php");
 
 $pageContent = <<<START_HTML
 <div class='static changelog'>
+<h3>v0.3.0 (16-09-2018)</h3>
+Content update - completat toată colecția Level cu numerele lipsă:
+<ul>
+<li>Anul 2010 - luna octombrie (nr. 157)</li>
+<li>Anul 2011 - lunile iulie-decembrie (nr. 166-171)</li>
+<li>Anul 2012 - tot anul (nr. 172-182)</li>
+<li>Anul 2013 - lunile martie-decembrie (nr. 184-191)</li>
+</ul>
+Mai rămân câteva numere cu pagini lipsă (în special în anii 2008 şi 2009), dar altfel colecţia e completă.
 <h3>v0.2.2 (01-07-2018)</h3>
 Content update:
 <ul>
