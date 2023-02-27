@@ -17,14 +17,16 @@
 // lista microthumbs din article-nav
 $outputMicroThumbsNav = "";
 
-$hasArticol = !empty($_GET['articol']);
-$hasPagina = !empty($_GET['pagina']);
+$articolCurent = filter_input(INPUT_GET, "articol", FILTER_VALIDATE_INT);
+$paginaCurentaNr = filter_input(INPUT_GET, "pagina", FILTER_VALIDATE_INT);
+
+$hasArticol = !empty($articolCurent);
+$hasPagina = !empty($paginaCurentaNr);
 
 // afiseaza un singur articol din editie
 if ($hasArticol) {
 
     // lista microthumbs articol
-    $articolCurent = $_GET['articol'];
     $articolCurent = $editiaCurenta->listaArticole[$articolCurent];
     $outputMicroThumbsNav = $articolCurent->buildHtmlPagesMicroThumbs();
     $outputMicroThumbsNav .= $articolCurent->getHtmlOutputTitle();
@@ -36,9 +38,7 @@ if ($hasArticol) {
     // $navLinkArticolNext;
 
     // afisare pagina din articol
-    if ($hasPagina) {
-        $paginaCurentaNr = $_GET['pagina'];
-    } else {
+    if (!$hasPagina) {
         $paginaCurentaNr = $articolCurent->listaPagini[0];
     }
     $paginaCurentaHugeThumb = $editiaCurenta->listaPagini[$paginaCurentaNr]->getHugeThumbWithLinkToFullImage();
@@ -55,7 +55,6 @@ if ($hasArticol) {
         // $outputMicroThumbsNav = ???
 
         // afisare pagina din editie
-        $paginaCurentaNr = $_GET['pagina'];
         $paginaCurentaHugeThumb = $editiaCurenta->listaPagini[$paginaCurentaNr]->getHugeThumbWithLinkToFullImage();
 
     // varianta default - daca nu are nici pagina, nici articol
@@ -65,5 +64,3 @@ if ($hasArticol) {
     }
 
 }
-
-
