@@ -29,6 +29,7 @@ DEFINE ("TEMPL"     , RESOURCES ."/templates");
 DEFINE ("IMG"       , RESOURCES ."/img");
 
 // cache
+DEFINE ("CACHE_ENABLED", false);
 DEFINE ("CACHE_DIR" , ROOT . "/cache");
 
 // db

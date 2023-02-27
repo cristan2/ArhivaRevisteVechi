@@ -30,20 +30,22 @@ if (isset($_GET["an"])) {
 
 if (!empty($revistaId)) {
 
-    /* ------- simple cache pentru lista de editii ------- */
-    // (http://wesbos.com/simple-php-page-caching-technique/)
-    $cachefile = ROOT . "/cache/editii_$revistaId"
-                . (!empty($revistaId) ? "-$filtruAn" : "")
-                    ."_".date('M-d-Y').'.php';
-    $cachetime = 86400; // 24 ore
+    if (CACHE_ENABLED) {
+        /* ------- simple cache pentru lista de editii ------- */
+        // (http://wesbos.com/simple-php-page-caching-technique/)
+        $cachefile = ROOT . "/cache/editii_$revistaId"
+                    . (!empty($revistaId) ? "-$filtruAn" : "")
+                        ."_".date('M-d-Y').'.php';
+        $cachetime = 86400; // 24 ore
 
-    // get cache if exists / is not old
-    if (file_exists($cachefile) && time() - $cachetime < filemtime($cachefile)) {
-        include($cachefile);
-        exit;
+        // get cache if exists / is not old
+        if (file_exists($cachefile) && time() - $cachetime < filemtime($cachefile)) {
+            include($cachefile);
+            exit;
+        }
+        // else genereaza pagina normal
+        ob_start();
     }
-    // else genereaza pagina normal
-    ob_start();
 
    /* ------- info revista curenta ------- */
     $revistaDbResult = $db->getNextRow($db->queryRevista($revistaId));
@@ -74,7 +76,7 @@ include_once HTMLLIB . "/view_simple.php";
 
 /* ------- save cache ------- */
 
-if (!empty($revistaId)) {
+if (CACHE_ENABLED && !empty($revistaId)) {
 
     $cachefile = ROOT . "/cache/editii_$revistaId"
                 . (!empty($revistaId) ? "-$filtruAn" : "")
