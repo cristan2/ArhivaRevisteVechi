@@ -15,7 +15,7 @@ Disponibil pe <a href='https://github.com/cristan2/ArhivaRevisteVechi'>GitHub</a
 <p>E fundaţia site-ului şi are un proiect dedicat pe <a href='https://github.com/adakaleh/revistevechi-db'>GitHub</a>. Tot acest site nu e în esență decât o interfață către informația din baza de date.</p>
 
 <h2>Proiecte conexe</h2>
-<p><a href='https://revistevechi.awiki.org/doku.php?id=index'><b>Reviste Vechi Wiki</b></a>: un wiki dedicat revistelor vechi, plecând de la aceeaşi bază de date.</p>
+<p><a href='https://wiki.candaparerevista.ro/'><b>Reviste Vechi Wiki</b></a>: un wiki dedicat revistelor vechi, plecând de la aceeaşi bază de date.</p>
 
 <h2>Road map</h2>
 <ul>

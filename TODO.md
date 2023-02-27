@@ -43,7 +43,7 @@ Editii
 * incarcare imagini via ajax (pana la instalarea unui Image Gallery)
 * ~~filtru ani~~ - luna (nu e cazul deocamdata)
 * ~~Linkuri download pentru fiecare revista~~
-* ~~Linkuri revistevechi.awiki.ro~~
+* ~~Linkuri wiki.candaparerevista.ro~~
 
 Reviste
 -------

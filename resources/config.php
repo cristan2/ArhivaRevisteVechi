@@ -45,7 +45,7 @@ DEFINE ("COPERTA_DEFAULT", IMG . "/coperti/default.jpg");
 DEFINE ("THUMB_DEFAULT"  , IMG . "/coperti/default_th.jpg");
 
 // external links
-DEFINE ("RVWIKI_BASE_LINK"         , "https://revistevechi.awiki.org");
+DEFINE ("RVWIKI_BASE_LINK"         , "https://wiki.candaparerevista.ro");
 DEFINE ("KNOWN_FILE_HOSTS", array(
     "archive" => "Archive.org",
     "scribd" => "Scribd",
