@@ -15,9 +15,19 @@ use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 use ArhivaRevisteVechi\resources\db\DBC;
 
 
+$editieId = filter_input(INPUT_GET, "editie-id", FILTER_VALIDATE_INT);
 
-if (isset($_GET["editie-id"])) {
-    $editieId = $_GET["editie-id"];
+if (empty($editieId)) {
+
+    // Disabled to reduce the attack surface.
+    exit;
+    // TODO: Check this code. Use filter_input().
+    //$numeRevista = $_GET[DBC::REV_NUME];
+    //$anEditie    = $_GET[DBC::ED_AN];
+    //$dirNo       = $_GET['editie'];
+    //$editiaCurenta = Editie::getEditieFromDisk($numeRevista, $anEditie, $dirNo, Editie::EDITIE_FULL);
+
+} else {
 
     /* ------- info editia curenta ------- */
     $editiaCurenta = $db->getNextRow($db->queryEditie($editieId));
@@ -50,18 +60,11 @@ if (isset($_GET["editie-id"])) {
         $articoleArray[] = $articol;
     }
 
-} else {
-    $numeRevista = $_GET[DBC::REV_NUME];
-    $anEditie    = $_GET[DBC::ED_AN];
-    $dirNo       = $_GET['editie'];
-    $editiaCurenta = Editie::getEditieFromDisk($numeRevista, $anEditie, $dirNo, Editie::EDITIE_FULL);
-}
-
-
-if (!empty($articoleArray)) {
-    $articoleCardRows = HtmlPrinter::buildDivContainer($articoleArray, array("col", "articol-card-container"));
-} else {
-    $articoleCardRows = "";
+    if (!empty($articoleArray)) {
+        $articoleCardRows = HtmlPrinter::buildDivContainer($articoleArray, array("col", "articol-card-container"));
+    } else {
+        $articoleCardRows = "";
+    }
 }
 
 $currentPageTitle = $editiaCurenta->outputTitluCuNumeRevista();

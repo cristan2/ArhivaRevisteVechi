@@ -44,36 +44,39 @@ function performSimpleSearch($params, $db)
 function specialQuerySimpleSearch($db, $searchFilter)
 {
     $searchFilter = strtolower($searchFilter);
-    $queryArticole = "
+
+    $statementArticole = $db->db->prepare("
         SELECT e.*, a.*
         FROM articole a
-        LEFT JOIN editii e USING ('editie_id')
-        WHERE lower(a.rubrica)  LIKE '%$searchFilter%'
-        OR lower(a.titlu)  LIKE '%$searchFilter%'
-        OR lower(a.joc_platforma)  LIKE '%$searchFilter%'
-        OR lower(a.autor)  LIKE '%$searchFilter%'
+        LEFT JOIN editii e USING (editie_id)
+        WHERE instr(lower(a.rubrica), :search_filter) > 0
+        OR instr(lower(a.titlu), :search_filter) > 0
+        OR instr(lower(a.joc_platforma), :search_filter) > 0
+        OR instr(lower(a.autor), :search_filter) > 0
         ORDER BY e.an, e.luna
-    ";
+        LIMIT 300  -- TODO: pagination
+    ");
+    $statementArticole->bindValue(':search_filter', $searchFilter, SQLITE3_TEXT);
 
     $lunaConvertita = searchLunaNumeric($searchFilter);
-
-    $queryEditii = "
+    $statementEditii = $db->db->prepare("
         SELECT e.*, r.*
         FROM editii e
-        LEFT JOIN reviste r USING ('revista_id')
-        WHERE lower(e.numar)  LIKE '$searchFilter'
-        OR lower(e.an)  LIKE '$searchFilter'
-        OR lower(e.luna)  LIKE '$lunaConvertita'
-        OR lower(e.joc_complet)  LIKE '%$searchFilter%'
-    ";
-
-    $rezultatDbArticole = $db->directQuery($queryArticole);
-    $rezultatDbEditii   = $db->directQuery($queryEditii);
+        LEFT JOIN reviste r USING (revista_id)
+        WHERE e.numar = :search_filter
+        OR e.an = :search_filter
+        OR e.luna = :luna_convertita
+        OR instr(lower(e.joc_complet), :search_filter) > 0
+        LIMIT 300  -- TODO: pagination
+    ");
+    $statementEditii->bindValue(':search_filter', $searchFilter, SQLITE3_TEXT);
+    $statementEditii->bindValue(':luna_convertita', $lunaConvertita, SQLITE3_INTEGER);
 
     return array(
-        "rezultatEditii"   => $rezultatDbEditii,
-        "rezultatArticole" => $rezultatDbArticole);
+        "rezultatEditii"   => $statementEditii->execute(),
+        "rezultatArticole" => $statementArticole->execute());
 }
+
 
 function processSimpleSearchDbResult($db, $dbResultTuple)
 {

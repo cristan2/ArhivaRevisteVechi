@@ -92,7 +92,7 @@ function processScanStatusDbResult($dbResult) {
 
 function specialQueryScanStatus($db)
 {
-    return $db->directQuery("
+    return $db->db->query("
             SELECT r.revista_nume, r.aparitii,
                 e.editie_id, e.tip, e.numar, e.an, e.luna,
                 e.luna_sfarsit, e.nr_pagini, e.scan_info_nr_pg,
@@ -106,3 +106,4 @@ function specialQueryScanStatus($db)
             ORDER BY r.revista_nume, e.an, e.tip, e.numar
         ");
 }
+

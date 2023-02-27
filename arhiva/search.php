@@ -5,6 +5,12 @@ require("../resources/config.php");
 require_once HELPERS . "/h_html.php";
 require_once HELPERS . "/h_misc.php";
 
+// Reduce attack surface: only allow the "filter" parameter.
+$filter = filter_input(INPUT_GET, "filter", FILTER_UNSAFE_RAW);
+if (empty($filter) || count($_GET) > 1) {
+    exit;
+}
+
 $urlWithParams = $_SERVER['REQUEST_URI'];
 $paramsRaw = parse_url($urlWithParams, PHP_URL_QUERY);
 

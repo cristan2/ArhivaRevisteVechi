@@ -2,7 +2,7 @@
 
 // debug & production
 DEFINE ("IS_DEBUG", false);
-DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids", "Hobbyte''s", "Game Over"));
+DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids", "Hobbyte's", "Game Over"));
 
 // site
 DEFINE ("SITE_NAME"  , "Arhiva Reviste Vechi");
@@ -29,6 +29,7 @@ DEFINE ("TEMPL"     , RESOURCES ."/templates");
 DEFINE ("IMG"       , RESOURCES ."/img");
 
 // cache
+DEFINE ("CACHE_ENABLED", false);
 DEFINE ("CACHE_DIR" , ROOT . "/cache");
 
 // db
@@ -45,7 +46,7 @@ DEFINE ("COPERTA_DEFAULT", IMG . "/coperti/default.jpg");
 DEFINE ("THUMB_DEFAULT"  , IMG . "/coperti/default_th.jpg");
 
 // external links
-DEFINE ("RVWIKI_BASE_LINK"         , "https://revistevechi.awiki.org");
+DEFINE ("RVWIKI_BASE_LINK"         , "https://wiki.candaparerevista.ro");
 DEFINE ("KNOWN_FILE_HOSTS", array(
     "archive" => "Archive.org",
     "scribd" => "Scribd",

@@ -36,16 +36,12 @@ class DBC
         $this->db = new \SQLite3($dbFile, SQLITE3_OPEN_READONLY) or die;
     }
 
-    public function directQuery($query)
+    public function queryToateRevistele()
     {
-        // var_dump($query);
-        return $this->db->query($query);
-    }
-
-    public function queryToateRevistele($filtruReviste)
-    {
+        // This query is safe, all vars are internal.
         $editiiCountAlias = self::REV_CNT_ED;
-        return $this->directQuery("
+        $reviste = '"' . implode('","', REVISTE_READY_FOR_PROD) . '"';
+        return $this->db->query("
             SELECT rev.*, ed.$editiiCountAlias
             FROM reviste rev
             LEFT JOIN (
@@ -55,119 +51,141 @@ class DBC
                 AND tip = 'revista'
                 AND numar <> ''
                 GROUP BY revista_id) ed
-            USING (revista_id)"
-            . (!empty($filtruReviste) ? "WHERE rev.revista_nume IN ('" .implode("','", $filtruReviste) . "')" : "")
-            . "GROUP BY rev.revista_id
+            USING (revista_id)
+            WHERE rev.revista_nume IN ($reviste)
+            GROUP BY rev.revista_id
         ");
     }
 
     public function queryRevista($revistaId)
     {
-        return $this->directQuery("
+        $statement = $this->db->prepare("
             SELECT revista_id, revista_nume, aparitii
             FROM reviste
-            WHERE revista_id = '$revistaId'
+            WHERE revista_id = :revista_id
         ");
+        $statement->bindValue(':revista_id', $revistaId, SQLITE3_INTEGER);
+        return $statement->execute();
     }
 
     public function queryAniEditii($revistaId)
     {
-        return $this->directQuery("
+        $statement = $this->db->prepare("
             SELECT DISTINCT " . self::ED_AN . "
             FROM editii
             WHERE 1
-            AND revista_id = '$revistaId'
+            AND revista_id = :revista_id
             AND tip = 'revista'
             ORDER BY an
         ");
+        $statement->bindValue(':revista_id', $revistaId, SQLITE3_INTEGER);
+        return $statement->execute();
     }
 
     public function queryMaxEditiiDinRevista($revistaId)
     {
         $maxEdAlias = self::REV_MAX_ED;
         // fara abs() poate returna un string gol de la editiile fara numar
-        return $this->directQuery("
+        $statement = $this->db->prepare("
             SELECT MAX(abs(numar)) $maxEdAlias
             FROM editii
-            WHERE (revista_id) = '$revistaId'
+            WHERE (revista_id) = :revista_id
          ");
+        $statement->bindValue(':revista_id', $revistaId, SQLITE3_INTEGER);
+        return $statement->execute();
     }
 
     public function queryToateEditiile($revistaId, $filtruAn = '')
     {
         $articleCountAlias = self::ED_ART_CNT;
-        return $this->directQuery("
+        $extraCondition = !empty($filtruAn) ? "AND e.an = :filtru_an" : "";
+        $statement = $this->db->prepare("
             SELECT r.revista_nume, e.*, count(a.articol_id) $articleCountAlias
             FROM editii e
             LEFT JOIN reviste r USING ('revista_id')
             LEFT JOIN articole a USING ('editie_id')
             WHERE 1
-            AND e.revista_id = '$revistaId'
-            AND e.tip = 'revista'"
-            . (!empty($filtruAn) ? "AND e.an =  '$filtruAn'" : "")
-            ."GROUP BY editie_id
+            AND e.revista_id = :revista_id
+            AND e.tip = 'revista'
+            $extraCondition
+            GROUP BY editie_id
         ");
+        $statement->bindValue(':revista_id', $revistaId, SQLITE3_INTEGER);
+        $statement->bindValue(':filtru_an', $filtruAn, SQLITE3_INTEGER);
+        return $statement->execute();
     }
 
     public function queryEditie($editieId)
     {
-        return $this->directQuery("
+        $statement = $this->db->prepare("
             SELECT r.revista_nume, e.editie_id,
             e.revista_id, e.an, e.luna, e.numar, e.nr_pagini
             FROM editii e
             LEFT JOIN reviste r
             USING ('revista_id')
-            WHERE e.editie_id = $editieId
+            WHERE e.editie_id = :editie_id
         ");
+        $statement->bindValue(':editie_id', $editieId, SQLITE3_INTEGER);
+        return $statement->execute();
     }
 
     public function queryEditieFromNumar($revistaId, $editieNumar)
     {
-        return $this->directQuery("
+        $statement = $this->db->prepare("
             SELECT r.revista_nume, e.editie_id,
             e.revista_id, e.an, e.luna, e.numar, e.nr_pagini
             FROM editii e
             LEFT JOIN reviste r
             USING ('revista_id')
-            WHERE e.revista_id = $revistaId
-            AND e.numar = $editieNumar
+            WHERE e.revista_id = :revista_id
+            AND e.numar = :editie_numar
         ");
+        $statement->bindValue(':revista_id', $revistaId, SQLITE3_INTEGER);
+        $statement->bindValue(':editie_numar', $editieNumar, SQLITE3_INTEGER);
+        return $statement->execute();
     }
 
     public function queryEditieIdFromNumar($revistaId, $editieNumar)
     {
-        return $this->directQuery("
+        $statement = $this->db->prepare("
             SELECT editie_id
             FROM editii
-            WHERE revista_id = '$revistaId'
-            AND numar = '$editieNumar'
+            WHERE revista_id = :revista_id
+            AND numar = :editie_numar
         ");
+        $statement->bindValue(':revista_id', $revistaId, SQLITE3_INTEGER);
+        $statement->bindValue(':editie_numar', $editieNumar, SQLITE3_INTEGER);
+        return $statement->execute();
     }
 
     public function queryArticoleDinEditie($editieId)
     {
-        return $this->directQuery("
+        $statement = $this->db->prepare("
             SELECT a.*,
             e.an, e.luna,
             r.revista_nume
             FROM articole a
             LEFT JOIN editii e USING (editie_id)
             LEFT JOIN reviste r USING (revista_id)
-            WHERE editie_id = $editieId
+            WHERE editie_id = :editie_id
             ORDER BY a.pg_toc
         ");
+        $statement->bindValue(':editie_id', $editieId, SQLITE3_INTEGER);
+        return $statement->execute();
     }
 
     public function queryDownloadsDinEditie($editieId)
     {
         $linksAlias = self::DLD_LINKS;
-        return $this->directQuery("
+        $statement = $this->db->prepare("
             SELECT categorie, item, group_concat(link,',') $linksAlias
             FROM downloads
-            WHERE editie_id = $editieId
+            WHERE editie_id = :editie_id
             AND link <> ''
             GROUP BY categorie, item
         ");
+        $statement->bindValue(':editie_id', $editieId, SQLITE3_INTEGER);
+        return $statement->execute();
     }
 
     public function getNextRow($dbResult)
@@ -184,3 +202,4 @@ class DBC
         return $arrayToReturn;
     }
 }
+
