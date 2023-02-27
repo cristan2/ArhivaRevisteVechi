@@ -12,7 +12,7 @@ require_once HELPERS . "/HtmlPrinter.php";
 use ArhivaRevisteVechi\lib\Revista;
 use ArhivaRevisteVechi\lib\helpers\HtmlPrinter;
 
-$revisteDbResult = $db->queryToateRevistele(REVISTE_READY_FOR_PROD);
+$revisteDbResult = $db->queryToateRevistele();
 
 $revisteArray = array();
 while($dbRow = $db->getNextRow($revisteDbResult)) {

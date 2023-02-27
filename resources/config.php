@@ -2,7 +2,7 @@
 
 // debug & production
 DEFINE ("IS_DEBUG", false);
-DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids", "Hobbyte''s", "Game Over"));
+DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids", "Hobbyte's", "Game Over"));
 
 // site
 DEFINE ("SITE_NAME"  , "Arhiva Reviste Vechi");

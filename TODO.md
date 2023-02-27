@@ -108,8 +108,8 @@ Revista
 DBC
 ------------------
 * modifica toate query-urile DB sa foloseasca constantele
-* prepare statements (escape)
-* sanitize inputs
+* ~~prepare statements (escape)~~
+* sanitize inputs (*almost* done)
 
 Search
 ------------------
