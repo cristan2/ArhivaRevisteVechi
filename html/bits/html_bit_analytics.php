@@ -1,5 +1,1 @@
-<!-- Matomo -->
-<script type="text/javascript">
-    <!-- paste Matomo tracking code here -->
-</script>
-<!-- End Matomo Code -->
+<script src="<?php echo ROOT ?>/html/js/analytics.js" defer ></script>
