@@ -4,6 +4,19 @@
 DEFINE ("IS_DEBUG", false);
 DEFINE ("REVISTE_READY_FOR_PROD", array("Level", "Games 4 Kids", "Hobbyte's", "Game Over"));
 
+if (IS_DEBUG) {
+    // development
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+} else {
+    // production
+    ini_set('display_errors', 0);
+    ini_set('display_startup_errors', 0);
+    ini_set('log_errors', 1);
+    error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+}
+
 // site
 DEFINE ("SITE_NAME"  , "Arhiva Reviste Vechi");
 DEFINE ("SITE_TAG"   , "Sniper rifles... close-range weapons for when you accidentaly select the wrong gun.");
