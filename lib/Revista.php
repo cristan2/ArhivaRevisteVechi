@@ -83,7 +83,7 @@ class Revista {
             $displayedImagePath = COPERTA_DEFAULT;
 //    else {
         $htmlClassList = getCssClassList($htmlClasses);
-        return "<a href='$targetLink'><img src='$displayedImagePath' $htmlClassList alt='Image' /></a>";
+        return "<a href='$targetLink'><img src='$displayedImagePath' $htmlClassList alt='Image' loading='lazy' /></a>";
 //    }
     }
 

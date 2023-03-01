@@ -151,7 +151,7 @@ class HtmlPrinter {
 
     static function wrapImg($imagePath, $cssClass, $altDescription = 'Image')
     {
-        return "<img src='$imagePath' $cssClass alt='$altDescription' />";
+        return "<img src='$imagePath' $cssClass alt='$altDescription' loading='lazy' />";
     }
 
     static function buildDropdownFromArray($arrayFilters, $baseUrl, $numeDropdown = "Filtru")
