@@ -37,7 +37,7 @@ function buildHtmlSimpleSearch()
     return <<<START_HTML
 	<form action = "$searchPage">
 		 <input type = "text" class = "home-nav-search-box" name = "filter" placeholder = "$searchHint"/>
-         <input type = "submit" value = "Cauta" style = "display: none"/>
+         <input type = "submit" value = "Cauta" id="search-btn" />
       </form>
 
 START_HTML;

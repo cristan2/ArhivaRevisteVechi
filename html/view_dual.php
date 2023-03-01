@@ -5,8 +5,6 @@
     <title><?php echo (!empty($currentPageTitle) ? $currentPageTitle . " &bull; " : "") . SITE_NAME ?></title>
     <link rel="stylesheet" href="<?php echo CSSLIB.'/fonts.css'; ?>" >
     <link rel="stylesheet" href="<?php echo CSSLIB.'/stylesheet_basic.css'; ?>" >
-
-    <?php include HTMLBITS . "/html_bit_analytics.php" ?>
 </head>
 
 <body>
@@ -27,5 +25,6 @@
     <!--footer>
         <?php /*include HTMLBITS . "/html_bit_footer.php";*/ ?>
     </footer-->
+    <?php include HTMLBITS . "/html_bit_analytics.php" ?>
 </body>
 </html>
